@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-AGENT Reliability & Security Audit  -  v1.3
+AGENT Reliability & Security Audit  -  v1.3.1
 
 Tests what an AI AGENT *does* (the tools it calls), not just what it says,
 including instructions hidden inside the data it reads (indirect prompt injection).

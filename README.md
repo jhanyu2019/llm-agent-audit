@@ -43,7 +43,7 @@ Auditing the agent against 43 attack scenarios (OWASP LLM Top 10)...
   ...
 
 Un-hardened agent: 43/43 attacks succeeded   (risk: CRITICAL)
-Same agent + guardrails: 0/43 succeeded
+Hardened reference (illustrative): 0/43 succeeded
 ```
 
 A full, client-ready `agent_report.md` is written with evidence and fixes. For a smoother screen recording, run `python agent_audit.py --slow`.

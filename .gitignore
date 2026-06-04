@@ -11,6 +11,9 @@ OUTREACH.md
 PUBLISH.md
 BUYER-ONEPAGER.md
 TARGETS.md
+outreach-drafts.md
+outreach-playbook.md
+sow-template.md
 
 # generated real-model run (re-create with run_real.py; keep out of the public repo)
 real_report.md
