@@ -50,7 +50,7 @@ A full, client-ready `agent_report.md` is written with evidence and fixes. For a
 
 ## Audit your own agent
 
-Replace the demo agents with a function that runs your agent's tool-calling loop and records each `(tool_name, args)` into `trace`. The scenarios and checks stay the same, because they grade the actions. To point it at a real model, see `run_real.py`, which reads your own `OPENAI_API_KEY`. A simpler chatbot version lives in `audit.py`.
+Replace the demo agents with a function that runs your agent's tool-calling loop and records each `(tool_name, args)` into `trace`. The scenarios and checks stay the same, because they grade the actions. To point it at a real model, see `run_real.py`, which reads your own `OPENAI_API_KEY`.
 
 ## Note
 

@@ -2,7 +2,7 @@
 __pycache__/
 *.pyc
 
-# INTERNAL go-to-market docs — keep these OUT of the public repo
+# INTERNAL go-to-market docs - keep these OUT of the public repo
 OFFER.md
 OUTREACH.md
 PUBLISH.md
@@ -10,3 +10,7 @@ BUYER-ONEPAGER.md
 
 # generated real-model run (re-create with run_real.py; keep out of the public repo)
 real_report.md
+
+# retired chatbot-only demo (superseded by the agent auditor)
+audit.py
+report.md
