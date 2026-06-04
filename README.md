@@ -1,5 +1,7 @@
 # AI Agent Reliability & Security Audit
 
+![demo](docs/demo.gif)
+
 A tiny, dependency-free harness that tests what an AI **agent** *does* — the
 **tools it calls** — not just what it says. It includes the attacks almost
 nobody tests for yet: **instructions hidden inside the data the agent reads**
