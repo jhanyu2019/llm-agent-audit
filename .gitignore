@@ -1,0 +1,8 @@
+# Python
+__pycache__/
+*.pyc
+
+# INTERNAL go-to-market docs — keep these OUT of the public repo
+OFFER.md
+OUTREACH.md
+PUBLISH.md
