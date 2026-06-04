@@ -7,3 +7,6 @@ OFFER.md
 OUTREACH.md
 PUBLISH.md
 BUYER-ONEPAGER.md
+
+# generated real-model run (re-create with run_real.py; keep out of the public repo)
+real_report.md
