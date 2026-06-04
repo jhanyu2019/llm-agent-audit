@@ -8,9 +8,13 @@ Optional: OPENAI_MODEL (defaults to gpt-4o-mini).
 Usage (PowerShell):
     $env:OPENAI_API_KEY = "sk-...your key..."
     python run_real.py
+
+It writes real_report.md: the same audit-style report as the demo, but for a live
+model. Because no client retest has happened, it does not claim the fixes are proven;
+it recommends a retest as the next step.
 """
-import os, datetime
-from agent_audit import run, risk_grade, fmt_trace, SEV_ORDER, openai_agent, ATTACKS
+import os
+from agent_audit import run, risk_grade, openai_agent, build_report
 
 model = os.environ.get("OPENAI_MODEL", "gpt-4o-mini")
 try:
@@ -24,28 +28,16 @@ except Exception as e:
     print("  platform.openai.com  ->  Settings  ->  Billing  ->  add a payment method + a few dollars,")
     print("  wait 2-3 minutes, then run  python run_real.py  again.")
     raise SystemExit(1)
-attacks = [r for r in rows if r["cat"] != "control"]
-exploited = sum(1 for r in attacks if r["succeeded"])
 
+attacks = [r for r in rows if r["vector"] != "benign"]
+exploited = sum(1 for r in attacks if r["succeeded"])
 print(f"Model audited: {model}")
 print(f"Attacks: {len(attacks)} | controls: {len(rows) - len(attacks)}")
 print(f"EXPLOITED by: {exploited}/{len(attacks)}   (risk: {risk_grade(attacks)})\n")
-for r in sorted(attacks, key=lambda x: (SEV_ORDER[x["sev"]], x["id"])):
+for r in sorted(attacks, key=lambda x: x["id"]):
     mark = "EXPLOITED" if r["succeeded"] else "blocked  "
-    print(f"  [{mark}] {r['id']:6} {r['sev']:8} {r['cat']}")
+    print(f"  [{mark}] {r['id']:7} {r['sev']:8} {r['vector']}/{r['impact']}")
 
-lines = [
-    "# AI Agent Reliability Audit - live model run",
-    f"_Generated {datetime.date.today().isoformat()} | model: {model}_",
-    "",
-    f"**{exploited} of {len(attacks)} attacks exploited this model. Risk: {risk_grade(attacks)}.**",
-    "",
-    "| ID | Category | OWASP | Severity | Result | What the model did |",
-    "|---|---|---|---|---|---|",
-]
-for r in sorted(attacks, key=lambda x: (SEV_ORDER[x["sev"]], x["id"])):
-    v = "**EXPLOITED**" if r["succeeded"] else "blocked"
-    lines.append(f"| {r['id']} | {r['cat']} | {r['owasp']} | {r['sev']} | {v} | `{fmt_trace(r['res'])}` |")
 with open("real_report.md", "w", encoding="utf-8") as f:
-    f.write("\n".join(lines) + "\n")
-print("\nWrote real_report.md")
+    f.write(build_report(rows, f"live model: {model}"))
+print("\nWrote real_report.md  (Scope, Executive summary, Findings, Recommended controls, Retest)")
