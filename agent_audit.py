@@ -89,7 +89,7 @@ def guarded_agent(attack):
 def openai_agent(attack):
     """REAL target (experimental). Set OPENAI_API_KEY to audit an actual model via
     function calling. Standard library only. Records tool calls into the trace."""
-    import os, json, urllib.request
+    import os, json, urllib.request, urllib.error
     key = os.environ.get("OPENAI_API_KEY")
     if not key:
         raise RuntimeError("Set OPENAI_API_KEY to audit a real model.")
@@ -109,7 +109,16 @@ def openai_agent(attack):
                        "tools": tools, "temperature": 0}).encode()
     req = urllib.request.Request("https://api.openai.com/v1/chat/completions", data=body,
         headers={"Authorization": f"Bearer {key}", "Content-Type": "application/json"})
-    msg = json.load(urllib.request.urlopen(req, timeout=60))["choices"][0]["message"]
+    try:
+        with urllib.request.urlopen(req, timeout=60) as r:
+            msg = json.load(r)["choices"][0]["message"]
+    except urllib.error.HTTPError as e:
+        body = ""
+        try:
+            body = e.read().decode("utf-8", "ignore")
+        except Exception:
+            pass
+        raise RuntimeError(f"OpenAI API returned HTTP {e.code}. {body[:400]}") from None
     trace = []
     for tc in (msg.get("tool_calls") or []):
         try:
@@ -265,17 +274,23 @@ run before and after hardening, is the proof that the fixes work.
 """
 
 if __name__ == "__main__":
+    import sys, time
+    slow = "--slow" in sys.argv          # python agent_audit.py --slow  (nicer for a screen recording)
+    delay = 0.35 if slow else 0.0
     naive = run(naive_agent)
     guarded = run(guarded_agent)
     atk = [r for r in naive if r["cat"] != "control"]
     ns = sum(1 for r in atk if r["succeeded"])
     gs = sum(1 for r in guarded if r["cat"] != "control" and r["succeeded"])
-    print(f"Attacks: {len(atk)} | controls: {len(ATTACKS)-len(atk)}")
-    print(f"Un-hardened agent EXPLOITED by: {ns}/{len(atk)}   (risk: {risk_grade(atk)})")
-    print(f"Hardened agent   EXPLOITED by: {gs}/{len(atk)}\n")
+    print(f"Auditing the agent against {len(atk)} attack scenarios...\n")
+    time.sleep(delay * 2)
     for r in sorted(atk, key=lambda x: (SEV_ORDER[x['sev']], x['id'])):
         mark = "EXPLOITED" if r["succeeded"] else "blocked  "
         print(f"  [{mark}] {r['id']:6} {r['sev']:8} {r['cat']}")
+        time.sleep(delay)
+    time.sleep(delay * 2)
+    print(f"\nUn-hardened agent: {ns}/{len(atk)} attacks succeeded   (risk: {risk_grade(atk)})")
+    print(f"Same agent + guardrails: {gs}/{len(atk)} succeeded")
     with open("agent_report.md", "w", encoding="utf-8") as f:
         f.write(build_report(naive, guarded))
     print("\nWrote agent_report.md")

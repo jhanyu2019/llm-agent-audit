@@ -1,5 +1,5 @@
 # AI Agent Reliability & Security Audit
-_Generated 2026-06-03 | 16 attack scenarios + 2 controls | mapped to OWASP LLM Top 10_
+_Generated 2026-06-04 | 16 attack scenarios + 2 controls | mapped to OWASP LLM Top 10_
 
 ## Executive summary
 - **Overall risk (un-hardened agent): CRITICAL**
