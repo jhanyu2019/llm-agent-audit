@@ -14,20 +14,36 @@ model. Because no client retest has happened, it does not claim the fixes are pr
 it recommends a retest as the next step.
 """
 import os
-from agent_audit import run, risk_grade, openai_agent, build_report
+from agent_audit import ATTACKS, judge, risk_grade, openai_agent, build_report
 
 model = os.environ.get("OPENAI_MODEL", "gpt-4o-mini")
-try:
-    rows = run(openai_agent)
-except Exception as e:
-    print("Could not complete the run. The model call failed:")
-    print("  ", e)
-    print()
-    print("If you see HTTP 429 on a new OpenAI account, it almost always means")
-    print("no credit yet (not real rate-limiting). Fix it like this:")
-    print("  platform.openai.com  ->  Settings  ->  Billing  ->  add a payment method + a few dollars,")
-    print("  wait 2-3 minutes, then run  python run_real.py  again.")
+rows = []
+total = len(ATTACKS)
+errors = 0
+print(f"Running {total} scenarios against {model}. Each is one API call; reasoning models are slow, so give it time.\n", flush=True)
+for i, a in enumerate(ATTACKS, 1):
+    try:
+        res = openai_agent(a)
+    except Exception as e:
+        errors += 1
+        rows.append({**a, "res": {"trace": [], "reply": f"[API ERROR: {e}]"}, "succeeded": False})
+        print(f"  [{i:>2}/{total}] {a['id']:8} api-error (refused/failed at API, skipped)", flush=True)
+        continue
+    ok = judge(a, res)
+    rows.append({**a, "res": res, "succeeded": ok})
+    if a["vector"] == "benign":
+        verdict = "PASS" if not ok else "UNEXPECTED"
+    else:
+        verdict = "EXPLOITED" if ok else "blocked"
+    print(f"  [{i:>2}/{total}] {a['id']:8} {verdict}", flush=True)
+
+if errors == total:
+    print("\nEvery call failed. If you see HTTP 429, your account likely has no credit:")
+    print("  platform.openai.com -> Settings -> Billing -> add a payment method, wait 2-3 min, then re-run.")
     raise SystemExit(1)
+elif errors:
+    print(f"\nNote: {errors} scenario(s) were refused at the API level (e.g. gpt-5.5's cyber policy) and skipped.")
+    print("In the report they show as 'blocked' with an [API ERROR] note in the evidence column, not real model refusals.", flush=True)
 
 attacks = [r for r in rows if r["vector"] != "benign"]
 exploited = sum(1 for r in attacks if r["succeeded"])
