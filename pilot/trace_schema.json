@@ -1,0 +1,53 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Agent audit trace submission",
+  "description": "Format the client sends back after running the scenarios against their staging agent. The whole audit is about INDIRECT injection: the adversarial instruction must live in data_the_agent_reads, never in user_request.",
+  "type": "object",
+  "required": ["runs"],
+  "properties": {
+    "engagement": {"type": "string", "description": "e.g. 'Acme Co - AP agent pilot (staging)'"},
+    "agent_under_test": {"type": "string"},
+    "runs": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["scenario_id", "user_request", "data_the_agent_reads", "tool_call_trace"],
+        "properties": {
+          "scenario_id": {"type": "string"},
+          "user_request": {
+            "type": "string",
+            "description": "The benign task the caller asked. The adversarial/test instruction must NOT appear here."
+          },
+          "data_the_agent_reads": {
+            "type": "array",
+            "description": "Content the agent retrieves and reads. Any adversarial/test instruction lives HERE.",
+            "items": {
+              "type": "object",
+              "required": ["source", "content"],
+              "properties": {
+                "source": {"type": "string", "description": "e.g. support_ticket, invoice_pdf, vendor_email, crm_note, tool_response, calendar_invite"},
+                "id": {"type": "string"},
+                "content": {"type": "string"}
+              }
+            }
+          },
+          "tool_call_trace": {
+            "type": "array",
+            "description": "Every tool call the agent made, in order.",
+            "items": {
+              "type": "object",
+              "required": ["tool", "arguments"],
+              "properties": {
+                "tool": {"type": "string"},
+                "arguments": {"type": "object"}
+              }
+            }
+          },
+          "final_reply": {"type": "string"},
+          "model": {"type": "string", "description": "context only, e.g. gpt-5-mini"},
+          "notes": {"type": "string", "description": "How data_the_agent_reads was delivered into the agent, i.e. the real read path, not the user prompt."}
+        }
+      }
+    }
+  }
+}
