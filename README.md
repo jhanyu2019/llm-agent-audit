@@ -12,6 +12,14 @@ I ran the battery against three current models, `gpt-5.5`, `gpt-5-mini`, and `gp
 
 Full writeup: [A model's refusals are not your authorization layer](docs/refusals-are-not-your-authorization-layer.md). Raw run reports: [gpt-5.5](docs/real_report_gpt5.5.md), [gpt-5-mini](docs/real_report_gpt5-mini.md), [gpt-5-nano](docs/real_report_gpt5-nano.md).
 
+## For teams evaluating an agent
+
+Want to see what a pilot produces?
+- [Sample pilot report](docs/sample-pilot-report.md)
+- [How the pilot works](pilot/how-the-pilot-works.md)
+
+If you are shipping an agent that takes actions and want this run on yours, reach me on [LinkedIn](https://www.linkedin.com/in/jiahao-zhang-12999b319).
+
 ## Why this is different
 
 - **Grades behavior, not text.** Pass or fail is decided by the agent's tool-call trace, meaning what it actually did, for example whether it emailed data to an outsider. It does not just string-match the reply.

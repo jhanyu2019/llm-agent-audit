@@ -1,6 +1,6 @@
 # How the pilot works
 
-A fixed-scope, low-effort check of whether your tool-using agent can be talked into an action it should not take. Staging only. I never touch your systems.
+A fixed-scope, lightweight check of whether your tool-using agent can be talked into an action it should not take. Staging only. I do not need access to your systems.
 
 ## The steps
 
