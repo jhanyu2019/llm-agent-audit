@@ -20,8 +20,10 @@ pilot_runbook.md
 objection-handling.md
 sow-template.md
 
-# generated real-model run (re-create with run_real.py; keep out of the public repo)
+# generated real-model runs (re-create with run_real.py; keep out of the public repo)
 real_report.md
+real_report_*.md
+runs/
 
 # retired chatbot-only demo (superseded by the agent auditor)
 audit.py

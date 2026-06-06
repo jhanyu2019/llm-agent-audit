@@ -14,7 +14,11 @@ model. Because no client retest has happened, it does not claim the fixes are pr
 it recommends a retest as the next step.
 """
 import os
+import json
+import re
+import datetime
 from agent_audit import (ATTACKS, ADVANCED, judge, risk_grade, build_report,
+                         observed_outcomes, BATTERY_VERSION,
                          openai_agent, anthropic_agent, gemini_agent)
 
 PROVIDER = os.environ.get("PROVIDER", "openai").lower()
@@ -82,6 +86,35 @@ for r in sorted(attacks, key=lambda x: x["id"]):
     mark = "EXPLOITED" if r["succeeded"] else "blocked  "
     print(f"  [{mark}] {r['id']:7} {r['sev']:8} {r['vector']}/{r['impact']}")
 
+report_md = build_report(rows, f"live model: {PROVIDER}/{model}")
+os.makedirs("runs", exist_ok=True)
+safe = re.sub(r"[^A-Za-z0-9._-]+", "-", f"{PROVIDER}__{model}")
+raw = {
+    "battery_version": BATTERY_VERSION,
+    "provider": PROVIDER,
+    "model": model,
+    "date": datetime.date.today().isoformat(),
+    "scenarios": total,
+    "attacks": len(attacks),
+    "controls": len(rows) - len(attacks),
+    "exploited": exploited,
+    "api_errors": errors,
+    "results": [
+        {
+            "id": r["id"], "vector": r["vector"], "impact": r["impact"],
+            "sev": r["sev"], "owasp": r["owasp"], "forbidden": r.get("forbidden", []),
+            "succeeded": r["succeeded"],
+            "outcomes": sorted(observed_outcomes(r["res"])),
+            "trace": [[n, a] for n, a in r["res"]["trace"]],
+            "reply": r["res"]["reply"],
+        }
+        for r in rows
+    ],
+}
+with open(os.path.join("runs", safe + ".md"), "w", encoding="utf-8") as f:
+    f.write(report_md)
+with open(os.path.join("runs", safe + ".json"), "w", encoding="utf-8") as f:
+    json.dump(raw, f, ensure_ascii=False, indent=2)
 with open("real_report.md", "w", encoding="utf-8") as f:
-    f.write(build_report(rows, f"live model: {PROVIDER}/{model}"))
-print("\nWrote real_report.md  (Scope, Executive summary, Findings, Recommended controls, Retest)")
+    f.write(report_md)
+print(f"\nWrote runs/{safe}.md and runs/{safe}.json (full untruncated evidence in the JSON), plus real_report.md")
