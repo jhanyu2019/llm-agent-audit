@@ -14,16 +14,24 @@ model. Because no client retest has happened, it does not claim the fixes are pr
 it recommends a retest as the next step.
 """
 import os
-from agent_audit import ATTACKS, judge, risk_grade, openai_agent, build_report
+from agent_audit import (ATTACKS, ADVANCED, judge, risk_grade, build_report,
+                         openai_agent, anthropic_agent, gemini_agent)
 
-model = os.environ.get("OPENAI_MODEL", "gpt-5-mini")
+PROVIDER = os.environ.get("PROVIDER", "openai").lower()
+AGENTS = {"openai": openai_agent, "anthropic": anthropic_agent, "gemini": gemini_agent}
+MODEL_ENV = {"openai": "OPENAI_MODEL", "anthropic": "ANTHROPIC_MODEL", "gemini": "GEMINI_MODEL"}
+if PROVIDER not in AGENTS:
+    raise SystemExit(f"PROVIDER must be one of {sorted(AGENTS)}; got {PROVIDER!r}")
+agent = AGENTS[PROVIDER]
+model = os.environ.get(MODEL_ENV[PROVIDER], "")
+SCENARIOS = ATTACKS + ADVANCED
 rows = []
-total = len(ATTACKS)
+total = len(SCENARIOS)
 errors = 0
-print(f"Running {total} scenarios against {model}. Each is one API call; reasoning models are slow, so give it time.\n", flush=True)
-for i, a in enumerate(ATTACKS, 1):
+print(f"Provider: {PROVIDER} | model: {model or '(set the model env var)'} | {total} scenarios\n", flush=True)
+for i, a in enumerate(SCENARIOS, 1):
     try:
-        res = openai_agent(a)
+        res = agent(a)
     except Exception as e:
         errors += 1
         rows.append({**a, "res": {"trace": [], "reply": f"[API ERROR: {e}]"}, "succeeded": False})
@@ -55,5 +63,5 @@ for r in sorted(attacks, key=lambda x: x["id"]):
     print(f"  [{mark}] {r['id']:7} {r['sev']:8} {r['vector']}/{r['impact']}")
 
 with open("real_report.md", "w", encoding="utf-8") as f:
-    f.write(build_report(rows, f"live model: {model}"))
+    f.write(build_report(rows, f"live model: {PROVIDER}/{model}"))
 print("\nWrote real_report.md  (Scope, Executive summary, Findings, Recommended controls, Retest)")
