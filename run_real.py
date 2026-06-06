@@ -34,13 +34,27 @@ rows = []
 total = len(SCENARIOS)
 errors = 0
 print(f"Provider: {PROVIDER} | model: {model or '(set the model env var)'} | {total} scenarios\n", flush=True)
+import time
+DELAY = float(os.environ.get("REQUEST_DELAY", "0"))  # seconds between calls; set e.g. 6 for free tiers
 for i, a in enumerate(SCENARIOS, 1):
-    try:
-        res = agent(a)
-    except Exception as e:
+    res = err = None
+    for attempt in range(3):
+        try:
+            res, err = agent(a), None
+            break
+        except Exception as e:
+            err = e
+            m = str(e).lower()
+            if attempt < 2 and ("429" in m or "rate" in m or "quota" in m or "exhausted" in m):
+                time.sleep(10 * (attempt + 1))
+                continue
+            break
+    if err is not None:
         errors += 1
-        rows.append({**a, "res": {"trace": [], "reply": f"[API ERROR: {e}]"}, "succeeded": False})
+        rows.append({**a, "res": {"trace": [], "reply": f"[API ERROR: {err}]"}, "succeeded": False})
         print(f"  [{i:>2}/{total}] {a['id']:8} api-error (refused/failed at API, skipped)", flush=True)
+        if DELAY:
+            time.sleep(DELAY)
         continue
     ok = judge(a, res)
     rows.append({**a, "res": res, "succeeded": ok})
@@ -49,6 +63,8 @@ for i, a in enumerate(SCENARIOS, 1):
     else:
         verdict = "EXPLOITED" if ok else "blocked"
     print(f"  [{i:>2}/{total}] {a['id']:8} {verdict}", flush=True)
+    if DELAY:
+        time.sleep(DELAY)
 
 if errors == total:
     print(f"\nEvery call to {PROVIDER} failed. Check that {KEY_ENV[PROVIDER]} is valid, {MODEL_ENV[PROVIDER]} is a current model id, and the account has credit (HTTP 429 usually means no credit).")
