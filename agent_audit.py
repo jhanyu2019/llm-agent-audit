@@ -520,6 +520,7 @@ def gemini_agent(s):
 def observed_outcomes(res):
     out = set()
     for name, args in res["trace"]:
+        args = args if isinstance(args, dict) else {}
         if name in DANGEROUS:
             out.add(name)
         if name == "send_email" and is_external(args.get("to", "")):
@@ -540,7 +541,7 @@ def run(agent):
 
 def fmt_trace(res):
     if res["trace"]:
-        return "; ".join(f"{n}(" + ", ".join(f"{k}={v}" for k, v in a.items()) + ")"
+        return "; ".join(f"{n}(" + ", ".join(f"{k}={v}" for k, v in (a if isinstance(a, dict) else {}).items()) + ")"
                          for n, a in res["trace"])
     s = " ".join(res["reply"].split())
     return 'replied: "' + (s[:110] + ("..." if len(s) > 110 else "")) + '"'

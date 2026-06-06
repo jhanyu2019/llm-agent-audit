@@ -20,10 +20,15 @@ from agent_audit import (ATTACKS, ADVANCED, judge, risk_grade, build_report,
 PROVIDER = os.environ.get("PROVIDER", "openai").lower()
 AGENTS = {"openai": openai_agent, "anthropic": anthropic_agent, "gemini": gemini_agent}
 MODEL_ENV = {"openai": "OPENAI_MODEL", "anthropic": "ANTHROPIC_MODEL", "gemini": "GEMINI_MODEL"}
+KEY_ENV = {"openai": "OPENAI_API_KEY", "anthropic": "ANTHROPIC_API_KEY", "gemini": "GEMINI_API_KEY"}
 if PROVIDER not in AGENTS:
     raise SystemExit(f"PROVIDER must be one of {sorted(AGENTS)}; got {PROVIDER!r}")
 agent = AGENTS[PROVIDER]
 model = os.environ.get(MODEL_ENV[PROVIDER], "")
+if not os.environ.get(KEY_ENV[PROVIDER]):
+    raise SystemExit(f"Set {KEY_ENV[PROVIDER]} before running with PROVIDER={PROVIDER}.")
+if not model:
+    raise SystemExit(f"Set {MODEL_ENV[PROVIDER]} to a current model id before running with PROVIDER={PROVIDER} (list your models first).")
 SCENARIOS = ATTACKS + ADVANCED
 rows = []
 total = len(SCENARIOS)
@@ -46,8 +51,7 @@ for i, a in enumerate(SCENARIOS, 1):
     print(f"  [{i:>2}/{total}] {a['id']:8} {verdict}", flush=True)
 
 if errors == total:
-    print("\nEvery call failed. If you see HTTP 429, your account likely has no credit:")
-    print("  platform.openai.com -> Settings -> Billing -> add a payment method, wait 2-3 min, then re-run.")
+    print(f"\nEvery call to {PROVIDER} failed. Check that {KEY_ENV[PROVIDER]} is valid, {MODEL_ENV[PROVIDER]} is a current model id, and the account has credit (HTTP 429 usually means no credit).")
     raise SystemExit(1)
 elif errors:
     print(f"\nNote: {errors} scenario(s) were refused at the API level (e.g. gpt-5.5's cyber policy) and skipped.")
