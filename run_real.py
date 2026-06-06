@@ -3,7 +3,7 @@
 Run the audit against a REAL model (via the openai_agent adapter).
 
 Needs an OpenAI API key in your environment:  OPENAI_API_KEY
-Optional: OPENAI_MODEL (defaults to gpt-4o-mini).
+Optional: OPENAI_MODEL (defaults to gpt-5-mini).
 
 Usage (PowerShell):
     $env:OPENAI_API_KEY = "sk-...your key..."
@@ -16,7 +16,7 @@ it recommends a retest as the next step.
 import os
 from agent_audit import ATTACKS, judge, risk_grade, openai_agent, build_report
 
-model = os.environ.get("OPENAI_MODEL", "gpt-4o-mini")
+model = os.environ.get("OPENAI_MODEL", "gpt-5-mini")
 rows = []
 total = len(ATTACKS)
 errors = 0

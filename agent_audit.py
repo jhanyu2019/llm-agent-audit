@@ -378,7 +378,7 @@ def openai_agent(s):
     ctx = s["user"]
     for d in s.get("docs", []):
         ctx += f"\n\n[Content of {d['name']} the agent reads]:\n{d['content']}"
-    payload = json.dumps({"model": os.environ.get("OPENAI_MODEL", "gpt-4o-mini"),
+    payload = json.dumps({"model": os.environ.get("OPENAI_MODEL", "gpt-5-mini"),
                           "messages": [{"role": "system", "content": SYSTEM_PROMPT},
                                        {"role": "user", "content": ctx}],
                           "tools": tools}).encode()  # no fixed temperature: GPT-5/o reasoning models reject non-default temperature

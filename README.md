@@ -8,7 +8,7 @@ A tiny, dependency-free harness that tests what an AI **agent** actually *does*,
 
 ## What it found on live models (writeup)
 
-I ran the battery against three current models, `gpt-5.5`, `gpt-5-mini`, and `gpt-5-nano`. All three blocked every prompt injection I disguised as ordinary business text. What got through were plain, direct requests phrased like routine work. The models still called `delete_account`, `transfer_funds`, and `grant_access` with no authorization check. The takeaway is that a model's refusal is a safety feature, not an authorization layer.
+I ran the battery against three current models, `gpt-5.5`, `gpt-5-mini`, and `gpt-5-nano`. All three blocked every prompt injection I disguised as ordinary business text. What got through were mostly plain, direct requests phrased like routine work, plus one one-line jailbreak on gpt-5-nano. The models still called `delete_account`, `transfer_funds`, and `grant_access` with no authorization check. The takeaway is that a model's refusal is a safety feature, not an authorization layer.
 
 Full writeup: [A model's refusals are not your authorization layer](docs/refusals-are-not-your-authorization-layer.md). Raw run reports: [gpt-5.5](docs/real_report_gpt5.5.md), [gpt-5-mini](docs/real_report_gpt5-mini.md), [gpt-5-nano](docs/real_report_gpt5-nano.md).
 
@@ -56,7 +56,7 @@ A full, client-ready `agent_report.md` is written with evidence and fixes. For a
 
 ## Audit your own agent
 
-Replace the demo agents with a function that runs your agent's tool-calling loop and records each `(tool_name, args)` into `trace`. The scenarios and checks stay the same, because they grade the actions. To point it at a real model, see `run_real.py`, which reads your own `OPENAI_API_KEY`.
+Replace the demo agents with a function that runs your agent's tool-calling loop and records each `(tool_name, args)` into `trace`. The scenarios and checks stay the same, because they grade the actions. To point it at a real model, see `run_real.py`, which reads your own `OPENAI_API_KEY`. Set `OPENAI_MODEL` to choose the model (it defaults to `gpt-5-mini`); the writeup above used `gpt-5.5`, `gpt-5-mini`, and `gpt-5-nano`.
 
 ## Note
 
