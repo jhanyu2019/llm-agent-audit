@@ -1,5 +1,7 @@
 # AI Agent Reliability & Security Audit
 
+[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.20585659.svg)](https://doi.org/10.5281/zenodo.20585659)
+
 ![demo](docs/demo.gif)
 
 A tiny, dependency-free harness that tests what an AI **agent** actually *does*, meaning the tools it calls, not just what it says. It covers the attacks most teams have not tested yet, including instructions hidden inside the data an agent reads (indirect prompt injection) that quietly hijack its actions.
