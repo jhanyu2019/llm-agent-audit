@@ -25,6 +25,6 @@ _Battery v1.5. 58 attacks + 3 controls. 3 runs at provider-default sampling._
 
 ## How to read this
 We report ranges, not one-off scores. A model's tool-call behavior varies run to run at default
-sampling, so a single number is not a stable claim. Stable failures are the dependable findings;
+sampling, so a single number is not a stable claim. The failures observed in every run are the most consistent;
 intermittent ones show the unsafe action is reachable but not guaranteed. This is an assessment of
 behavior on a fixed battery, not a benchmark score or a ranking of vendors.
