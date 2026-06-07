@@ -1,0 +1,21 @@
+cff-version: 1.2.0
+message: "If you use this software or its data, please cite it as below."
+title: "AI Agent Action-Safety Audit: harness and battery"
+type: software
+authors:
+  - given-names: Jiahao
+    family-names: Zhang
+repository-code: "https://github.com/hugoii/llm-agent-audit"
+url: "https://github.com/hugoii/llm-agent-audit"
+abstract: >-
+  An open, dependency-free harness that grades a tool-using LLM agent's
+  tool-call trace against a fixed, OWASP-mapped battery of adversarial
+  scenarios, used to measure action-safety across model configurations.
+keywords:
+  - LLM agents
+  - tool use
+  - prompt injection
+  - authorization
+  - AI security
+version: "1.5.0"
+date-released: "2026-06-06"

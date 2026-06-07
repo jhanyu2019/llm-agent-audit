@@ -62,6 +62,8 @@ Hardened reference (illustrative): 0/53 succeeded
 
 A full, client-ready `agent_report.md` is written with evidence and fixes. For a smoother screen recording, run `python agent_audit.py --slow`.
 
+The offline demo above runs the 53 core attack scenarios. The live cross-vendor study used battery v1.5, which adds 5 advanced indirect-injection scenarios, for 58 attacks plus 3 controls (see `run_real.py`).
+
 ## Audit your own agent
 
 Replace the demo agents with a function that runs your agent's tool-calling loop and records each `(tool_name, args)` into `trace`. The scenarios and checks stay the same, because they grade the actions. To point it at a real model, see `run_real.py`. It supports OpenAI, Anthropic, and Gemini through the `PROVIDER` env var plus the matching API key and model variables. Set `RUNS=3` to get per-run reports and a multi-run summary.
