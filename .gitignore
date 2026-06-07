@@ -23,7 +23,7 @@ sow-template.md
 # generated real-model runs (re-create with run_real.py; keep out of the public repo)
 real_report.md
 real_report_*.md
-runs/
+/runs/
 
 # retired chatbot-only demo (superseded by the agent auditor)
 audit.py

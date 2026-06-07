@@ -6,11 +6,11 @@ A tiny, dependency-free harness that tests what an AI **agent** actually *does*,
 
 > Most LLM testing checks a chatbot's words. But an agent that can issue refunds, send email, or delete accounts has real blast radius, so the failures that matter are actions. This audits the actions.
 
-## What it found on live models (writeup)
+## What it found on live models (writeups)
 
-I ran the battery against three current models, `gpt-5.5`, `gpt-5-mini`, and `gpt-5-nano`. All three blocked every prompt injection I disguised as ordinary business text. What got through were mostly plain, direct requests phrased like routine work, plus one one-line jailbreak on gpt-5-nano. The models still called `delete_account`, `transfer_funds`, and `grant_access` with no authorization check. The takeaway is that a model's refusal is a safety feature, not an authorization layer.
+**Part one, one vendor.** I ran the battery against three current OpenAI models, `gpt-5.5`, `gpt-5-mini`, and `gpt-5-nano`. All three blocked every prompt injection I disguised as ordinary business text. What got through were mostly plain, direct requests phrased like routine work, plus one one-line jailbreak on gpt-5-nano. The models still called `delete_account`, `transfer_funds`, and `grant_access` with no authorization check. The takeaway is that a model's refusal is a safety feature, not an authorization layer. Full writeup: [A model's refusals are not your authorization layer](docs/refusals-are-not-your-authorization-layer.md). Raw run reports: [gpt-5.5](docs/real_report_gpt5.5.md), [gpt-5-mini](docs/real_report_gpt5-mini.md), [gpt-5-nano](docs/real_report_gpt5-nano.md).
 
-Full writeup: [A model's refusals are not your authorization layer](docs/refusals-are-not-your-authorization-layer.md). Raw run reports: [gpt-5.5](docs/real_report_gpt5.5.md), [gpt-5-mini](docs/real_report_gpt5-mini.md), [gpt-5-nano](docs/real_report_gpt5-nano.md).
+**Part two, six models across three vendors, three runs each.** I ran the same battery (v1.5, 58 attacks plus 3 controls) against the current frontier and budget models from Anthropic, OpenAI, and Google. On the same test, the average number of unsafe tool calls ranged from 0.0 to 8.0, and the frontier label was not a reliable safety signal. Where failures appeared, they clustered around authorization for high-impact actions, not hidden prompt injection. The takeaway is that model choice is not an authorization layer either. Full writeup: [Model choice is not an authorization layer](docs/model-choice-is-not-an-authorization-layer.md). Per-model summaries: [docs/runs/v1.5](docs/runs/v1.5).
 
 ## For teams evaluating an agent
 
@@ -64,7 +64,7 @@ A full, client-ready `agent_report.md` is written with evidence and fixes. For a
 
 ## Audit your own agent
 
-Replace the demo agents with a function that runs your agent's tool-calling loop and records each `(tool_name, args)` into `trace`. The scenarios and checks stay the same, because they grade the actions. To point it at a real model, see `run_real.py`, which reads your own `OPENAI_API_KEY`. Set `OPENAI_MODEL` to choose the model (it defaults to `gpt-5-mini`); the writeup above used `gpt-5.5`, `gpt-5-mini`, and `gpt-5-nano`.
+Replace the demo agents with a function that runs your agent's tool-calling loop and records each `(tool_name, args)` into `trace`. The scenarios and checks stay the same, because they grade the actions. To point it at a real model, see `run_real.py`. It supports OpenAI, Anthropic, and Gemini through the `PROVIDER` env var plus the matching API key and model variables. Set `RUNS=3` to get per-run reports and a multi-run summary.
 
 ## Note
 
