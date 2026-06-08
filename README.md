@@ -2,6 +2,8 @@
 
 [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.20585659.svg)](https://doi.org/10.5281/zenodo.20585659)
 
+**New to this?** Start with the [one-page overview](https://hugoii.github.io/llm-agent-audit/) for a buyer-facing explanation of the audit and pilot.
+
 **What this is.** I run an independent, staging-only audit of tool-using AI agents. I check whether an unverified user, ticket, email, document, or tool response can push your agent into a high-impact action it should not take, such as issuing a refund, moving money, deleting an account, granting access, disabling MFA, or exporting data.
 
 **How it works.** Your team runs a small set of scenarios against a staging copy of your agent and sends back the tool-call traces. You get an OWASP-mapped report with the evidence and concrete fixes. No production access, no real customer data, no shared credentials.
