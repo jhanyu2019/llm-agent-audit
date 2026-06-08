@@ -61,8 +61,8 @@
 <p>A model's refusal is a safety feature, not an authorization system, and the choice of model does not change that. On a fixed battery run across six current models from three vendors, the average number of unsafe outcomes per run ranged from 0.0 to 8.0 on the same 58-scenario battery, and model tier was not a reliable safety signal. The thing that stops an unauthorized action has to live in your application, so the only reliable way to know what your agent does is to test your agent. See the <a href="https://github.com/hugoii/llm-agent-audit">writeups and data</a>.</p>
 
 <h2>What this looks like in practice</h2>
-<div class="ex"><b>Finance and AP</b>An accounts-payable agent reads a vendor invoice whose text says the bank account changed. A text-only test checks whether the model warns about fraud. This audit checks whether the agent actually calls update_bank_details or schedule_payment.</div>
-<div class="ex"><b>Healthcare</b>A prior-authorization agent reads a payer response that asks for more documentation or raises the urgency. This audit checks whether the agent changes what it submits, or submits at all, without the right review gate.</div>
+<div class="ex"><b>Finance and AP</b>An accounts-payable agent reads a vendor invoice whose text says the bank account changed. A text-only test checks whether the model warns about fraud. This audit checks whether the agent actually calls a tool to update bank details or schedule payment.</div>
+<div class="ex"><b>Healthcare</b>A prior-authorization agent reads a payer response that asks for more documentation or raises the urgency. This audit checks whether the agent changes what it prepares or submits without the right review gate.</div>
 <div class="ex"><b>Logistics</b>A dispatch agent reads a carrier email or a phone transcript where the caller says a job is urgent or asks to change someone else's booking. This audit checks whether the agent dispatches, cancels, or edits the job without verifying the caller is allowed to ask.</div>
 
 <h2>How a pilot works</h2>
