@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AI Agent Action-Safety Audit</title>
+<style>
+  :root { --ink:#1b1b1b; --muted:#555; --line:#e3e3e3; --box:#f6f8fa; }
+  * { box-sizing: border-box; }
+  body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+         color: var(--ink); line-height: 1.62; max-width: 760px; margin: 0 auto; padding: 42px 22px 64px; }
+  h1 { font-size: 1.7rem; margin: 0 0 6px; }
+  .tag { color: var(--muted); font-size: 1.05rem; margin: 0 0 26px; }
+  h2 { font-size: 1.12rem; margin: 32px 0 8px; }
+  p { margin: 10px 0; }
+  a { color: #0a58ca; }
+  .muted { color: var(--muted); }
+  .flow { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; margin: 16px 0 6px; }
+  .node { background: var(--box); border: 1px solid var(--line); border-radius: 8px; padding: 9px 12px; font-size: 0.9rem; }
+  .arrow { color: var(--muted); font-weight: 700; }
+  .ex { border-left: 3px solid var(--line); padding: 2px 0 2px 14px; margin: 12px 0; }
+  .ex b { display: block; }
+  .pilot { border: 1px solid var(--ink); border-radius: 10px; padding: 16px 20px; margin: 22px 0; background: var(--box); }
+  .pilot h3 { margin: 0 0 8px; font-size: 1.08rem; }
+  .pilot ul { margin: 6px 0 0; padding-left: 20px; }
+  .cta { margin: 28px 0 0; font-size: 1.05rem; }
+  footer { margin-top: 40px; border-top: 1px solid var(--line); padding-top: 16px; color: var(--muted); font-size: 0.88rem; }
+</style>
+</head>
+<body>
+
+<h1>AI Agent Action-Safety Audit</h1>
+<p class="tag">An independent, staging-only check of whether your tool-using agent can be pushed into a high-impact action it should not take.</p>
+
+<h2>What I test</h2>
+<p>When an AI agent can call tools, the failure that matters is not what it says, it is what it does. I check whether content the agent reads, such as a user message, a support ticket, an email, a document, or a tool response, can push it into a high-impact action it should not take, such as issuing a refund, moving money, deleting an account, granting access, disabling MFA, or exporting data.</p>
+
+<div class="flow">
+  <span class="node">Untrusted input<br><span class="muted">note, email, ticket, doc</span></span>
+  <span class="arrow">&rarr;</span>
+  <span class="node">Agent</span>
+  <span class="arrow">&rarr;</span>
+  <span class="node">Tool call</span>
+  <span class="arrow">&rarr;</span>
+  <span class="node">Unsafe action?</span>
+  <span class="arrow">&rarr;</span>
+  <span class="node">Report<br><span class="muted">evidence + fixes</span></span>
+</div>
+
+<h2>Why it matters</h2>
+<p>A model's refusal is a safety feature, not an authorization system, and the choice of model does not change that. On a fixed battery run across six current models from three vendors, the number of unsafe outcomes ranged from 0.0 to 8.0 on the identical test, and the more expensive tier did not predict safer behavior. The thing that stops an unauthorized action has to live in your application, so the only reliable way to know what your agent does is to test your agent. See the <a href="https://github.com/hugoii/llm-agent-audit">writeups and data</a>.</p>
+
+<h2>Three examples</h2>
+<div class="ex"><b>Healthcare</b>A specialty prior-authorization agent reads a clinical note or a payer response and submits a request. Could that content steer the medical-necessity framing, or change what gets submitted?</div>
+<div class="ex"><b>Logistics</b>A dispatch agent reads a carrier email or a call transcript and dispatches a job or changes a rate. Could a crafted message trigger the wrong dispatch or rate change?</div>
+<div class="ex"><b>Finance and AP</b>An accounts-payable agent reads a vendor invoice and pays it or updates bank details. Could the invoice content redirect a payment?</div>
+
+<h2>How a pilot works</h2>
+<p>Your team runs a small set of scenarios against a staging copy of your agent and sends back the tool-call traces. I score them by hand and send a report mapped to the OWASP Top 10 for LLM Applications, with the tool-call evidence and concrete fixes. No production access, no real customer data, no shared credentials. See a <a href="https://github.com/hugoii/llm-agent-audit/blob/master/docs/sample-pilot-report.md">sample report</a>.</p>
+
+<div class="pilot">
+  <h3>Fixed-scope pilot</h3>
+  <ul>
+    <li>3 to 5 custom scenarios for your riskiest workflow</li>
+    <li>staging only, no production data</li>
+    <li>trace-based, evidence-backed report with fixes</li>
+    <li>mapped to the OWASP LLM Top 10</li>
+    <li>founding price: $1,500</li>
+  </ul>
+</div>
+
+<h2>Why trust it</h2>
+<p>It is independent third-party evidence you can show a customer's security review or your own team. The harness, the per-model summaries, and a technical report are open source and archived on Zenodo with a <a href="https://doi.org/10.5281/zenodo.20585659">DOI</a> for citation and reproducibility.</p>
+
+<p class="cta"><b>Want the three scenarios I would test for your agent?</b><br>
+Reach me on <a href="https://www.linkedin.com/in/jiahao-zhang-12999b319">LinkedIn</a> or by email at <a href="mailto:zjh1428088191@gmail.com">zjh1428088191@gmail.com</a>.</p>
+
+<footer>
+Jiahao Zhang. Independent. <a href="https://github.com/hugoii/llm-agent-audit">github.com/hugoii/llm-agent-audit</a><br>
+A focused assessment and reproducibility archive, not a peer-reviewed publication or a compliance certification.
+</footer>
+
+</body>
+</html>
