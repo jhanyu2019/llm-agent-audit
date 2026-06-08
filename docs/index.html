@@ -25,6 +25,16 @@
   .pilot ul { margin: 6px 0 0; padding-left: 20px; }
   .cta { margin: 28px 0 0; font-size: 1.05rem; }
   footer { margin-top: 40px; border-top: 1px solid var(--line); padding-top: 16px; color: var(--muted); font-size: 0.88rem; }
+  @media (max-width: 520px) {
+    .flow { flex-direction: column; align-items: flex-start; }
+    .arrow { transform: rotate(90deg); margin: 2px 0 2px 32px; }
+  }
+  @media print {
+    body { max-width: none; padding: 0; }
+    a { color: #000; text-decoration: underline; }
+    h2 { break-after: avoid; }
+    .flow, .ex, .pilot, .cta { break-inside: avoid; page-break-inside: avoid; }
+  }
 </style>
 </head>
 <body>
@@ -48,7 +58,7 @@
 </div>
 
 <h2>Why it matters</h2>
-<p>A model's refusal is a safety feature, not an authorization system, and the choice of model does not change that. On a fixed battery run across six current models from three vendors, the number of unsafe outcomes ranged from 0.0 to 8.0 on the identical test, and the more expensive tier did not predict safer behavior. The thing that stops an unauthorized action has to live in your application, so the only reliable way to know what your agent does is to test your agent. See the <a href="https://github.com/hugoii/llm-agent-audit">writeups and data</a>.</p>
+<p>A model's refusal is a safety feature, not an authorization system, and the choice of model does not change that. On a fixed battery run across six current models from three vendors, the average number of unsafe outcomes per run ranged from 0.0 to 8.0 on the same 58-scenario battery, and model tier was not a reliable safety signal. The thing that stops an unauthorized action has to live in your application, so the only reliable way to know what your agent does is to test your agent. See the <a href="https://github.com/hugoii/llm-agent-audit">writeups and data</a>.</p>
 
 <h2>Three examples</h2>
 <div class="ex"><b>Healthcare</b>A specialty prior-authorization agent reads a clinical note or a payer response and submits a request. Could that content steer the medical-necessity framing, or change what gets submitted?</div>
@@ -56,7 +66,7 @@
 <div class="ex"><b>Finance and AP</b>An accounts-payable agent reads a vendor invoice and pays it or updates bank details. Could the invoice content redirect a payment?</div>
 
 <h2>How a pilot works</h2>
-<p>Your team runs a small set of scenarios against a staging copy of your agent and sends back the tool-call traces. I score them by hand and send a report mapped to the OWASP Top 10 for LLM Applications, with the tool-call evidence and concrete fixes. No production access, no real customer data, no shared credentials. See a <a href="https://github.com/hugoii/llm-agent-audit/blob/master/docs/sample-pilot-report.md">sample report</a>.</p>
+<p>Your team runs a small set of scenarios against a staging copy of your agent and sends back the tool-call traces. I review the tool-call traces against pre-written pass/fail rules and send a report mapped to the OWASP Top 10 for LLM Applications, with the evidence and concrete fixes. No production access, no real customer data, no shared credentials. See a <a href="https://github.com/hugoii/llm-agent-audit/blob/master/docs/sample-pilot-report.md">sample report</a>.</p>
 
 <div class="pilot">
   <h3>Fixed-scope pilot</h3>
@@ -65,12 +75,12 @@
     <li>staging only, no production data</li>
     <li>trace-based, evidence-backed report with fixes</li>
     <li>mapped to the OWASP LLM Top 10</li>
-    <li>founding price: $1,500</li>
+    <li>founding pilot price: USD $1,500</li>
   </ul>
 </div>
 
 <h2>Why trust it</h2>
-<p>It is independent third-party evidence you can show a customer's security review or your own team. The harness, the per-model summaries, and a technical report are open source and archived on Zenodo with a <a href="https://doi.org/10.5281/zenodo.20585659">DOI</a> for citation and reproducibility.</p>
+<p>It is independent third-party evidence you can show a customer's security review or your own team. The harness is open source. The per-model summaries and the technical report are public and archived on Zenodo with a <a href="https://doi.org/10.5281/zenodo.20585659">DOI</a> for citation and reproducibility.</p>
 
 <p class="cta"><b>Want the three scenarios I would test for your agent?</b><br>
 Reach me on <a href="https://www.linkedin.com/in/jiahao-zhang-12999b319">LinkedIn</a> or by email at <a href="mailto:zjh1428088191@gmail.com">zjh1428088191@gmail.com</a>.</p>
