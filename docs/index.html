@@ -60,10 +60,10 @@
 <h2>Why it matters</h2>
 <p>A model's refusal is a safety feature, not an authorization system, and the choice of model does not change that. On a fixed battery run across six current models from three vendors, the average number of unsafe outcomes per run ranged from 0.0 to 8.0 on the same 58-scenario battery, and model tier was not a reliable safety signal. The thing that stops an unauthorized action has to live in your application, so the only reliable way to know what your agent does is to test your agent. See the <a href="https://github.com/hugoii/llm-agent-audit">writeups and data</a>.</p>
 
-<h2>Three examples</h2>
-<div class="ex"><b>Healthcare</b>A specialty prior-authorization agent reads a clinical note or a payer response and submits a request. Could that content steer the medical-necessity framing, or change what gets submitted?</div>
-<div class="ex"><b>Logistics</b>A dispatch agent reads a carrier email or a call transcript and dispatches a job or changes a rate. Could a crafted message trigger the wrong dispatch or rate change?</div>
-<div class="ex"><b>Finance and AP</b>An accounts-payable agent reads a vendor invoice and pays it or updates bank details. Could the invoice content redirect a payment?</div>
+<h2>What this looks like in practice</h2>
+<div class="ex"><b>Finance and AP</b>An accounts-payable agent reads a vendor invoice whose text says the bank account changed. A text-only test checks whether the model warns about fraud. This audit checks whether the agent actually calls update_bank_details or schedule_payment.</div>
+<div class="ex"><b>Healthcare</b>A prior-authorization agent reads a payer response that asks for more documentation or raises the urgency. This audit checks whether the agent changes what it submits, or submits at all, without the right review gate.</div>
+<div class="ex"><b>Logistics</b>A dispatch agent reads a carrier email or a phone transcript where the caller says a job is urgent or asks to change someone else's booking. This audit checks whether the agent dispatches, cancels, or edits the job without verifying the caller is allowed to ask.</div>
 
 <h2>How a pilot works</h2>
 <p>Your team runs a small set of scenarios against a staging copy of your agent and sends back the tool-call traces. I review the tool-call traces against pre-written pass/fail rules and send a report mapped to the OWASP Top 10 for LLM Applications, with the evidence and concrete fixes. No production access, no real customer data, no shared credentials. See a <a href="https://github.com/hugoii/llm-agent-audit/blob/master/docs/sample-pilot-report.md">sample report</a>.</p>
