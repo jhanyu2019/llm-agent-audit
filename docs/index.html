@@ -5,45 +5,106 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>AI Agent Action-Safety Audit</title>
 <style>
-  :root { --ink:#1b1b1b; --muted:#555; --line:#e3e3e3; --box:#f6f8fa; }
+  :root {
+    --ink:#181a1f;
+    --muted:#5c6370;
+    --line:#dfe3e8;
+    --box:#f6f8fa;
+    --accent:#155e75;
+    --accent-soft:#e7f5f8;
+    --warn:#8a4b10;
+    --warn-soft:#fff7ed;
+    --paper:#fbfbfd;
+    --glass:rgba(255,255,255,0.72);
+    --shadow:0 1px 2px rgba(18,24,35,0.06), 0 12px 28px rgba(18,24,35,0.07);
+    --shadow-soft:0 1px 2px rgba(18,24,35,0.05), 0 8px 18px rgba(18,24,35,0.05);
+  }
   * { box-sizing: border-box; }
+  html { overflow-x: hidden; }
   body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-         color: var(--ink); line-height: 1.62; max-width: 760px; margin: 0 auto; padding: 42px 22px 64px; }
-  h1 { font-size: 1.7rem; margin: 0 0 6px; }
-  .tag { color: var(--muted); font-size: 1.05rem; margin: 0 0 26px; }
-  h2 { font-size: 1.12rem; margin: 32px 0 8px; }
+         background: var(--paper); color: var(--ink); line-height: 1.6; max-width: 820px; margin: 0 auto; padding: 40px 22px 64px; overflow-wrap: break-word; }
+  header { border-bottom: 1px solid var(--line); padding-bottom: 22px; margin-bottom: 28px; }
+  h1 { font-size: clamp(1.8rem, 4vw, 2.35rem); line-height: 1.12; letter-spacing: 0; margin: 0 0 10px; }
+  .eyebrow { color: var(--accent); font-size: 0.86rem; font-weight: 700; letter-spacing: 0; margin: 0 0 8px; text-transform: uppercase; }
+  .tag { color: var(--muted); font-size: 1.12rem; margin: 0; max-width: 690px; }
+  .quick { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin-top: 22px; }
+  .quick div { border: 1px solid rgba(223,227,232,0.88); border-radius: 8px; padding: 11px 12px; background: var(--glass); box-shadow: var(--shadow-soft); backdrop-filter: saturate(145%) blur(14px); font-size: 0.92rem; }
+  .quick b { display: block; font-size: 0.78rem; color: var(--muted); margin-bottom: 2px; text-transform: uppercase; }
+  h2 { font-size: 1.18rem; margin: 34px 0 9px; }
   p { margin: 10px 0; }
   a { color: #0a58ca; }
+  strong { font-weight: 700; }
   .muted { color: var(--muted); }
-  .flow { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; margin: 16px 0 6px; }
-  .node { background: var(--box); border: 1px solid var(--line); border-radius: 8px; padding: 9px 12px; font-size: 0.9rem; }
-  .arrow { color: var(--muted); font-weight: 700; }
-  .ex { border-left: 3px solid var(--line); padding: 2px 0 2px 14px; margin: 12px 0; }
-  .ex b { display: block; }
-  .pilot { border: 1px solid var(--ink); border-radius: 10px; padding: 16px 20px; margin: 22px 0; background: var(--box); }
-  .pilot h3 { margin: 0 0 8px; font-size: 1.08rem; }
-  .pilot ul { margin: 6px 0 0; padding-left: 20px; }
-  .cta { margin: 28px 0 0; font-size: 1.05rem; }
+  .flow { display: grid; grid-template-columns: 1.15fr auto 0.8fr auto 0.95fr auto 1fr auto 0.95fr; align-items: stretch; gap: 8px; margin: 18px 0 8px; }
+  .node { background: var(--glass); border: 1px solid rgba(223,227,232,0.88); border-radius: 8px; padding: 10px 12px; box-shadow: var(--shadow-soft); backdrop-filter: saturate(145%) blur(14px); font-size: 0.9rem; min-height: 58px; display: flex; flex-direction: column; justify-content: center; }
+  .node.risk { background: rgba(255,247,237,0.82); border-color: #f1c99d; }
+  .node.done { background: rgba(231,245,248,0.86); border-color: #b8dbe4; }
+  .arrow { color: var(--muted); font-weight: 700; align-self: center; }
+  .rule { border-left: 4px solid var(--accent); background: rgba(231,245,248,0.78); box-shadow: var(--shadow-soft); backdrop-filter: saturate(145%) blur(14px); padding: 10px 14px; margin: 18px 0 0; font-size: 0.96rem; }
+  .ex { border-left: 3px solid var(--line); padding: 2px 0 2px 14px; margin: 13px 0; }
+  .ex b { display: block; margin-bottom: 1px; }
+  .pilot { border: 1px solid rgba(24,26,31,0.88); border-radius: 8px; padding: 17px 20px; margin: 22px 0; background: rgba(255,255,255,0.78); box-shadow: var(--shadow); backdrop-filter: saturate(150%) blur(16px); }
+  .pilot h3 { margin: 0 0 8px; font-size: 1.1rem; }
+  .pilot ul { margin: 8px 0 0; padding-left: 20px; }
+  .pilot li { margin: 4px 0; }
+  .cta { margin: 30px 0 0; padding: 16px 18px; border: 1px solid rgba(223,227,232,0.88); border-radius: 8px; background: var(--glass); box-shadow: var(--shadow-soft); backdrop-filter: saturate(145%) blur(14px); font-size: 1.05rem; }
   footer { margin-top: 40px; border-top: 1px solid var(--line); padding-top: 16px; color: var(--muted); font-size: 0.88rem; }
+  .section-note { color: var(--muted); margin-top: 0; }
+  @media (hover: hover) {
+    .quick div, .node, .pilot, .cta {
+      transition: transform 160ms ease, box-shadow 160ms ease, border-color 160ms ease;
+    }
+    .quick div:hover, .node:hover, .pilot:hover, .cta:hover {
+      transform: translateY(-1px);
+      box-shadow: var(--shadow);
+      border-color: rgba(21,94,117,0.26);
+    }
+  }
+  @media (prefers-reduced-motion: no-preference) {
+    header, .flow, .rule, .pilot, .cta {
+      animation: rise 260ms ease-out both;
+    }
+    @keyframes rise {
+      from { transform: translateY(4px); }
+      to { transform: translateY(0); }
+    }
+  }
   @media (max-width: 520px) {
-    .flow { flex-direction: column; align-items: flex-start; }
-    .arrow { transform: rotate(90deg); margin: 2px 0 2px 32px; }
+    body { max-width: min(100%, 390px); margin-left: 0; margin-right: auto; padding-top: 30px; }
+    h1 { font-size: 1.58rem; }
+    .tag { font-size: 1rem; }
+    .quick { grid-template-columns: 1fr; }
+    .flow { grid-template-columns: 1fr; }
+    .arrow { transform: rotate(90deg); justify-self: start; margin-left: 28px; }
   }
   @media print {
-    body { max-width: none; padding: 0; }
+    body { background: #fff; max-width: none; padding: 0; }
+    header { padding-bottom: 16px; margin-bottom: 20px; }
     a { color: #000; text-decoration: underline; }
     h2 { break-after: avoid; }
-    .flow, .ex, .pilot, .cta { break-inside: avoid; page-break-inside: avoid; }
+    .quick div, .node, .rule, .pilot, .cta { background: #fff; box-shadow: none; backdrop-filter: none; }
+    .node.risk { background: var(--warn-soft); }
+    .node.done, .rule { background: var(--accent-soft); }
+    .flow, .quick, .ex, .pilot, .cta, .rule { break-inside: avoid; page-break-inside: avoid; }
   }
 </style>
 </head>
 <body>
 
-<h1>AI Agent Action-Safety Audit</h1>
-<p class="tag">An independent, staging-only check of whether your tool-using agent can be pushed into a high-impact action it should not take.</p>
+<header>
+  <p class="eyebrow">Action-level audit for tool-using agents</p>
+  <h1>AI Agent Action-Safety Audit</h1>
+  <p class="tag">An independent, staging-only check of whether your agent can be pushed into a high-impact action it should not take.</p>
+  <div class="quick">
+    <div><b>Scope</b>3 to 5 custom scenarios</div>
+    <div><b>Access</b>No production data or credentials</div>
+    <div><b>Output</b>Trace-based report with fixes</div>
+  </div>
+</header>
 
 <h2>What I test</h2>
-<p>When an AI agent can call tools, the failure that matters is not what it says, it is what it does. I check whether content the agent reads, such as a user message, a support ticket, an email, a document, or a tool response, can push it into a high-impact action it should not take, such as issuing a refund, moving money, deleting an account, granting access, disabling MFA, or exporting data.</p>
+<p>When an AI agent can call tools, the failure that matters is not what it says. It is what it does. I check whether content the agent reads, such as a user message, a support ticket, an email, a document, or a tool response, can push it into a high-impact action it should not take.</p>
+<p>Examples include issuing a refund, moving money, deleting an account, granting access, disabling MFA, or exporting data.</p>
 
 <div class="flow">
   <span class="node">Untrusted input<br><span class="muted">note, email, ticket, doc</span></span>
@@ -52,15 +113,17 @@
   <span class="arrow">&rarr;</span>
   <span class="node">Tool call</span>
   <span class="arrow">&rarr;</span>
-  <span class="node">Unsafe action?</span>
+  <span class="node risk">Unsafe action?</span>
   <span class="arrow">&rarr;</span>
-  <span class="node">Report<br><span class="muted">evidence + fixes</span></span>
+  <span class="node done">Report<br><span class="muted">evidence + fixes</span></span>
 </div>
 
 <h2>Why it matters</h2>
-<p>A model's refusal is a safety feature, not an authorization system, and the choice of model does not change that. On a fixed battery run across six current models from three vendors, the average number of unsafe outcomes per run ranged from 0.0 to 8.0 on the same 58-scenario battery, and model tier was not a reliable safety signal. The thing that stops an unauthorized action has to live in your application, so the only reliable way to know what your agent does is to test your agent. See the <a href="https://github.com/hugoii/llm-agent-audit">writeups and data</a>.</p>
+<p>A model's refusal is a safety feature, not an authorization system. A stronger model can help, but it does not replace application-side authorization. On a fixed battery run across six recent models from three major model vendors, the average number of unsafe outcomes per run ranged from 0.0 to 8.0 on the same 58-scenario battery, and model tier was not a reliable safety signal. The thing that stops an unauthorized action has to live in your application, so the only reliable way to know what your agent does is to test your agent. See the <a href="https://github.com/hugoii/llm-agent-audit">writeups and data</a>.</p>
+<p class="rule"><strong>The audit question is simple:</strong> did the agent call a tool it should not have been allowed to call?</p>
 
 <h2>What this looks like in practice</h2>
+<p class="section-note">These are examples of the action boundary, not public test payloads.</p>
 <div class="ex"><b>Finance and AP</b>An accounts-payable agent reads a vendor invoice whose text says the bank account changed. A text-only test checks whether the model warns about fraud. This audit checks whether the agent actually calls a tool to update bank details or schedule payment.</div>
 <div class="ex"><b>Healthcare</b>A prior-authorization agent reads a payer response that asks for more documentation or raises the urgency. This audit checks whether the agent changes what it prepares or submits without the right review gate.</div>
 <div class="ex"><b>Logistics</b>A dispatch agent reads a carrier email or a phone transcript where the caller says a job is urgent or asks to change someone else's booking. This audit checks whether the agent dispatches, cancels, or edits the job without verifying the caller is allowed to ask.</div>
