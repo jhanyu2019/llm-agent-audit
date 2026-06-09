@@ -33,10 +33,12 @@
   h2 { font-size: 1.18rem; margin: 34px 0 9px; }
   p { margin: 10px 0; }
   a { color: #0a58ca; }
+  a:hover { color: #084298; }
+  a:focus-visible { outline: 2px solid rgba(21,94,117,0.36); outline-offset: 3px; border-radius: 3px; }
   strong { font-weight: 700; }
   .muted { color: var(--muted); }
   .flow { display: grid; grid-template-columns: 1.15fr auto 0.8fr auto 0.95fr auto 1fr auto 0.95fr; align-items: stretch; gap: 8px; margin: 18px 0 8px; }
-  .node { background: var(--glass); border: 1px solid rgba(223,227,232,0.88); border-radius: 8px; padding: 10px 12px; box-shadow: var(--shadow-soft); backdrop-filter: saturate(145%) blur(14px); font-size: 0.9rem; min-height: 58px; display: flex; flex-direction: column; justify-content: center; }
+  .node { position: relative; background: var(--glass); border: 1px solid rgba(223,227,232,0.88); border-radius: 8px; padding: 10px 12px; box-shadow: var(--shadow-soft); backdrop-filter: saturate(145%) blur(14px); font-size: 0.9rem; min-height: 58px; display: flex; flex-direction: column; justify-content: center; }
   .node.risk { background: rgba(255,247,237,0.82); border-color: #f1c99d; }
   .node.done { background: rgba(231,245,248,0.86); border-color: #b8dbe4; }
   .arrow { color: var(--muted); font-weight: 700; align-self: center; }
@@ -51,22 +53,63 @@
   footer { margin-top: 40px; border-top: 1px solid var(--line); padding-top: 16px; color: var(--muted); font-size: 0.88rem; }
   .section-note { color: var(--muted); margin-top: 0; }
   @media (hover: hover) {
-    .quick div, .node, .pilot, .cta {
-      transition: transform 160ms ease, box-shadow 160ms ease, border-color 160ms ease;
+    .quick div, .node, .pilot, .cta, .ex {
+      transition: transform 160ms ease, box-shadow 160ms ease, border-color 160ms ease, background-color 160ms ease;
     }
     .quick div:hover, .node:hover, .pilot:hover, .cta:hover {
       transform: translateY(-1px);
       box-shadow: var(--shadow);
       border-color: rgba(21,94,117,0.26);
     }
+    .ex:hover {
+      border-color: rgba(21,94,117,0.42);
+      background: rgba(255,255,255,0.5);
+    }
   }
   @media (prefers-reduced-motion: no-preference) {
     header, .flow, .rule, .pilot, .cta {
       animation: rise 260ms ease-out both;
     }
+    .quick div, .flow .node, .ex, .pilot li {
+      animation: step-in 360ms cubic-bezier(.2,.8,.2,1) both;
+      animation-delay: calc(var(--i, 0) * 70ms);
+    }
+    .quick div:nth-child(1) { --i: 1; }
+    .quick div:nth-child(2) { --i: 2; }
+    .quick div:nth-child(3) { --i: 3; }
+    .flow .node:nth-child(1) { --i: 1; }
+    .flow .node:nth-child(3) { --i: 3; }
+    .flow .node:nth-child(5) { --i: 5; }
+    .flow .node:nth-child(7) { --i: 7; }
+    .flow .node:nth-child(9) { --i: 9; }
+    .ex { --i: 1; }
+    .ex + .ex { --i: 2; }
+    .ex + .ex + .ex { --i: 3; }
+    .pilot li:nth-child(1) { --i: 1; }
+    .pilot li:nth-child(2) { --i: 2; }
+    .pilot li:nth-child(3) { --i: 3; }
+    .pilot li:nth-child(4) { --i: 4; }
+    .pilot li:nth-child(5) { --i: 5; }
+    .node.risk::after {
+      content: "";
+      position: absolute;
+      inset: -2px;
+      border-radius: inherit;
+      pointer-events: none;
+      border: 1px solid rgba(138,75,16,0.15);
+      animation: risk-pulse 3.8s ease-in-out 900ms infinite;
+    }
     @keyframes rise {
       from { transform: translateY(4px); }
       to { transform: translateY(0); }
+    }
+    @keyframes step-in {
+      from { transform: translateY(7px) scale(0.995); }
+      to { transform: translateY(0) scale(1); }
+    }
+    @keyframes risk-pulse {
+      0%, 100% { opacity: 0.2; box-shadow: 0 0 0 0 rgba(241,201,157,0); }
+      45% { opacity: 1; box-shadow: 0 0 0 5px rgba(241,201,157,0.24); }
     }
   }
   @media (max-width: 520px) {
@@ -79,6 +122,7 @@
   }
   @media print {
     body { background: #fff; max-width: none; padding: 0; }
+    * { animation: none !important; transition: none !important; }
     header { padding-bottom: 16px; margin-bottom: 20px; }
     a { color: #000; text-decoration: underline; }
     h2 { break-after: avoid; }
