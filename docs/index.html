@@ -30,6 +30,9 @@
   .quick { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin-top: 22px; }
   .quick div { border: 1px solid rgba(223,227,232,0.88); border-radius: 8px; padding: 11px 12px; background: var(--glass); box-shadow: var(--shadow-soft); backdrop-filter: saturate(145%) blur(14px); font-size: 0.92rem; }
   .quick b { display: block; font-size: 0.78rem; color: var(--muted); margin-bottom: 2px; text-transform: uppercase; }
+  .hero-cta { margin: 18px 0 0; font-size: 1rem; }
+  .trust { color: var(--muted); font-size: 0.9rem; margin: 12px 0 0; }
+  .trust a { color: var(--accent); }
   h2 { font-size: 1.18rem; margin: 34px 0 9px; }
   p { margin: 10px 0; }
   a { color: #0a58ca; }
@@ -70,13 +73,15 @@
     header, .flow, .rule, .pilot, .cta {
       animation: rise 260ms ease-out both;
     }
-    .quick div, .flow .node, .ex, .pilot li {
+    .quick div, .hero-cta, .trust, .flow .node, .ex, .pilot li {
       animation: step-in 360ms cubic-bezier(.2,.8,.2,1) both;
       animation-delay: calc(var(--i, 0) * 70ms);
     }
     .quick div:nth-child(1) { --i: 1; }
     .quick div:nth-child(2) { --i: 2; }
     .quick div:nth-child(3) { --i: 3; }
+    .hero-cta { --i: 4; }
+    .trust { --i: 5; }
     .flow .node:nth-child(1) { --i: 1; }
     .flow .node:nth-child(3) { --i: 3; }
     .flow .node:nth-child(5) { --i: 5; }
@@ -136,14 +141,16 @@
 <body>
 
 <header>
-  <p class="eyebrow">Action-level audit for tool-using agents</p>
-  <h1>AI Agent Action-Safety Audit</h1>
-  <p class="tag">An independent, staging-only check of whether your agent can be pushed into a high-impact action it should not take.</p>
+  <p class="eyebrow">For teams shipping vertical AI agents</p>
+  <h1>Action-boundary audits for tool-using AI agents</h1>
+  <p class="tag">I test whether untrusted tickets, emails, docs, calls, or tool responses can push your agent into refunds, payments, access changes, account deletion, data export, or dispatch actions it should not take.</p>
   <div class="quick">
-    <div><b>Scope</b>3 to 5 custom scenarios</div>
-    <div><b>Access</b>No production data or credentials</div>
-    <div><b>Output</b>Trace-based report with fixes</div>
+    <div><b>For</b>Customer-facing or ops agents with real tools</div>
+    <div><b>Pilot</b>3 to 5 custom scenarios, staging only</div>
+    <div><b>Output</b>OWASP-mapped report with trace evidence and fixes</div>
   </div>
+  <p class="hero-cta"><b>Want the three scenarios I would test for your agent?</b> Reach me on <a href="https://www.linkedin.com/in/jiahao-zhang-12999b319">LinkedIn</a> or <a href="mailto:zjh1428088191@gmail.com">email me</a>.</p>
+  <p class="trust">Independent audit by Jiahao Zhang, JZ Software Consulting · <a href="https://github.com/hugoii/llm-agent-audit">Open-source harness</a> · <a href="https://doi.org/10.5281/zenodo.20585659">Zenodo DOI</a> · <a href="https://github.com/hugoii/llm-agent-audit/blob/master/docs/sample-pilot-report.md">Sample report</a> · No production access</p>
 </header>
 
 <h2>What I test</h2>
@@ -193,7 +200,7 @@
 Reach me on <a href="https://www.linkedin.com/in/jiahao-zhang-12999b319">LinkedIn</a> or by email at <a href="mailto:zjh1428088191@gmail.com">zjh1428088191@gmail.com</a>.</p>
 
 <footer>
-Jiahao Zhang. Independent. <a href="https://github.com/hugoii/llm-agent-audit">github.com/hugoii/llm-agent-audit</a><br>
+Jiahao Zhang · JZ Software Consulting · Independent. <a href="https://github.com/hugoii/llm-agent-audit">github.com/hugoii/llm-agent-audit</a><br>
 A focused assessment and reproducibility archive, not a peer-reviewed publication or a compliance certification.
 </footer>
 

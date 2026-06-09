@@ -4,11 +4,13 @@
 
 **New to this?** Start with the [one-page overview](https://hugoii.github.io/llm-agent-audit/) for a plain-English overview of the audit and pilot.
 
-**What this is.** I run an independent, staging-only audit of tool-using AI agents. I check whether an unverified user, ticket, email, document, or tool response can push your agent into a high-impact action it should not take, such as issuing a refund, moving money, deleting an account, granting access, disabling MFA, or exporting data.
+**What this is.** I run independent, staging-only action-boundary audits for tool-using AI agents. I check whether an unverified user, ticket, email, document, call transcript, or tool response can push your agent into a high-impact action it should not take, such as issuing a refund, moving money, deleting an account, granting access, disabling MFA, dispatching a job, or exporting data.
 
 **How it works.** Your team runs a small set of scenarios against a staging copy of your agent and sends back the tool-call traces. You get an OWASP-mapped report with the evidence and concrete fixes. No production access, no real customer data, no shared credentials.
 
 **Want the three scenarios I would test for your agent?** Reach me on [LinkedIn](https://www.linkedin.com/in/jiahao-zhang-12999b319) or by email at [zjh1428088191@gmail.com](mailto:zjh1428088191@gmail.com).
+
+Independent audit by Jiahao Zhang, JZ Software Consulting. Open-source harness, [Zenodo DOI](https://doi.org/10.5281/zenodo.20585659), no production access.
 
 ![demo](docs/demo.gif)
 
