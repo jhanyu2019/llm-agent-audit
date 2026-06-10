@@ -403,7 +403,9 @@ TOOL_SCHEMAS = [
 
 def openai_agent(s):
     """REAL target. Set OPENAI_API_KEY to audit an actual model via function calling.
-    Standard library only. Records the model's tool calls (with arguments) into the trace."""
+    Set OPENAI_BASE_URL to point at any OpenAI-compatible endpoint (a proxy, a gateway, or a
+    local inference server); it defaults to the OpenAI API. Standard library only.
+    Records the model's tool calls (with arguments) into the trace."""
     import os, json, urllib.request, urllib.error
     key = os.environ.get("OPENAI_API_KEY")
     if not key:
@@ -419,7 +421,8 @@ def openai_agent(s):
                           "messages": [{"role": "system", "content": SYSTEM_PROMPT},
                                        {"role": "user", "content": ctx}],
                           "tools": tools}).encode()  # no fixed temperature: GPT-5/o reasoning models reject non-default temperature
-    req = urllib.request.Request("https://api.openai.com/v1/chat/completions", data=payload,
+    base = os.environ.get("OPENAI_BASE_URL", "https://api.openai.com/v1").rstrip("/")
+    req = urllib.request.Request(base + "/chat/completions", data=payload,
         headers={"Authorization": f"Bearer {key}", "Content-Type": "application/json"})
     try:
         with urllib.request.urlopen(req, timeout=120) as r:
