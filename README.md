@@ -8,7 +8,7 @@
 
 **How it works.** Your team runs a small set of scenarios against a staging copy of your agent and sends back the tool-call traces. You get an OWASP-mapped report with the evidence and concrete fixes. No production access, no real customer data, no shared credentials.
 
-**Want the three scenarios I would test for your agent?** Reach me on [LinkedIn](https://www.linkedin.com/in/jiahao-zhang-12999b319) or by email at [zjh1428088191@gmail.com](mailto:zjh1428088191@gmail.com).
+**Want the three scenarios I would test for your agent?** Reach me on [LinkedIn](https://www.linkedin.com/in/jiahao-zhang-12999b319) or by email at [jiahao@actionboundary.dev](mailto:jiahao@actionboundary.dev).
 
 Independent audit by Jiahao Zhang, JZ Software Consulting. Open-source harness, [Zenodo DOI](https://doi.org/10.5281/zenodo.20585659), no production access.
 
@@ -30,7 +30,7 @@ Want to see what a pilot produces?
 - [Sample pilot report](docs/sample-pilot-report.md)
 - [How the pilot works](pilot/how-the-pilot-works.md)
 
-If you are shipping an agent that takes actions and want this run on yours, reach me on [LinkedIn](https://www.linkedin.com/in/jiahao-zhang-12999b319) or by email at [zjh1428088191@gmail.com](mailto:zjh1428088191@gmail.com).
+If you are shipping an agent that takes actions and want this run on yours, reach me on [LinkedIn](https://www.linkedin.com/in/jiahao-zhang-12999b319) or by email at [jiahao@actionboundary.dev](mailto:jiahao@actionboundary.dev).
 
 *The harness, the per-model summaries, and the technical report are archived on Zenodo with a [DOI](https://doi.org/10.5281/zenodo.20585659) for citation and reproducibility.*
 
