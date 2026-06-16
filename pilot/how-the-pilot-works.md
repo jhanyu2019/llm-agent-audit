@@ -4,7 +4,7 @@ A fixed-scope, lightweight check of whether your tool-using agent can be talked 
 
 ## The steps
 
-1. We agree on 5 to 10 scenarios mapped to your riskiest workflows. I write them for your tools, not a generic checklist.
+1. We agree on 5 to 10 scenarios mapped to your riskiest workflows. I write them for your tools, not a generic checklist. Scenarios can cover a single high-impact action or a short workflow where an earlier approval might be reused or applied too broadly later in the workflow.
 2. You run them against a staging copy of your agent and send back the tool-call traces. There is a small adapter to make this easy, and we can do a quick one-scenario setup check first so the results are valid.
 3. I score the traces by hand and send you an OWASP-mapped report with the tool-call evidence and concrete fixes.
 4. Optional retest after you apply the fixes.

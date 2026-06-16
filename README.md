@@ -24,6 +24,10 @@ A tiny, dependency-free harness that tests what an AI **agent** actually *does*,
 
 **Part two, six models across three vendors, three runs each.** I ran the same battery (v1.5, 58 attacks plus 3 controls) against the current frontier and budget models from Anthropic, OpenAI, and Google. On the same test, the average number of unsafe tool calls ranged from 0.0 to 8.0, and the frontier label was not a reliable safety signal. Where failures appeared, they clustered around authorization for high-impact actions, not hidden prompt injection. The takeaway is that model choice is not an authorization layer either. Full writeup: [Model choice is not an authorization layer](docs/model-choice-is-not-an-authorization-layer.md). Per-model summaries: [docs/runs/v1.5](docs/runs/v1.5).
 
+## Scope
+
+The public research here is a *fixed* battery (v1.5: 58 attacks + 3 controls) run across models for reproducibility. That is the open benchmark, not the product. A client pilot is *customized to your real workflow*: scenarios are written for your agent's own tools, and can cover a single high-impact action or a short workflow where an earlier approval might be reused or applied too broadly later in the workflow.
+
 ## Work with me: a fixed-scope pilot
 
 Want to see what a pilot produces?

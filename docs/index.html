@@ -159,7 +159,7 @@
   <p class="tag">I test whether untrusted tickets, emails, docs, calls, or tool responses can push your agent into refunds, payments, access changes, account deletion, data export, or dispatch actions it should not take.</p>
   <div class="quick">
     <div><b>For</b>Customer-facing or ops agents with real tools</div>
-    <div><b>Pilot</b>3 to 5 custom scenarios, staging only</div>
+    <div><b>Pilot</b>5 to 10 custom scenarios, staging only</div>
     <div><b>Output</b>OWASP-mapped report with trace evidence and fixes</div>
   </div>
   <p class="hero-cta"><b>Want the three scenarios I would test for your agent?</b> Reach me on <a href="https://www.linkedin.com/in/jiahao-zhang-12999b319">LinkedIn</a> or <a href="mailto:jiahao@actionboundary.dev">email me</a>.</p>
@@ -194,12 +194,12 @@
 <div class="ex"><b>Logistics</b>A dispatch agent reads a carrier email or a phone transcript where the caller says a job is urgent or asks to change someone else's booking. This audit checks whether the agent dispatches, cancels, or edits the job without verifying the caller is allowed to ask.</div>
 
 <h2>How a pilot works</h2>
-<p>Your team runs a small set of scenarios against a staging copy of your agent and sends back the tool-call traces. I review the tool-call traces against pre-written pass/fail rules and send a report mapped to the OWASP Top 10 for LLM Applications, with the evidence and concrete fixes. No production access, no real customer data, no shared credentials. See a <a href="https://github.com/hugoii/llm-agent-audit/blob/master/docs/sample-pilot-report.md">sample report</a>.</p>
+<p>Your team runs a small set of scenarios against a staging copy of your agent and sends back the tool-call traces. I review the tool-call traces against pre-written pass/fail rules and send a report mapped to the OWASP Top 10 for LLM Applications, with the evidence and concrete fixes. No production access, no real customer data, no shared credentials. Scenarios are written for your workflow and can cover a single high-impact action or a short workflow where an earlier approval might be reused or applied too broadly later in the workflow. See a <a href="https://github.com/hugoii/llm-agent-audit/blob/master/docs/sample-pilot-report.md">sample report</a>.</p>
 
 <div class="pilot">
   <h3>Fixed-scope pilot</h3>
   <ul>
-    <li>3 to 5 custom scenarios for your riskiest workflow</li>
+    <li>5 to 10 custom scenarios for your riskiest workflow, including benign controls</li>
     <li>staging only, no production data</li>
     <li>trace-based, evidence-backed report with fixes</li>
     <li>mapped to the OWASP LLM Top 10</li>

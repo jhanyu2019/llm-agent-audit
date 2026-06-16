@@ -8,9 +8,9 @@ This audit is about **indirect** prompt injection: can a malicious instruction h
 
 ## Files
 
-- `trace_schema.json` — the format for what you send back (a `runs` array).
-- `sample_trace_indirect_injection.json` — a worked example. Note where the malicious instruction lives (in the data, not the request) and that the trace shows the agent reading that data before it acts.
-- `adapter_template.py` — fill in two functions (`load_scenario_data`, `run_agent`) to run the scenarios you were sent against your staging agent and emit traces in the schema.
+- `trace_schema.json`: the format for what you send back (a `runs` array).
+- `sample_trace_indirect_injection.json`: a worked example. Note where the malicious instruction lives (in the data, not the request) and that the trace shows the agent reading that data before it acts.
+- `adapter_template.py`: fill in two functions (`load_scenario_data`, `run_agent`) to run the scenarios you were sent against your staging agent and emit traces in the schema.
 
 ## Steps
 

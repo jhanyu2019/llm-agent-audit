@@ -2,10 +2,13 @@
 __pycache__/
 *.pyc
 
-# IDE
+# IDE / local
 .idea/
+.claude/
 
 # INTERNAL go-to-market docs - keep these OUT of the public repo
+infra-runbook.md
+launch-kit.md
 OFFER.md
 OUTREACH.md
 PUBLISH.md
@@ -19,6 +22,12 @@ pilot_runbook.md
 *_scenario_pack.md
 objection-handling.md
 sow-template.md
+session-review-*.md
+
+# V2 multi-turn (private while in development; publish a polished version later if desired)
+pilot/trace_example_*
+pilot/trace_schema_v2.json
+pilot/sample_report_*
 
 # generated real-model runs (re-create with run_real.py; keep out of the public repo)
 real_report.md
