@@ -2,7 +2,7 @@
 
 [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.20585659.svg)](https://doi.org/10.5281/zenodo.20585659)
 
-**New to this?** Start with the [one-page overview](https://hugoii.github.io/llm-agent-audit/) for a plain-English overview of the audit and pilot.
+> **Start here:** [One-page overview](https://hugoii.github.io/llm-agent-audit/) · [Sample pilot report](docs/sample-pilot-report.md) · [How the pilot works](pilot/how-the-pilot-works.md)
 
 **What this is.** I run independent, staging-only action-boundary audits for tool-using AI agents. I check whether an unverified user, ticket, email, document, call transcript, or tool response can push your agent into a high-impact action it should not take, such as issuing a refund, moving money, deleting an account, granting access, disabling MFA, dispatching a job, or exporting data.
 
