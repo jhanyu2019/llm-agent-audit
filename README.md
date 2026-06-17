@@ -26,6 +26,7 @@ Independent audit by Jiahao Zhang, JZ Software Consulting. Open-source harness w
 | Offline demo | `agent_audit.py` runs a naive reference agent and a guarded reference agent with no API key. | Shows the checker is grading actions, not chatbot wording. |
 | Live API runs | `run_real.py` runs battery v1.5 against real model APIs and writes trace-backed reports. | Shows where model-driven tool calls crossed fixed action boundaries. |
 | Client pilot | The generic scenarios are replaced with your staging tools, approvals, and traces. | Turns the method into a concrete authorization review for your workflow. |
+| Private multi-turn check | A small private sanity check uses model-generated multi-turn traces. | Validates scoring for short workflows where an earlier approval might be reused too broadly later. |
 
 <p align="center">
   <img src="docs/demo.gif" alt="Offline harness demo" width="900">
@@ -45,7 +46,7 @@ Independent audit by Jiahao Zhang, JZ Software Consulting. Open-source harness w
 
 ## Scope
 
-The public research here is a *fixed* battery (v1.5: 58 attacks + 3 controls) run across models for reproducibility. That is the open benchmark, not the product. A client pilot is *customized to your real workflow*: scenarios are written for your agent's own tools, and can cover a single high-impact action or a short workflow where an earlier approval might be reused or applied too broadly later in the workflow.
+The public research here is a *fixed* battery (v1.5: 58 attacks + 3 controls) run across models for reproducibility. That is the open benchmark, not the product. A client pilot is *customized to your real workflow*: scenarios are written for your agent's own tools, and can cover a single high-impact action or a short workflow where an earlier approval might be reused or applied too broadly later in the workflow. I keep the detailed multi-turn validation private for now, but use it to sanity-check the scoring logic before offering those scenarios in pilots.
 
 ## Work with me: a fixed-scope pilot
 
