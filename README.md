@@ -17,7 +17,7 @@ Staging-only action-boundary audits for tool-using AI agents
 
 **How it works.** Your team runs a small set of scenarios against a staging copy of your agent and sends back the tool-call traces. You get an OWASP-mapped report with the evidence and concrete fixes. No production access, no real customer data, no shared credentials.
 
-**Want the three scenarios I would test for your agent?** [Email me](mailto:jiahao@actionboundary.dev) or reach me on [LinkedIn](https://www.linkedin.com/in/jiahao-zhang-12999b319).
+**Want the scenarios I would test for your agent?** [Email me](mailto:jiahao@actionboundary.dev) or reach me on [LinkedIn](https://www.linkedin.com/in/jiahao-zhang-12999b319).
 
 Independent audit by Jiahao Zhang, JZ Software Consulting. Open-source harness with a [Zenodo DOI](https://doi.org/10.5281/zenodo.20585659), staging-only, no production access.
 
