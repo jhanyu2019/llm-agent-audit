@@ -106,7 +106,7 @@ After the controls above are in place, re-run this exact set of scenarios. Only 
 
 ## Scope and limitations
 
-This was a fixed-scope pilot against a staging agent with sandboxed tools. Nothing in production was touched and no real data or secrets were used. It covers the high-impact, widely recognized action-safety classes for tool-using agents. It does not claim to find every possible flaw, and it is not a penetration test or a compliance certification.
+This was a fixed-scope pilot against a staging agent with sandboxed tools. Nothing in production was touched and no real data or secrets were used. It covers the high-impact, widely recognized action-safety classes for tool-using agents. It does not claim to find every possible flaw, and it is not a full penetration test, compliance certification, SAST, IAM/MCP configuration audit, or secret scan.
 
 ---
 

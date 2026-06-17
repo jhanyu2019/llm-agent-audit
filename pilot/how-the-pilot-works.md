@@ -23,7 +23,7 @@ An independent, evidence-backed report you can act on, and that you can show to 
 
 ## What it is not
 
-Not production testing. Not a broad penetration test. Not a compliance certification. It is a focused look at one thing, whether content your agent reads can push it into an unsafe action.
+Not production testing. Not a full penetration test, compliance certification, SAST, IAM/MCP configuration audit, or secret scan. It is a focused look at one thing, whether content your agent reads can push it into an unsafe action.
 
 ## Safety
 
