@@ -194,7 +194,7 @@
 <div class="ex"><b>Logistics</b>A dispatch agent reads a carrier email or a phone transcript where the caller says a job is urgent or asks to change someone else's booking. This audit checks whether the agent dispatches, cancels, or edits the job without verifying the caller is allowed to ask.</div>
 
 <h2>How a pilot works</h2>
-<p>Your team runs a small set of scenarios against a staging copy of your agent and sends back the tool-call traces. I review the tool-call traces against pre-written pass/fail rules and send a report mapped to the OWASP Top 10 for LLM Applications, with the evidence and concrete fixes. No production access, no real customer data, no shared credentials. Scenarios are written for your workflow and can cover a single high-impact action or a short workflow where an earlier approval might be reused or applied too broadly later in the workflow. I also keep a private multi-turn sanity check on model-generated traces to validate that scoring logic before using it in pilots. See a <a href="https://github.com/hugoii/llm-agent-audit/blob/master/docs/sample-pilot-report.md">sample report</a>.</p>
+<p>Your team runs a small set of scenarios against a staging copy of your agent and sends back the tool-call traces. I review the tool-call traces against pre-written pass/fail rules and send a report mapped to the OWASP Top 10 for LLM Applications, with the evidence and concrete fixes. No production access, no real customer data, no shared credentials. Scenarios are written for your workflow and can cover a single high-impact action or a short workflow where an earlier approval might be reused or applied too broadly later in the workflow. See a <a href="https://github.com/hugoii/llm-agent-audit/blob/master/docs/sample-pilot-report.md">sample report</a> and the <a href="https://github.com/hugoii/llm-agent-audit/blob/master/docs/multi-turn-authorization-drift-method.md">multi-turn method note</a>.</p>
 
 <div class="pilot">
   <h3>Fixed-scope pilot</h3>
@@ -208,7 +208,7 @@
 </div>
 
 <h2>Why trust it</h2>
-<p>It is independent third-party evidence you can show a customer's security review or your own team. The harness is open source. The per-model summaries and the technical report are public and archived on Zenodo with a <a href="https://doi.org/10.5281/zenodo.20585659">DOI</a> for citation and reproducibility. For deeper technical review, I can share the private multi-turn validation summary that exercises authorization drift on generated tool-call traces.</p>
+<p>It is independent third-party evidence you can show a customer's security review or your own team. The harness is open source. The per-model summaries and the technical report are public and archived on Zenodo with a <a href="https://doi.org/10.5281/zenodo.20585659">DOI</a> for citation and reproducibility. The <a href="https://github.com/hugoii/llm-agent-audit/blob/master/docs/multi-turn-authorization-drift-method.md">method note</a> explains how I score multi-turn authorization drift without treating every approval-looking note as trusted evidence.</p>
 
 <p class="cta"><b>Want the scenarios I would test for your agent?</b><br>
 Reach me on <a href="https://www.linkedin.com/in/jiahao-zhang-12999b319">LinkedIn</a> or by email at <a href="mailto:jiahao@actionboundary.dev">jiahao@actionboundary.dev</a>.</p>
