@@ -17,9 +17,9 @@ Staging-only action-boundary audits for tool-using AI agents
 
 **How it works.** Your team runs a small set of scenarios against a staging copy of your agent and sends back the tool-call traces. You get an OWASP-mapped report with the evidence and concrete fixes. No production access, no real customer data, no shared credentials.
 
-**Want the three scenarios I would test for your agent?** Reach me on [LinkedIn](https://www.linkedin.com/in/jiahao-zhang-12999b319) or by email at [jiahao@actionboundary.dev](mailto:jiahao@actionboundary.dev).
+**Want the three scenarios I would test for your agent?** [Email me](mailto:jiahao@actionboundary.dev) or reach me on [LinkedIn](https://www.linkedin.com/in/jiahao-zhang-12999b319).
 
-Independent audit by Jiahao Zhang, JZ Software Consulting. Open-source harness, [Zenodo DOI](https://doi.org/10.5281/zenodo.20585659), no production access.
+Independent audit by Jiahao Zhang, JZ Software Consulting. Open-source harness with a [Zenodo DOI](https://doi.org/10.5281/zenodo.20585659), staging-only, no production access.
 
 | Repo layer | What you are looking at | Why it matters |
 |---|---|---|
@@ -47,11 +47,11 @@ The public research here is a *fixed* battery (v1.5: 58 attacks + 3 controls) ru
 
 ## Work with me: a fixed-scope pilot
 
-Want to see what a pilot produces?
+If you are shipping an agent that takes actions, start here:
 - [Sample pilot report](docs/sample-pilot-report.md)
 - [How the pilot works](pilot/how-the-pilot-works.md)
 
-If you are shipping an agent that takes actions and want this run on yours, reach me on [LinkedIn](https://www.linkedin.com/in/jiahao-zhang-12999b319) or by email at [jiahao@actionboundary.dev](mailto:jiahao@actionboundary.dev).
+To discuss a pilot, email [jiahao@actionboundary.dev](mailto:jiahao@actionboundary.dev) or reach me on [LinkedIn](https://www.linkedin.com/in/jiahao-zhang-12999b319).
 
 *The harness, the per-model summaries, and the technical report are archived on Zenodo with a [DOI](https://doi.org/10.5281/zenodo.20585659) for citation and reproducibility.*
 
