@@ -9,6 +9,10 @@ Pick a provider and model with environment variables, then run:
     $env:RUNS = "3"                        # optional, default 1
     python run_real.py
 
+For an OpenAI-compatible endpoint, keep PROVIDER="openai", set OPENAI_BASE_URL,
+and optionally set PROVIDER_LABEL="deepseek" or "qwen" so reports are labeled
+with the actual model provider.
+
 Each run writes runs/{provider}__{model}__run-N.(md|json) with full, untruncated
 evidence (the JSON keeps every reply and tool call). It also writes a
 runs/{provider}__{model}__summary.(md|json) reporting per-run counts, min/max/avg,
@@ -25,18 +29,19 @@ from agent_audit import (ATTACKS, ADVANCED, judge, build_report,
                          observed_outcomes, BATTERY_VERSION,
                          openai_agent, anthropic_agent, gemini_agent)
 
-PROVIDER = os.environ.get("PROVIDER", "openai").lower()
+API_PROVIDER = os.environ.get("PROVIDER", "openai").lower()
+PROVIDER_LABEL = os.environ.get("PROVIDER_LABEL", API_PROVIDER).lower()
 AGENTS = {"openai": openai_agent, "anthropic": anthropic_agent, "gemini": gemini_agent}
 MODEL_ENV = {"openai": "OPENAI_MODEL", "anthropic": "ANTHROPIC_MODEL", "gemini": "GEMINI_MODEL"}
 KEY_ENV = {"openai": "OPENAI_API_KEY", "anthropic": "ANTHROPIC_API_KEY", "gemini": "GEMINI_API_KEY"}
-if PROVIDER not in AGENTS:
-    raise SystemExit(f"PROVIDER must be one of {sorted(AGENTS)}; got {PROVIDER!r}")
-agent = AGENTS[PROVIDER]
-model = os.environ.get(MODEL_ENV[PROVIDER], "")
-if not os.environ.get(KEY_ENV[PROVIDER]):
-    raise SystemExit(f"Set {KEY_ENV[PROVIDER]} before running with PROVIDER={PROVIDER}.")
+if API_PROVIDER not in AGENTS:
+    raise SystemExit(f"PROVIDER must be one of {sorted(AGENTS)}; got {API_PROVIDER!r}")
+agent = AGENTS[API_PROVIDER]
+model = os.environ.get(MODEL_ENV[API_PROVIDER], "")
+if not os.environ.get(KEY_ENV[API_PROVIDER]):
+    raise SystemExit(f"Set {KEY_ENV[API_PROVIDER]} before running with PROVIDER={API_PROVIDER}.")
 if not model:
-    raise SystemExit(f"Set {MODEL_ENV[PROVIDER]} to a current model id before running with PROVIDER={PROVIDER} (list your models first).")
+    raise SystemExit(f"Set {MODEL_ENV[API_PROVIDER]} to a current model id before running with PROVIDER={API_PROVIDER} (list your models first).")
 
 SCENARIOS = ATTACKS + ADVANCED
 RUNS = int(os.environ.get("RUNS", "1"))
@@ -46,7 +51,7 @@ attack_ids = [a["id"] for a in SCENARIOS if a["vector"] != "benign"]
 n_attacks = len(attack_ids)
 meta = {a["id"]: (a["vector"], a["impact"], a["sev"]) for a in SCENARIOS}
 os.makedirs("runs", exist_ok=True)
-safe = re.sub(r"[^A-Za-z0-9._-]+", "-", f"{PROVIDER}__{model}")
+safe = re.sub(r"[^A-Za-z0-9._-]+", "-", f"{PROVIDER_LABEL}__{model}")
 today = datetime.date.today().isoformat()
 
 
@@ -87,7 +92,8 @@ def run_once(run_idx):
 def raw_json(rows, errors):
     attacks = [r for r in rows if r["vector"] != "benign"]
     return {
-        "battery_version": BATTERY_VERSION, "provider": PROVIDER, "model": model, "date": today,
+        "battery_version": BATTERY_VERSION, "provider": PROVIDER_LABEL,
+        "api_compat_provider": API_PROVIDER, "model": model, "date": today,
         "sampling": "provider default (no fixed temperature)",
         "scenarios": total, "attacks": len(attacks), "controls": len(rows) - len(attacks),
         "exploited": sum(1 for r in attacks if r["succeeded"]), "api_errors": errors,
@@ -101,7 +107,8 @@ def raw_json(rows, errors):
     }
 
 
-print(f"Provider: {PROVIDER} | model: {model} | battery {BATTERY_VERSION} | {total} scenarios x {RUNS} run(s)\n", flush=True)
+compat_note = "" if PROVIDER_LABEL == API_PROVIDER else f" (via {API_PROVIDER}-compatible API)"
+print(f"Provider: {PROVIDER_LABEL}{compat_note} | model: {model} | battery {BATTERY_VERSION} | {total} scenarios x {RUNS} run(s)\n", flush=True)
 
 exploited_per_run, errors_per_run = [], []
 hits = {i: 0 for i in attack_ids}
@@ -110,11 +117,11 @@ for run_idx in range(1, RUNS + 1):
     rows, errors = run_once(run_idx)
     last_rows = rows
     if errors == total:
-        print(f"\nEvery call to {PROVIDER} failed on run {run_idx}. Check {KEY_ENV[PROVIDER]} is valid, "
-              f"{MODEL_ENV[PROVIDER]} is a current model id, and the account has credit (429 usually means no credit).")
+        print(f"\nEvery call to {PROVIDER_LABEL} failed on run {run_idx}. Check {KEY_ENV[API_PROVIDER]} is valid, "
+              f"{MODEL_ENV[API_PROVIDER]} is a current model id, and the account has credit (429 usually means no credit).")
         raise SystemExit(1)
     with open(os.path.join("runs", f"{safe}__run-{run_idx}.md"), "w", encoding="utf-8") as f:
-        f.write(build_report(rows, f"live model: {PROVIDER}/{model} (run {run_idx}/{RUNS})"))
+        f.write(build_report(rows, f"live model: {PROVIDER_LABEL}/{model} (run {run_idx}/{RUNS})"))
     with open(os.path.join("runs", f"{safe}__run-{run_idx}.json"), "w", encoding="utf-8") as f:
         json.dump(raw_json(rows, errors), f, ensure_ascii=False, indent=2)
     attacks = [r for r in rows if r["vector"] != "benign"]
@@ -127,7 +134,7 @@ for run_idx in range(1, RUNS + 1):
     print(f"  -> run {run_idx}: {ex}/{n_attacks} exploited, {errors} api-error\n", flush=True)
 
 with open("real_report.md", "w", encoding="utf-8") as f:
-    f.write(build_report(last_rows, f"live model: {PROVIDER}/{model}"))
+    f.write(build_report(last_rows, f"live model: {PROVIDER_LABEL}/{model}"))
 
 mn, mx = min(exploited_per_run), max(exploited_per_run)
 avg = round(sum(exploited_per_run) / len(exploited_per_run), 2)
@@ -135,7 +142,8 @@ stable = sorted(i for i in attack_ids if hits[i] == RUNS)
 intermittent = sorted(i for i in attack_ids if 0 < hits[i] < RUNS)
 
 summary = {
-    "battery_version": BATTERY_VERSION, "provider": PROVIDER, "model": model, "date": today,
+    "battery_version": BATTERY_VERSION, "provider": PROVIDER_LABEL,
+    "api_compat_provider": API_PROVIDER, "model": model, "date": today,
     "runs": RUNS, "sampling": "provider default (no fixed temperature)", "attacks": n_attacks,
     "exploited_per_run": exploited_per_run, "exploited_min": mn, "exploited_max": mx, "exploited_avg": avg,
     "api_errors_per_run": errors_per_run,
@@ -151,7 +159,7 @@ def fmt_ids(ids):
 
 
 lines = [
-    f"# Multi-run summary: {PROVIDER}/{model}",
+    f"# Multi-run summary: {PROVIDER_LABEL}/{model}",
     "",
     f"_Battery {BATTERY_VERSION}. {n_attacks} attacks + {total - n_attacks} controls. "
     f"{RUNS} runs at provider-default sampling._",

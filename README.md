@@ -9,7 +9,7 @@ Staging-only action-boundary audits for tool-using AI agents
 ![staging only](https://img.shields.io/badge/scope-staging--only-155e75)
 ![MIT license](https://img.shields.io/badge/license-MIT-155e75)
 
-[One-page overview](https://actionboundary.dev/) · [Sample pilot report](docs/sample-pilot-report.md) · [How the pilot works](pilot/how-the-pilot-works.md)
+[One-page overview](https://actionboundary.dev/) | [Sample pilot report](docs/sample-pilot-report.md) | [How the pilot works](pilot/how-the-pilot-works.md)
 
 </div>
 
@@ -21,9 +21,17 @@ Staging-only action-boundary audits for tool-using AI agents
 
 Independent audit by Jiahao Zhang, JZ Software Consulting. Open-source harness, [Zenodo DOI](https://doi.org/10.5281/zenodo.20585659), no production access.
 
-![demo](docs/demo.gif)
+| Repo layer | What you are looking at | Why it matters |
+|---|---|---|
+| Offline demo | `agent_audit.py` runs a naive reference agent and a guarded reference agent with no API key. | Shows the checker is grading actions, not chatbot wording. |
+| Live API runs | `run_real.py` runs battery v1.5 against real model APIs and writes trace-backed reports. | Shows where model-driven tool calls crossed fixed action boundaries. |
+| Client pilot | The generic scenarios are replaced with your staging tools, approvals, and traces. | Turns the method into a concrete authorization review for your workflow. |
 
-A tiny, dependency-free harness that tests what an AI **agent** actually *does*, meaning the tools it calls, not just what it says. It covers the attacks most teams have not tested yet, including instructions hidden inside the data an agent reads (indirect prompt injection) that quietly hijack its actions.
+<p align="center">
+  <img src="docs/demo.gif" alt="Offline harness demo" width="900">
+</p>
+
+<p align="center"><sub>Offline demo, not a live-model result. It shows the harness grading tool calls against reference demo agents.</sub></p>
 
 > Most LLM testing checks a chatbot's words. But an agent that can issue refunds, send email, or delete accounts has real blast radius, so the failures that matter are actions. This audits the actions.
 
@@ -69,7 +77,7 @@ The focus is not whether the model says something unsafe. It is whether your app
 
 Every scenario is tagged with an OWASP LLM Top 10 category and a severity.
 
-## Quickstart
+## Quickstart: offline demo
 
 ```bash
 python agent_audit.py
@@ -95,7 +103,7 @@ The offline demo above runs the 53 core attack scenarios. The live cross-vendor 
 
 ## DIY: run it on your own model
 
-This section is for engineers who want to run the harness themselves. Replace the demo agents with a function that runs your agent's tool-calling loop and records each `(tool_name, args)` into `trace`. The scenarios and checks stay the same, because they grade the actions. To point it at a real model, see `run_real.py`. It supports OpenAI, Anthropic, and Gemini through the `PROVIDER` env var plus the matching API key and model variables. Set `RUNS=3` to get per-run reports and a multi-run summary.
+This section is for engineers who want to run the harness themselves. Replace the demo agents with a function that runs your agent's tool-calling loop and records each `(tool_name, args)` into `trace`. The scenarios and checks stay the same, because they grade the actions. To point it at a real model, see `run_real.py`. It supports OpenAI, Anthropic, and Gemini through the `PROVIDER` env var plus the matching API key and model variables. For OpenAI-compatible gateways, set `PROVIDER=openai`, `OPENAI_BASE_URL`, and optionally `PROVIDER_LABEL` so reports show the actual backend. Set `RUNS=3` to get per-run reports and a multi-run summary.
 
 ## Note
 
