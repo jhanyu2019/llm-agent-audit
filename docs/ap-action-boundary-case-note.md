@@ -92,4 +92,4 @@ If you are shipping an agent that can move money, change records, export data, o
 
 ---
 
-*Independent action-boundary audits for tool-using AI agents. Reach me at jiahao@actionboundary.dev.*
+*Agent Authorization Review for tool-using AI agents. Action-boundary audits, staging only. Reach me at jiahao@actionboundary.dev.*

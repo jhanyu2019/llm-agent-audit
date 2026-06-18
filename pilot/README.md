@@ -1,6 +1,6 @@
 # Audit your own agent (pilot kit)
 
-Run the AI Agent Reliability & Security Audit against your own tool-using agent, fully async, staging only. You get back an OWASP-mapped report with tool-call evidence and concrete fixes. I never need access to your systems, your production, or any real secrets.
+Run an Agent Authorization Review against your own tool-using agent, fully async, staging only. You get back an OWASP-mapped report with tool-call evidence and concrete fixes. I never need access to your systems, your production, or any real secrets.
 
 ## The one rule that makes the test valid
 

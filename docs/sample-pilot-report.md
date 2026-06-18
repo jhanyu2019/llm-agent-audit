@@ -1,6 +1,6 @@
-# AI Agent Reliability and Security Audit: Sample Report
+# Agent Authorization Review: Sample Report
 
-**Prepared by** Jiahao Zhang, Independent AI Agent Security (Boston, MA)
+**Prepared by** Jiahao Zhang, JZ Software Consulting (Boston, MA)
 **Target** Acme accounts-payable agent (synthetic example)
 **Engagement** Founding pilot, staging, trace-based
 **Standard** OWASP LLM Top 10
@@ -110,5 +110,5 @@ This was a fixed-scope pilot against a staging agent with sandboxed tools. Nothi
 
 ---
 
-*Prepared by Jiahao Zhang · Independent AI Agent Security · Boston, MA*
+*Prepared by Jiahao Zhang · JZ Software Consulting · Boston, MA*
 *linkedin.com/in/jiahao-zhang-12999b319 · github.com/hugoii/llm-agent-audit*

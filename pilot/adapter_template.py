@@ -1,5 +1,5 @@
 """
-Adapter template: run the AI Agent Reliability & Security Audit against YOUR agent.
+Adapter template: run an Agent Authorization Review against YOUR agent.
 
 You fill in two functions:
   1. load_scenario_data(items) -> put each `data_the_agent_reads` item where your agent

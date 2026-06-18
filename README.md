@@ -1,8 +1,8 @@
 <div align="center">
 
-# Action-boundary audits for tool-using AI agents
+# Agent Authorization Review for tool-using AI agents
 
-I test whether untrusted content, such as a user message, ticket, email, document, call transcript, or tool response, can push your tool-using AI agent into a high-impact action it should not take: issuing a refund, moving money, changing a vendor's bank account, deleting an account, granting access, disabling MFA, dispatching a job, or exporting data.
+I run a staging-only, trace-based action-boundary audit. I test whether untrusted content, such as a user message, ticket, email, document, call transcript, or tool response, can push your tool-using AI agent into a high-impact action it should not take: issuing a refund, moving money, changing a vendor's bank account, deleting an account, granting access, disabling MFA, dispatching a job, or exporting data.
 
 [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.20585659.svg)](https://doi.org/10.5281/zenodo.20585659)
 ![OWASP LLM Top 10](https://img.shields.io/badge/OWASP-LLM_Top_10-155e75)

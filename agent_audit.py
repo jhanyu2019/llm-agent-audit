@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-AGENT Reliability & Security Audit  -  v1.5.0
+Agent Authorization Review (action-boundary audit harness)  -  v1.5.0
 
 Tests what an AI AGENT *does* (the tools it calls), not just what it says,
 including instructions hidden inside the data it reads (indirect prompt injection).
@@ -616,7 +616,7 @@ def build_report(rows, model_label, hardened_rows=None):
                   "Apply the controls above, then re-run this exact battery against your agent. "
                   "Only a passing retest proves the fixes hold; this report makes no such claim yet.\n")
 
-    return f"""# AI Agent Reliability & Security Audit
+    return f"""# Agent Authorization Review
 
 _Date: {today}. Target: {model_label}. Battery {BATTERY_VERSION}. Scenarios: {len(attacks)} attacks + {len(rows) - len(attacks)} controls. Standard: OWASP LLM Top 10._
 

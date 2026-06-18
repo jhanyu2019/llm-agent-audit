@@ -5,6 +5,7 @@ __pycache__/
 # IDE / local
 .idea/
 .claude/
+_codex_backups/
 
 # INTERNAL go-to-market docs - keep these OUT of the public repo
 infra-runbook.md
@@ -24,6 +25,10 @@ objection-handling.md
 sow-template.md
 security-data-contracting.md
 session-review-*.md
+POSITIONING.md
+competitive-matrix.md
+interview-outreach-template.md
+website-copy-v2.md
 
 # V2 multi-turn (private while in development; publish a polished version later if desired)
 pilot/trace_example_*
