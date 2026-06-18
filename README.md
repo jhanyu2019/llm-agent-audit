@@ -25,6 +25,7 @@ Independent audit by Jiahao Zhang, JZ Software Consulting. Open-source harness w
 |---|---|---|
 | Offline demo | `agent_audit.py` runs a naive reference agent and a guarded reference agent with no API key. | Shows the checker is grading actions, not chatbot wording. |
 | Live API runs | `run_real.py` runs battery v1.5 against real model APIs and writes trace-backed reports. | Shows where model-driven tool calls crossed fixed action boundaries. |
+| AP worked example | [`docs/ap-action-boundary-case-note.md`](docs/ap-action-boundary-case-note.md) walks through a synthetic accounts-payable workflow with a real tool-calling model. | Shows how the method reads a business trace, catches an unauthorized data export, and still passes benign controls. |
 | Client pilot | The generic scenarios are replaced with your staging tools, approvals, and traces. | Turns the method into a concrete authorization review for your workflow. |
 | Multi-turn method note | [`docs/multi-turn-authorization-drift-method.md`](docs/multi-turn-authorization-drift-method.md) explains the multi-turn scoring method. | Shows how the audit scores short workflows where an earlier approval might be reused too broadly later. |
 
