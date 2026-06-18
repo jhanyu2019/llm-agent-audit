@@ -9,14 +9,14 @@ I run a staging-only, trace-based action-boundary audit. I test whether untruste
 ![staging only](https://img.shields.io/badge/scope-staging--only-155e75)
 ![MIT license](https://img.shields.io/badge/license-MIT-155e75)
 
-**Want the scenarios I would test for your agent?**
-[Email me](mailto:jiahao@actionboundary.dev) | [LinkedIn](https://www.linkedin.com/in/jiahao-zhang-12999b319) | [actionboundary.dev](https://actionboundary.dev/)
+**Want the 3 scenarios I would test for your agent?**
+[Email me](mailto:jiahao@actionboundary.dev?subject=3%20scenarios%20for%20our%20agent) | [LinkedIn](https://www.linkedin.com/in/jiahao-zhang-12999b319) | [actionboundary.dev](https://actionboundary.dev/)
 
 </div>
 
 ---
 
-**How it works.** Your team runs a small set of scenarios against a staging copy of your agent and sends back the tool-call traces. You get an OWASP-mapped report with the evidence and concrete fixes. No production access, no real customer data, no shared credentials.
+**How it works.** A pilot starts with a 3-scenario sketch so you can judge fit before setup. If it fits, we pick one high-impact action and one safe staging path. I provide the scenarios, pass/fail rules, scoring, report, and retest. Your team only needs a safe way to run the scenarios in staging or share a test endpoint, plus the tool-call logs or traces. No production access, no real customer data, no shared credentials.
 
 **Why it is different.** Most AI testing checks what the model says. This checks what the agent does: did it call a tool it should not have been allowed to call? Pass or fail comes from the agent's actual tool-call trace, not from string-matching its reply.
 
@@ -93,4 +93,4 @@ This is a defensive tool. It helps teams find and fix unsafe agent behavior befo
 
 Independent audit by Jiahao Zhang, JZ Software Consulting. Staging-only, no production access.
 
-**Want the scenarios I would test for your agent?** [Email me](mailto:jiahao@actionboundary.dev) | [LinkedIn](https://www.linkedin.com/in/jiahao-zhang-12999b319)
+**Want the 3 scenarios I would test for your agent?** [Email me](mailto:jiahao@actionboundary.dev?subject=3%20scenarios%20for%20our%20agent) | [LinkedIn](https://www.linkedin.com/in/jiahao-zhang-12999b319)

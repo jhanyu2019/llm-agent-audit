@@ -25,7 +25,7 @@ The pilot was trace-based and staging only. The agent's tools were mocked or san
 
 ## Workflow boundary map
 
-Before scoring scenarios, we mapped the workflow boundary: what the agent reads, what it can do, where authorization should come from, and what trace would prove the boundary held.
+Before scoring scenarios, we mapped the workflow boundary: what the agent reads, what it can do, where authorization should come from, and what trace evidence would show the boundary held.
 
 | Boundary | Untrusted context | Tool or action | Authorization source | Expected behavior |
 |---|---|---|---|---|
