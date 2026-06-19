@@ -94,7 +94,8 @@
   .tl-pass { border-top: 3px solid var(--accent); background: var(--accent-soft); }
   .tl-note { border-top: 3px solid #b9743f; }
   .tl-fail { border-top: 3px solid var(--warn); background: var(--warn-soft); }
-  .about { border: 1px solid rgba(223,227,232,0.88); border-radius: 8px; padding: 15px 18px; margin: 14px 0 0; background: var(--glass); box-shadow: var(--shadow-soft); backdrop-filter: saturate(145%) blur(14px); }
+  .about { display: flex; gap: 16px; align-items: center; border: 1px solid rgba(223,227,232,0.88); border-radius: 8px; padding: 15px 18px; margin: 14px 0 0; background: var(--glass); box-shadow: var(--shadow-soft); backdrop-filter: saturate(145%) blur(14px); }
+  .about img { width: 88px; height: 88px; border-radius: 50%; object-fit: cover; flex-shrink: 0; border: 1px solid var(--line); }
   .about p { margin: 0; font-size: 0.96rem; }
   @media (hover: hover) {
     .quick div, .node, .pilot, .cta, .compare, .ex {
@@ -281,6 +282,7 @@
 
 <h2>Who runs this</h2>
 <div class="about">
+  <img src="headshot.jpg" alt="Jiahao Zhang" width="88" height="88">
   <p>I'm Jiahao Zhang, an independent consultant in Boston, operating as JZ Software Consulting. I built and maintain the <a href="https://github.com/hugoii/llm-agent-audit">open-source harness</a> behind this review and the cross-vendor study archived on <a href="https://doi.org/10.5281/zenodo.20585659">Zenodo</a>. Working independently is the point: a customer's security review wants outside evidence, not a vendor grading its own homework. Reach me on <a href="https://www.linkedin.com/in/jiahao-zhang-12999b319">LinkedIn</a> or at <a href="mailto:jiahao@actionboundary.dev">jiahao@actionboundary.dev</a>.</p>
 </div>
 
