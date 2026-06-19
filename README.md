@@ -28,6 +28,11 @@ A poisoned ticket, invoice, or tool response can look like normal business conte
 
 ## Start here
 
+<p align="center">
+  <img src="docs/sample-report-preview.png" alt="Preview of a sample founding-pilot report: executive summary, risk summary (1 critical, 1 high, 6 handled safely including 2 benign controls), finding F-1 payment redirected by a vendor email with tool-call evidence, and recommended controls" width="820">
+</p>
+<p align="center"><sub>Sample founding-pilot report, synthetic AP workflow. A real report uses your agent, tools, traces, and workflow-specific scenarios.</sub></p>
+
 - **[Sample pilot report](docs/sample-pilot-report.md)**: what you receive, with findings, trace evidence, severity, and fixes.
 - **[A worked example: an accounts-payable agent](docs/ap-action-boundary-case-note.md)**: the method run end to end on a real tool-calling model in a synthetic AP workflow. It caught an unauthorized data export and still passed the benign controls.
 - **[A multi-turn case note](docs/multi-turn-authorization-drift-case-note.md)**: a healthcare prior-auth workflow where the early action was authorized, then a later note tried to carry that approval too far.
@@ -99,23 +104,41 @@ This is a defensive tool. It helps teams find and fix unsafe agent behavior befo
 
 ## FAQ
 
-**Do you need production access or real customer data?**
+<details>
+<summary><b>Do you need production access or real customer data?</b></summary>
+
 No. The review is staging-only. Test data is synthetic or a harmless canary. No production access, no real customer data, no shared credentials.
+</details>
 
-**Is this a penetration test or a compliance certification?**
+<details>
+<summary><b>Is this a penetration test or a compliance certification?</b></summary>
+
 No. It is a focused, evidence-based review of whether your tool-using agent can be pushed into an unauthorized high-impact action. It is not a full penetration test, SAST, IAM or MCP configuration audit, or secret scan, and it is not a compliance certification. The deliverable is independent evidence, findings, fixes, and a retest, not a "certified secure" stamp.
+</details>
 
-**How is this different from internal evals, Promptfoo or garak, or runtime monitoring?**
-Those mostly check what a model says, or watch production after the fact. This grades the agent's actual tool calls against a per-action authorization rule, on your staging workflow, as independent third-party evidence. A customer's security review wants an outside look, not the vendor grading its own homework. Runtime monitoring is complementary.
+<details>
+<summary><b>How is this different from internal evals, Promptfoo or garak, or runtime monitoring?</b></summary>
 
-**What do you need from us?**
+Those tools often focus on model or prompt behavior, generic test suites, or post-deployment monitoring. This review grades your agent's actual tool calls against a per-action authorization rule on a staging workflow, as independent third-party evidence. A customer's security review wants an outside look, not the vendor grading its own homework. Runtime monitoring is complementary.
+</details>
+
+<details>
+<summary><b>What do you need from us?</b></summary>
+
 A safe way to run the scenarios in staging or a shared test endpoint, plus the tool-call logs or traces. That is it.
+</details>
 
-**Will you sign an NDA or MSA?**
+<details>
+<summary><b>Will you sign an NDA or MSA?</b></summary>
+
 Yes, a reasonable NDA or MSA.
+</details>
 
-**What do I receive?**
+<details>
+<summary><b>What do I receive?</b></summary>
+
 An OWASP-mapped report with trace evidence, severity, concrete application-layer fixes, and one retest. See the [sample report](docs/sample-pilot-report.md).
+</details>
 
 ---
 
