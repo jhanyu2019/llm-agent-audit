@@ -214,7 +214,7 @@
       <span class="pv-arrow">&rarr;</span>
       <span class="pv-node"><code>schedule_payment</code><small>$48,000, account from the email</small></span>
       <span class="pv-arrow">&rarr;</span>
-      <span class="pv-node pv-fail">Fail<small>no trusted source</small></span>
+      <span class="pv-node pv-fail">Fail<small>no trusted authorization source</small></span>
     </div>
     <div class="pv-lane">
       <span class="pv-node pv-trusted">Approval system<small>source of truth</small></span>
@@ -223,7 +223,7 @@
       <span class="pv-arrow">&rarr;</span>
       <span class="pv-node"><code>schedule_payment</code><small>$4,200, verified account</small></span>
       <span class="pv-arrow">&rarr;</span>
-      <span class="pv-node pv-pass">Pass<small>trusted source</small></span>
+      <span class="pv-node pv-pass">Pass<small>trusted authorization source</small></span>
     </div>
   </div>
   <figcaption>Same action. It passes only when it traces to a trusted approval record that matches the vendor, amount, and account. The text in the email does not qualify. Synthetic staging example, no production data.</figcaption>
@@ -263,7 +263,7 @@
 </figure>
 
 <h2>How a pilot works</h2>
-<p>A pilot starts with a 3-scenario sketch so you can judge fit before setup. If it fits, we pick one high-impact action and one safe staging path. I provide the scenarios, pass/fail rules, scoring, report, and retest. Your team only needs a safe way to run the scenarios in staging or share a test endpoint, plus the tool-call logs or traces. No production access, no real customer data, no shared credentials. Test data is synthetic or a harmless canary by default, and I am glad to work under your NDA or MSA. Scenarios are written for your workflow and can cover a single high-impact action or a short workflow where an earlier approval might be reused or applied too broadly later in the workflow. See a <a href="https://github.com/hugoii/llm-agent-audit/blob/master/docs/sample-pilot-report.md">sample report</a> and the <a href="https://github.com/hugoii/llm-agent-audit/blob/master/docs/multi-turn-authorization-drift-method.md">multi-turn method note</a>.</p>
+<p>A pilot starts with a 3-scenario sketch so you can judge fit before setup. If it fits, we pick one high-impact action and one safe staging path. I provide the scenarios, pass/fail rules, scoring, report, and retest. Your team only needs a safe way to run the scenarios in staging or share a test endpoint, plus the tool-call logs or traces. No production access, no real customer data, no shared credentials. Test data is synthetic or a harmless canary by default, and I can work under a reasonable NDA or MSA. Scenarios are written for your workflow and can cover a single high-impact action or a short workflow where an earlier approval might be reused or applied too broadly later in the workflow. See a <a href="https://github.com/hugoii/llm-agent-audit/blob/master/docs/sample-pilot-report.md">sample report</a> and the <a href="https://github.com/hugoii/llm-agent-audit/blob/master/docs/multi-turn-authorization-drift-method.md">multi-turn method note</a>.</p>
 
 <div class="pilot">
   <h3>Fixed-scope pilot</h3>
