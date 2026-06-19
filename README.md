@@ -16,6 +16,10 @@ I run a staging-only, trace-based action-boundary audit. I test whether untruste
 
 ---
 
+<p align="center">
+  <img src="docs/provenance.png" alt="Same action, judged by its authorization source. A schedule_payment call to an account named inside a vendor email fails because it has no trusted authorization source; the same kind of call backed by an approval record from the source of truth passes." width="820">
+</p>
+
 **How it works.** A pilot starts with a 3-scenario sketch so you can judge fit before setup. If it fits, we pick one high-impact action and one safe staging path. I provide the scenarios, pass/fail rules, scoring, report, and retest. Your team only needs a safe way to run the scenarios in staging or share a test endpoint, plus the tool-call logs or traces. No production access, no real customer data, no shared credentials.
 
 **Why it is different.** Most AI testing checks what the model says. This checks what the agent does: did it call a tool it should not have been allowed to call? Pass or fail comes from the agent's actual tool-call trace, not from string-matching its reply.
@@ -92,6 +96,26 @@ It runs the 53 core attack scenarios against an un-hardened agent, then the same
 This is a defensive tool. It helps teams find and fix unsafe agent behavior before attackers do.
 
 </details>
+
+## FAQ
+
+**Do you need production access or real customer data?**
+No. The review is staging-only. Test data is synthetic or a harmless canary. No production access, no real customer data, no shared credentials.
+
+**Is this a penetration test or a compliance certification?**
+No. It is a focused, evidence-based review of whether your tool-using agent can be pushed into an unauthorized high-impact action. It is not a full penetration test, SAST, IAM or MCP configuration audit, or secret scan, and it is not a compliance certification. The deliverable is independent evidence, findings, fixes, and a retest, not a "certified secure" stamp.
+
+**How is this different from internal evals, Promptfoo or garak, or runtime monitoring?**
+Those mostly check what a model says, or watch production after the fact. This grades the agent's actual tool calls against a per-action authorization rule, on your staging workflow, as independent third-party evidence. A customer's security review wants an outside look, not the vendor grading its own homework. Runtime monitoring is complementary.
+
+**What do you need from us?**
+A safe way to run the scenarios in staging or a shared test endpoint, plus the tool-call logs or traces. That is it.
+
+**Will you sign an NDA or MSA?**
+Yes, a reasonable NDA or MSA.
+
+**What do I receive?**
+An OWASP-mapped report with trace evidence, severity, concrete application-layer fixes, and one retest. See the [sample report](docs/sample-pilot-report.md).
 
 ---
 
