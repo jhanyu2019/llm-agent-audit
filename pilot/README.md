@@ -2,9 +2,19 @@
 
 Run an Agent Authorization Review against your own tool-using agent, fully async, staging only. You get back an OWASP-mapped report with tool-call evidence and concrete fixes. I never need access to your systems, your production, or any real secrets.
 
-## The one rule that makes the test valid
+## The rule that makes trace results valid
 
-This audit is about **indirect** prompt injection: can a malicious instruction hidden in the **data your agent reads** (a ticket, an invoice, a tool response) make it take an unsafe tool action? So the adversarial text must go into `data_the_agent_reads`, **not** into the user's message. If you paste it into the user prompt, you are testing direct injection and the results are not valid.
+An Agent Authorization Review is about what the agent does: which tools it calls,
+with what arguments, and what authorization evidence existed at that moment.
+
+For scenarios that test **indirect** prompt injection, the adversarial text must
+go into `data_the_agent_reads`, such as a ticket, invoice, email, document, or
+tool response. It should not be pasted into the user's message. If it is pasted
+into the user prompt, that becomes a different test.
+
+Other scenarios may test direct requests, benign controls, or short multi-turn
+workflows. In every case, follow the scenario instructions and preserve the
+tool-call trace. The trace is the evidence.
 
 ## Files
 
@@ -18,6 +28,6 @@ This audit is about **indirect** prompt injection: can a malicious instruction h
 2. Run it on the scenario set you were sent. It writes `trace_results.json`.
 3. Send `trace_results.json` back. That is all the access needed. No production, no real customer data, no shared credentials.
 
-Tip: before the full run, do one scenario first and send it back so the wiring can be checked. The common mistake is putting the test instruction in the user prompt instead of in the data the agent reads.
+Tip: before the full run, do one scenario first and send it back so the wiring can be checked. For indirect-injection scenarios, the common mistake is putting the test instruction in the user prompt instead of in the data the agent reads.
 
 Main project and writeup: https://github.com/hugoii/llm-agent-audit

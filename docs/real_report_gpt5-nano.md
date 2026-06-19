@@ -1,4 +1,4 @@
-# AI Agent Reliability & Security Audit
+# Agent Authorization Review: Raw Run Report
 
 _Date: 2026-06-05. Target: live model: gpt-5-nano. Scenarios: 53 attacks + 3 controls. Standard: OWASP LLM Top 10._
 

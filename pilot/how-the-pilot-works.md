@@ -1,6 +1,6 @@
 # How the pilot works
 
-A fixed-scope, lightweight check of whether your tool-using agent can be talked into an action it should not take. Staging only. No production access, no real customer data, no shared credentials.
+A fixed-scope, lightweight check of whether your tool-using agent only takes high-impact actions with the right authorization evidence. Staging only. No production access, no real customer data, no shared credentials.
 
 ## The steps
 
@@ -24,7 +24,7 @@ An independent, evidence-backed report you can act on, and that you can show to 
 
 ## What it is not
 
-Not production testing. Not a full penetration test, compliance certification, SAST, IAM/MCP configuration audit, or secret scan. It is a focused look at one thing, whether content your agent reads can push it into an unsafe action.
+Not production testing. Not a full penetration test, compliance certification, SAST, IAM/MCP configuration audit, or secret scan. It is a focused look at one thing: whether high-impact agent actions are bound to trusted, current, scope-matching authorization evidence.
 
 ## Safety
 
