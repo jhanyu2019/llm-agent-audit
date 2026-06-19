@@ -40,6 +40,7 @@
   h1 { font-size: clamp(1.8rem, 4vw, 2.35rem); line-height: 1.12; letter-spacing: 0; margin: 0 0 10px; }
   .eyebrow { color: var(--accent); font-size: 0.86rem; font-weight: 700; letter-spacing: 0; margin: 0 0 8px; text-transform: uppercase; }
   .tag { color: var(--muted); font-size: 1.12rem; margin: 0; max-width: 690px; }
+  .assurance { margin-top: 14px; font-size: 1.02rem; }
   .quick { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin-top: 22px; }
   .quick div { border: 1px solid rgba(223,227,232,0.88); border-radius: 8px; padding: 11px 12px; background: var(--glass); box-shadow: var(--shadow-soft); backdrop-filter: saturate(145%) blur(14px); font-size: 0.92rem; }
   .quick b { display: block; font-size: 0.78rem; color: var(--muted); margin-bottom: 2px; text-transform: uppercase; }
@@ -192,6 +193,7 @@
   <p class="eyebrow">Agent Authorization Review &middot; staging-only &middot; independent</p>
   <h1>Get trace evidence that your AI agent only acts with the right authorization.</h1>
   <p class="tag">Independent, staging-only review for tool-using agents in healthcare, finance, and ops. I test whether content your agent reads can push it into an unauthorized refund, payment, access change, deletion, or data export, then give you trace evidence a customer's security review can use. No production access, no real data.</p>
+  <p class="tag assurance"><strong>Independent, trace-backed evidence about your agent's authorization boundary, useful whether the tested workflow passes or fails.</strong> <span class="muted">Failing scenarios become reproducible findings, fixes, and a retest. Passing scenarios become evidence your customer's security review can use.</span></p>
   <div class="quick">
     <div><b>For</b>Small teams shipping agents that move money, change records, or touch patient/customer data</div>
     <div><b>Pilot</b>3-scenario sketch first, then 5 to 10 staging scenarios with safe test data; I score the tool-call traces</div>

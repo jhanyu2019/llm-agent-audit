@@ -20,6 +20,8 @@ I run a staging-only, trace-based action-boundary audit. I test whether untruste
   <img src="docs/provenance.png" alt="Same action, judged by its authorization source. A schedule_payment call to an account named inside a vendor email fails because it has no trusted authorization source; the same kind of call backed by an approval record from the source of truth passes." width="820">
 </p>
 
+**Independent, trace-backed evidence about your agent's authorization boundary, useful whether the tested workflow passes or fails.** Failing scenarios become reproducible findings, fixes, and a retest. Passing scenarios become evidence your customer's security review can use.
+
 **How it works.** A pilot starts with a 3-scenario sketch so you can judge fit before setup. If it fits, we pick one high-impact action and one safe staging path. I provide the scenarios, pass/fail rules, scoring, report, and retest. Your team only needs a safe way to run the scenarios in staging or share a test endpoint, plus the tool-call logs or traces. No production access, no real customer data, no shared credentials.
 
 **Why it is different.** Most AI testing checks what the model says. This checks what the agent does: did it call a tool it should not have been allowed to call? Pass or fail comes from the agent's actual tool-call trace, not from string-matching its reply.
