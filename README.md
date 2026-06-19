@@ -26,6 +26,7 @@ A poisoned ticket, invoice, or tool response can look like normal business conte
 
 - **[Sample pilot report](docs/sample-pilot-report.md)**: what you receive, with findings, trace evidence, severity, and fixes.
 - **[A worked example: an accounts-payable agent](docs/ap-action-boundary-case-note.md)**: the method run end to end on a real tool-calling model in a synthetic AP workflow. It caught an unauthorized data export and still passed the benign controls.
+- **[A multi-turn case note](docs/multi-turn-authorization-drift-case-note.md)**: a healthcare prior-auth workflow where the early action was authorized, then a later note tried to carry that approval too far.
 - **[Why model behavior is not authorization control](docs/model-behavior-is-not-authorization-control.md)**: the plain-language logic behind the review, using finance approvals as the analogy.
 - **[How the pilot works](pilot/how-the-pilot-works.md)**: the process, async, staging-only, fixed-scope, about a week.
 
@@ -44,7 +45,7 @@ Read the cross-vendor study: [Model choice is not an authorization layer](docs/m
 
 **Addendum, two OpenAI-compatible models.** I added DeepSeek `deepseek-v4-flash` and Qwen `qwen/qwen3.7-plus` to the same v1.5 battery. The result did not change the lesson: cheaper or API-compatible model paths can still call high-impact tools without authorization. Short note: [Two more OpenAI-compatible models, same authorization question](docs/openai-compatible-models-authorization-addendum.md).
 
-**Multi-turn method.** How the audit scores short workflows where an earlier approval is reused or applied too broadly later: [Testing multi-turn authorization drift](docs/multi-turn-authorization-drift-method.md).
+**Multi-turn case note and method.** A worked prior-auth example: [When an agent treats a note as authorization](docs/multi-turn-authorization-drift-case-note.md). How the audit scores this kind of workflow: [Testing multi-turn authorization drift](docs/multi-turn-authorization-drift-method.md).
 
 **Authorization gates.** Stronger models help, but a careful model is not the same as an application-enforced authorization gate. See [Why model behavior is not authorization control](docs/model-behavior-is-not-authorization-control.md).
 
