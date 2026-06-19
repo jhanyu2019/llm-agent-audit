@@ -35,6 +35,8 @@ pilot/trace_example_*
 pilot/trace_schema_v2.json
 pilot/sample_report_*
 pilot/v2_minimal_validation_brief.md
+pilot/private-evidence-brief.md
+pilot/objection-handling.md
 
 # generated real-model runs (re-create with run_real.py; keep out of the public repo)
 real_report.md
