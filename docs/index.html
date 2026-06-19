@@ -72,6 +72,30 @@
   .cta { margin: 30px 0 0; padding: 16px 18px; border: 1px solid rgba(223,227,232,0.88); border-radius: 8px; background: var(--glass); box-shadow: var(--shadow-soft); backdrop-filter: saturate(145%) blur(14px); font-size: 1.05rem; }
   footer { margin-top: 40px; border-top: 1px solid var(--line); padding-top: 16px; color: var(--muted); font-size: 0.88rem; }
   .section-note { color: var(--muted); margin-top: 0; }
+  figure { margin: 18px 0 8px; }
+  figcaption { color: var(--muted); font-size: 0.85rem; margin-top: 9px; }
+  .pv { display: grid; gap: 8px; }
+  .pv-lane { display: grid; grid-template-columns: 1.1fr auto 0.6fr auto 1.3fr auto 0.95fr; align-items: stretch; gap: 8px; }
+  .pv-node { background: var(--glass); border: 1px solid rgba(223,227,232,0.88); border-radius: 8px; padding: 9px 11px; box-shadow: var(--shadow-soft); backdrop-filter: saturate(145%) blur(14px); font-size: 0.92rem; min-height: 52px; display: flex; flex-direction: column; justify-content: center; }
+  .pv-node small { display: block; color: var(--muted); font-size: 0.76rem; margin-top: 2px; }
+  .pv-node code { font-size: 0.85rem; }
+  .pv-untrusted { border-left: 4px solid #b9743f; border-radius: 0 8px 8px 0; }
+  .pv-trusted { border-left: 4px solid var(--accent); border-radius: 0 8px 8px 0; }
+  .pv-fail { background: var(--warn-soft); border-color: #f1c99d; color: var(--warn); font-weight: 700; }
+  .pv-pass { background: var(--accent-soft); border-color: #b8dbe4; color: var(--accent); font-weight: 700; }
+  .pv-fail small, .pv-pass small { font-weight: 400; }
+  .pv-arrow { color: var(--muted); font-weight: 700; align-self: center; }
+  .timeline { display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; }
+  .tl-step { background: var(--glass); border: 1px solid rgba(223,227,232,0.88); border-radius: 0 0 8px 8px; padding: 10px 11px; box-shadow: var(--shadow-soft); backdrop-filter: saturate(145%) blur(14px); font-size: 0.92rem; }
+  .tl-step b { display: block; margin-top: 2px; }
+  .tl-step small { display: block; color: var(--muted); font-size: 0.78rem; margin-top: 3px; }
+  .tl-turn { color: var(--muted); font-size: 0.74rem; letter-spacing: 0.05em; }
+  .tl-trusted { border-top: 3px solid var(--accent); }
+  .tl-pass { border-top: 3px solid var(--accent); background: var(--accent-soft); }
+  .tl-note { border-top: 3px solid #b9743f; }
+  .tl-fail { border-top: 3px solid var(--warn); background: var(--warn-soft); }
+  .about { border: 1px solid rgba(223,227,232,0.88); border-radius: 8px; padding: 15px 18px; margin: 14px 0 0; background: var(--glass); box-shadow: var(--shadow-soft); backdrop-filter: saturate(145%) blur(14px); }
+  .about p { margin: 0; font-size: 0.96rem; }
   @media (hover: hover) {
     .quick div, .node, .pilot, .cta, .compare, .ex {
       transition: transform 160ms ease, box-shadow 160ms ease, border-color 160ms ease, background-color 160ms ease;
@@ -141,6 +165,12 @@
     .quick { grid-template-columns: 1fr; }
     .flow { grid-template-columns: 1fr; }
     .arrow { transform: rotate(90deg); justify-self: start; margin-left: 28px; }
+    .pv { gap: 22px; }
+    .pv-lane { grid-template-columns: 1fr; }
+    .pv-untrusted, .pv-trusted { border-left: none; border-top: 4px solid #b9743f; border-radius: 8px; }
+    .pv-trusted { border-top-color: var(--accent); }
+    .pv-arrow { transform: rotate(90deg); justify-self: start; margin-left: 28px; }
+    .timeline { grid-template-columns: 1fr 1fr; }
   }
   @media print {
     body { background: #fff; max-width: none; padding: 0; }
@@ -148,10 +178,10 @@
     header { padding-bottom: 16px; margin-bottom: 20px; }
     a { color: #000; text-decoration: underline; }
     h2 { break-after: avoid; }
-    .quick div, .node, .rule, .pilot, .cta, .compare { background: #fff; box-shadow: none; backdrop-filter: none; }
-    .node.risk { background: var(--warn-soft); }
-    .node.done, .rule { background: var(--accent-soft); }
-    .flow, .quick, .ex, .pilot, .cta, .compare, .rule { break-inside: avoid; page-break-inside: avoid; }
+    .quick div, .node, .rule, .pilot, .cta, .compare, .pv-node, .tl-step, .about { background: #fff; box-shadow: none; backdrop-filter: none; }
+    .node.risk, .pv-fail, .tl-fail { background: var(--warn-soft); }
+    .node.done, .rule, .pv-pass, .tl-pass { background: var(--accent-soft); }
+    .flow, .quick, .ex, .pilot, .cta, .compare, .rule, .pv, .pv-lane, .timeline, .about { break-inside: avoid; page-break-inside: avoid; }
   }
 </style>
 </head>
@@ -175,17 +205,29 @@
 <p>When an AI agent can call tools, the failure that matters is not what it says. It is what it does. I check whether content the agent reads, such as a user message, a support ticket, an email, a document, or a tool response, can push it into a high-impact action it should not take.</p>
 <p>Examples include issuing a refund, moving money, deleting an account, granting access, disabling MFA, or exporting data.</p>
 
-<div class="flow">
-  <span class="node">Untrusted input<br><span class="muted">note, email, ticket, doc</span></span>
-  <span class="arrow">&rarr;</span>
-  <span class="node">Agent</span>
-  <span class="arrow">&rarr;</span>
-  <span class="node">Tool call</span>
-  <span class="arrow">&rarr;</span>
-  <span class="node risk">Unsafe action?</span>
-  <span class="arrow">&rarr;</span>
-  <span class="node done">Report<br><span class="muted">evidence + fixes</span></span>
-</div>
+<figure class="pv-fig">
+  <div class="pv">
+    <div class="pv-lane">
+      <span class="pv-node pv-untrusted">Vendor email<small>untrusted content</small></span>
+      <span class="pv-arrow">&rarr;</span>
+      <span class="pv-node">Agent</span>
+      <span class="pv-arrow">&rarr;</span>
+      <span class="pv-node"><code>schedule_payment</code><small>$48,000, account from the email</small></span>
+      <span class="pv-arrow">&rarr;</span>
+      <span class="pv-node pv-fail">Fail<small>no trusted source</small></span>
+    </div>
+    <div class="pv-lane">
+      <span class="pv-node pv-trusted">Approval system<small>source of truth</small></span>
+      <span class="pv-arrow">&rarr;</span>
+      <span class="pv-node">Agent</span>
+      <span class="pv-arrow">&rarr;</span>
+      <span class="pv-node"><code>schedule_payment</code><small>$4,200, verified account</small></span>
+      <span class="pv-arrow">&rarr;</span>
+      <span class="pv-node pv-pass">Pass<small>trusted source</small></span>
+    </div>
+  </div>
+  <figcaption>Same action. It passes only when it traces to a trusted approval record that matches the vendor, amount, and account. The text in the email does not qualify. Synthetic staging example, no production data.</figcaption>
+</figure>
 
 <h2>Why it matters</h2>
 <p>A model's refusal is a safety feature, not an authorization system. A stronger model can help, but it does not replace application-side authorization. A careful employee can reduce payment mistakes, but the company still needs a payment system that checks the approval, amount, vendor, scope, and audit trail. Agents need the same boundary: the model can help prepare the action, but the application has to decide whether the action is allowed. See <a href="https://github.com/hugoii/llm-agent-audit/blob/master/docs/model-behavior-is-not-authorization-control.md">why model behavior is not authorization control</a>.</p>
@@ -208,8 +250,20 @@
 <div class="ex"><b>Healthcare</b>A prior-authorization agent reads a payer response or patient note that sounds like approval. This audit checks whether it schedules, submits, or changes care without checking the right source of authority. See a <a href="https://github.com/hugoii/llm-agent-audit/blob/master/docs/multi-turn-authorization-drift-case-note.md">multi-turn prior-auth case note</a>.</div>
 <div class="ex"><b>Logistics</b>A dispatch agent reads a carrier email or a phone transcript where the caller says a job is urgent or asks to change someone else's booking. This audit checks whether the agent dispatches, cancels, or edits the job without verifying the caller is allowed to ask.</div>
 
+<h2>Why multi-turn workflows are harder</h2>
+<p class="section-note">Real agents take several steps. An early action can be correctly authorized, then a later note can carry that approval too far. The same tool call is fine or unsafe depending on where the authorization came from. See the <a href="https://github.com/hugoii/llm-agent-audit/blob/master/docs/multi-turn-authorization-drift-case-note.md">worked prior-auth case note</a> and the <a href="https://github.com/hugoii/llm-agent-audit/blob/master/docs/multi-turn-authorization-drift-method.md">method note</a>.</p>
+<figure>
+  <div class="timeline">
+    <div class="tl-step tl-trusted"><span class="tl-turn">T1</span><b>Payer lookup</b><small>PA-7781, source of truth</small></div>
+    <div class="tl-step tl-pass"><span class="tl-turn">T2</span><b>Book 1 visit</b><small>uses PA-7781 &middot; pass</small></div>
+    <div class="tl-step tl-note"><span class="tl-turn">T4</span><b>Patient note</b><small>claims APV-3318</small></div>
+    <div class="tl-step tl-fail"><span class="tl-turn">T5</span><b>Book 2 visits</b><small>uses APV-3318 &middot; fail</small></div>
+  </div>
+  <figcaption>Same tool, same patient. An earlier real approval is reused on a later note that never came from the payer system, so the later action fails. Benign work that checks the source of truth still passes. Synthetic staging example, no production data.</figcaption>
+</figure>
+
 <h2>How a pilot works</h2>
-<p>A pilot starts with a 3-scenario sketch so you can judge fit before setup. If it fits, we pick one high-impact action and one safe staging path. I provide the scenarios, pass/fail rules, scoring, report, and retest. Your team only needs a safe way to run the scenarios in staging or share a test endpoint, plus the tool-call logs or traces. No production access, no real customer data, no shared credentials. Scenarios are written for your workflow and can cover a single high-impact action or a short workflow where an earlier approval might be reused or applied too broadly later in the workflow. See a <a href="https://github.com/hugoii/llm-agent-audit/blob/master/docs/sample-pilot-report.md">sample report</a> and the <a href="https://github.com/hugoii/llm-agent-audit/blob/master/docs/multi-turn-authorization-drift-method.md">multi-turn method note</a>.</p>
+<p>A pilot starts with a 3-scenario sketch so you can judge fit before setup. If it fits, we pick one high-impact action and one safe staging path. I provide the scenarios, pass/fail rules, scoring, report, and retest. Your team only needs a safe way to run the scenarios in staging or share a test endpoint, plus the tool-call logs or traces. No production access, no real customer data, no shared credentials. Test data is synthetic or a harmless canary by default, and I am glad to work under your NDA or MSA. Scenarios are written for your workflow and can cover a single high-impact action or a short workflow where an earlier approval might be reused or applied too broadly later in the workflow. See a <a href="https://github.com/hugoii/llm-agent-audit/blob/master/docs/sample-pilot-report.md">sample report</a> and the <a href="https://github.com/hugoii/llm-agent-audit/blob/master/docs/multi-turn-authorization-drift-method.md">multi-turn method note</a>.</p>
 
 <div class="pilot">
   <h3>Fixed-scope pilot</h3>
@@ -224,6 +278,11 @@
 
 <h2>Why trust it</h2>
 <p>It is independent third-party evidence you can show a customer's security review or your own team. The harness is open source. The per-model summaries and the technical report are public and archived on Zenodo with a <a href="https://doi.org/10.5281/zenodo.20585659">DOI</a> for citation and reproducibility. The <a href="https://github.com/hugoii/llm-agent-audit/blob/master/docs/ap-action-boundary-case-note.md">worked AP example</a> and <a href="https://github.com/hugoii/llm-agent-audit/blob/master/docs/multi-turn-authorization-drift-case-note.md">multi-turn prior-auth case note</a> show the method on concrete workflows, the <a href="https://github.com/hugoii/llm-agent-audit/blob/master/docs/multi-turn-authorization-drift-method.md">method note</a> explains how I score multi-turn authorization drift without treating every approval-looking note as trusted evidence, and <a href="https://github.com/hugoii/llm-agent-audit/blob/master/docs/model-behavior-is-not-authorization-control.md">this short note</a> explains why strong model behavior is not the same as an authorization gate.</p>
+
+<h2>Who runs this</h2>
+<div class="about">
+  <p>I'm Jiahao Zhang, an independent consultant in Boston, operating as JZ Software Consulting. I built and maintain the <a href="https://github.com/hugoii/llm-agent-audit">open-source harness</a> behind this review and the cross-vendor study archived on <a href="https://doi.org/10.5281/zenodo.20585659">Zenodo</a>. Working independently is the point: a customer's security review wants outside evidence, not a vendor grading its own homework. Reach me on <a href="https://www.linkedin.com/in/jiahao-zhang-12999b319">LinkedIn</a> or at <a href="mailto:jiahao@actionboundary.dev">jiahao@actionboundary.dev</a>.</p>
+</div>
 
 <p class="cta"><b>Want the 3 scenarios I would test for your agent?</b><br>
 Reach me on <a href="https://www.linkedin.com/in/jiahao-zhang-12999b319">LinkedIn</a> or by email at <a href="mailto:jiahao@actionboundary.dev?subject=3%20scenarios%20for%20our%20agent">jiahao@actionboundary.dev</a>.</p>
