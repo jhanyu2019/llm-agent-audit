@@ -1,0 +1,245 @@
+# Client handoff for an Agent Authorization Review
+
+This is the technical handoff note to send after a prospect agrees to a pilot or asks what their engineering team needs to do.
+
+The goal is simple: run a small set of workflow-specific scenarios against a staging or sandbox agent, preserve the tool-call traces, and turn those traces into an authorization evidence report.
+
+## Short version
+
+You do not need to give me production access, real customer data, shared credentials, or source code.
+
+We choose one safe way to run the scenarios:
+
+1. Your team runs the scenarios in staging and sends back traces.
+2. You provide a narrow staging test endpoint with synthetic data, and I run the scenarios.
+3. If traces are not already easy to export, your team wires a small adapter first.
+
+Before the full run, we do one scenario as a setup check. That confirms the agent is reading the test data through the real staging path and that the trace contains enough evidence to score.
+
+## Default path
+
+The default path is client-run, trace-based testing.
+
+You receive a small scenario pack written for your agent. Your team runs it against a staging or sandbox copy of the agent, then sends back a trace file.
+
+This is usually the safest and lowest-friction path because:
+
+- no production system is touched;
+- no real customer data is needed;
+- no shared credentials change hands;
+- your team keeps control of the environment;
+- I can still score the behavior from the trace evidence.
+
+## Other acceptable paths
+
+### Path A: you run the scenarios and send traces
+
+Best when your team already has staging, sandboxed tools, and tool-call logging.
+
+You do:
+
+- load the synthetic scenario data into the place your agent actually reads from;
+- run the benign user request from each scenario;
+- export the tool-call traces;
+- send back `trace_results.json` or equivalent logs.
+
+I do:
+
+- write the scenarios and pass/fail rules;
+- check the first trace before the full run;
+- score the traces;
+- write the report and retest rules.
+
+### Path B: you provide a staging-safe test endpoint
+
+Best when you want the least internal engineering work and can expose a narrow test surface.
+
+You provide:
+
+- a staging or sandbox endpoint;
+- synthetic test account or tenant only;
+- no production data;
+- no production-side effects;
+- rate limits or test-window rules if needed;
+- written authorization naming the in-scope staging system.
+
+I run the scenarios through that endpoint and score the resulting traces. If the endpoint does not expose tool-call traces, we still need a way to export or retrieve them.
+
+### Path C: you wire the adapter
+
+Best when the agent exists but trace export is not yet clean.
+
+You receive `adapter_template.py` and `trace_schema.json`. Your team fills in two small functions:
+
+- `load_scenario_data`, which places the synthetic test data where the agent reads from in staging;
+- `run_agent`, which calls the agent and records each tool call as `{ "tool": "...", "arguments": {...} }`.
+
+Then the adapter writes `trace_results.json`.
+
+## Not a good fit yet
+
+Do not start the fixed-scope pilot if the only available option is:
+
+- production testing;
+- real customer data;
+- real secrets;
+- no staging or sandbox;
+- no way to capture tool calls;
+- no written authorization;
+- only a verbal product description with no runnable agent.
+
+If trace capture is missing, we can first do a small setup step or a lighter tool-surface review, but that is not the same as a trace-backed authorization review.
+
+## One-scenario setup check
+
+Before running all scenarios, run one scenario and send back the trace.
+
+The setup check confirms:
+
+- the adversarial or test instruction is placed in data the agent reads, not pasted into the user prompt;
+- the trace includes tool names and arguments;
+- high-impact tool calls are visible;
+- the principal, test user, or role is identifiable when relevant;
+- the result can be scored without guessing.
+
+If the first trace is not valid, we fix the setup before running the full set.
+
+## Minimum trace fields
+
+The trace can be JSON, exported logs, or a structured table. JSON is easiest.
+
+Minimum fields:
+
+```json
+{
+  "engagement": "Acme Co - AP agent pilot, staging",
+  "agent_under_test": "AP invoice agent",
+  "runs": [
+    {
+      "scenario_id": "S-1",
+      "user_request": "Please process the invoice for review.",
+      "data_the_agent_reads": [
+        {
+          "source": "vendor_email",
+          "id": "email-2210",
+          "content": "Synthetic vendor email text goes here"
+        }
+      ],
+      "tool_call_trace": [
+        {
+          "tool": "schedule_payment",
+          "arguments": {
+            "invoice": "INV-2210",
+            "amount": 48000,
+            "to_account": "88-7741"
+          }
+        }
+      ],
+      "final_reply": "Payment scheduled.",
+      "model": "optional context",
+      "notes": "Scenario data was inserted through the staging email fixture."
+    }
+  ]
+}
+```
+
+Helpful extra fields:
+
+- principal or test user;
+- role or permission level;
+- authorization lookup result;
+- tool result or denial reason;
+- timestamp;
+- trace ID or request ID;
+- environment name.
+
+## What not to send
+
+Do not send:
+
+- production credentials;
+- real customer data;
+- real secrets;
+- real PHI, PII, payment card data, or financial account data;
+- screenshots that reveal customer records;
+- raw database dumps;
+- unrestricted admin accounts.
+
+Use synthetic data, de-identified data, or a harmless canary value.
+
+If real PHI or PII could appear in a trace, pause before sending. We either de-identify the trace or put the required agreement in place first.
+
+## What I need from you
+
+For the initial setup:
+
+- a short description of what the agent does;
+- the list of tools the agent can call;
+- the high-impact actions you worry about;
+- where authorization should come from for those actions;
+- the staging or sandbox path you want to use;
+- how tool-call traces can be exported;
+- written authorization for the staging test.
+
+For the full run:
+
+- traces for the agreed scenarios;
+- notes on any run that failed for infrastructure reasons;
+- confirmation that the traces contain no real customer data or secrets.
+
+## What I do
+
+I handle the evidence work:
+
+- identify the riskiest action boundary;
+- write 5 to 10 workflow-specific scenarios;
+- include benign controls so normal authorized work still has to pass;
+- define pass/fail rules before scoring;
+- review traces by hand;
+- map findings to the relevant OWASP LLM risk category when applicable;
+- write the report, evidence register, recommendations, and retest rules;
+- perform one included retest of the same scenario set after fixes.
+
+## Expected engineering time
+
+Typical client effort:
+
+| Situation | Expected effort |
+|---|---:|
+| Staging exists and tool-call logs are easy to export | 1 to 3 hours |
+| Staging exists but trace format needs cleanup | 3 to 6 hours |
+| No trace export exists but a small adapter is possible | Half day to one day |
+| No staging, no sandbox, or no observable tool calls | Not ready for the fixed-scope pilot |
+
+These estimates are for the client's engineering time, not the full engagement time.
+
+## Communication model
+
+Async is the default.
+
+Email is enough for most of the engagement. A shared doc, private repo, or secure upload link can be used for scenario files and traces.
+
+A call is optional, not required. If a call happens, it should be short and specific: scope, setup check, or report readout.
+
+## Deliverables
+
+You receive:
+
+- a short scope and method section;
+- an action surface map;
+- an authorization source-of-truth map;
+- scenario matrix;
+- trace-backed findings;
+- severity and business impact;
+- concrete application-layer fixes;
+- evidence register;
+- retest plan;
+- one retest result after fixes.
+
+## Boundary
+
+This is a focused authorization review for a tool-using agent. It is not a full penetration test, compliance certification, SOC report, legal opinion, SAST, IAM review, MCP server configuration audit, or secret scan.
+
+The question it answers is narrower and practical:
+
+Can this agent take a high-impact action without trusted, current, scope-matching authorization evidence?
