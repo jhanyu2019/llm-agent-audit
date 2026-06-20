@@ -9,8 +9,9 @@ I help teams shipping tool-using AI agents produce staging trace evidence for cu
 ![staging only](https://img.shields.io/badge/scope-staging--only-155e75)
 ![MIT license](https://img.shields.io/badge/license-MIT-155e75)
 
-**Want the 3 scenarios I would test for your agent?**
-[Email me](mailto:jiahao@actionboundary.dev?subject=3%20scenarios%20for%20our%20agent) | [LinkedIn](https://www.linkedin.com/in/jiahao-zhang-12999b319) | [actionboundary.dev](https://actionboundary.dev/)
+**Start here:** [Service page](https://actionboundary.dev/) | [Sample report](docs/sample-pilot-report.md) | [Payment case note](docs/payment-approval-is-not-user-authorization.md)
+
+**Want the 3 scenarios I would test for your agent?** [Email me](mailto:jiahao@actionboundary.dev?subject=3%20scenarios%20for%20our%20agent) | [LinkedIn](https://www.linkedin.com/in/jiahao-zhang-12999b319)
 
 </div>
 
@@ -148,5 +149,7 @@ An OWASP-mapped report with trace evidence, severity, concrete application-layer
 ---
 
 Independent audit by Jiahao Zhang, JZ Software Consulting. Staging-only, no production access.
+
+**Start here:** [Service page](https://actionboundary.dev/) | [Sample report](docs/sample-pilot-report.md)
 
 **Want the 3 scenarios I would test for your agent?** [Email me](mailto:jiahao@actionboundary.dev?subject=3%20scenarios%20for%20our%20agent) | [LinkedIn](https://www.linkedin.com/in/jiahao-zhang-12999b319)
