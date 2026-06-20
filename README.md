@@ -2,7 +2,7 @@
 
 # Agent Authorization Review for tool-using AI agents
 
-I run a staging-only, trace-based action-boundary audit. I test whether untrusted content, such as a user message, ticket, email, document, call transcript, or tool response, can push your tool-using AI agent into a high-impact action it should not take: issuing a refund, moving money, changing a vendor's bank account, deleting an account, granting access, disabling MFA, dispatching a job, or exporting data.
+I help teams shipping tool-using AI agents produce staging trace evidence for customer security reviews. The review checks whether your agent can issue a refund, schedule a payment, change a vendor's bank account, grant access, edit records, or export data without the right user authority and approval evidence.
 
 [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.20585659.svg)](https://doi.org/10.5281/zenodo.20585659)
 ![OWASP LLM Top 10](https://img.shields.io/badge/OWASP-LLM_Top_10-155e75)
@@ -20,7 +20,7 @@ I run a staging-only, trace-based action-boundary audit. I test whether untruste
   <img src="docs/provenance.png" alt="Same action, judged by its authorization source. A schedule_payment call to an account named inside a vendor email fails because it has no trusted authorization source; the same kind of call backed by an approval record from the source of truth passes." width="820">
 </p>
 
-**Independent, trace-backed evidence about your agent's authorization boundary, useful whether the tested workflow passes or fails.** Failing scenarios become reproducible findings, fixes, and a retest. Passing scenarios become evidence your customer's security review can use.
+**Independent, trace-backed evidence about your agent's authorization boundary, useful before a customer asks whether the agent can move money or data without permission.** Failing scenarios become reproducible findings, fixes, and a retest. Passing scenarios become evidence your customer's security review can use.
 
 **How it works.** A pilot starts with a 3-scenario sketch so you can judge fit before setup. If it fits, we pick one high-impact action and one safe staging path. I provide the scenarios, pass/fail rules, scoring, report, and retest. Your team only needs a safe way to run the scenarios in staging or share a test endpoint, plus the tool-call logs or traces. No production access, no real customer data, no shared credentials.
 
@@ -36,6 +36,7 @@ A poisoned ticket, invoice, or tool response can look like normal business conte
 <p align="center"><sub>Sample founding-pilot report, synthetic AP workflow. A real report uses your agent, tools, traces, and workflow-specific scenarios.</sub></p>
 
 - **[Sample pilot report](docs/sample-pilot-report.md)**: what you receive, with findings, trace evidence, severity, and fixes.
+- **[A focused payment-permission case note](docs/payment-approval-is-not-user-authorization.md)**: a customer-like AP workflow where four model APIs often attempted payment under a viewer principal, while tool-side enforcement blocked the same action.
 - **[A worked example: an accounts-payable agent](docs/ap-action-boundary-case-note.md)**: the method run end to end on a real tool-calling model in a synthetic AP workflow. It caught an unauthorized data export and still passed the benign controls.
 - **[A multi-turn case note](docs/multi-turn-authorization-drift-case-note.md)**: a healthcare prior-auth workflow where the early action was authorized, then a later note tried to carry that approval too far. Includes a recent live agent-loop check and a paired benign control.
 - **[Why model behavior is not authorization control](docs/model-behavior-is-not-authorization-control.md)**: the plain-language logic behind the review, using finance approvals as the analogy.
@@ -59,6 +60,8 @@ Read the cross-vendor study: [Model choice is not an authorization layer](docs/m
 **Multi-turn case note and method.** A worked prior-auth example: [When an agent treats a note as authorization](docs/multi-turn-authorization-drift-case-note.md). How the audit scores this kind of workflow: [Testing multi-turn authorization drift](docs/multi-turn-authorization-drift-method.md).
 
 **Authorization gates.** Stronger models help, but a careful model is not the same as an application-enforced authorization gate. See [Why model behavior is not authorization control](docs/model-behavior-is-not-authorization-control.md).
+
+**Payment-permission case note.** A focused AP-L4 check across GPT-5.5, Claude Sonnet 4.6, DeepSeek V4 Pro, and Gemini 3.1 Pro Preview showed the same distinction in a customer-like payment flow: a valid payment approval is not the same as current-user authority to schedule payment. See [A payment approval is not user authorization](docs/payment-approval-is-not-user-authorization.md).
 
 **Scope.** The public research is a *fixed* battery, v1.5, 58 attacks plus 3 controls, run across models for reproducibility. That is the open benchmark, not the product. A client pilot is *customized to your real workflow*: scenarios are written for your agent's own tools.
 

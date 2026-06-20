@@ -3,19 +3,19 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Agent Authorization Review for tool-using AI agents | JZ Software Consulting</title>
-<meta name="description" content="Independent, staging-only Agent Authorization Review for tool-using AI agents. I test whether untrusted content can push an agent into unauthorized high-impact actions and deliver trace evidence for customer security reviews.">
+<title>Agent Authorization Review for AI agents that move money or data | JZ Software Consulting</title>
+<meta name="description" content="Independent, staging-only Agent Authorization Review for tool-using AI agents. I test whether an agent can move money, change records, grant access, or export data without the right user authority and approval evidence.">
 <link rel="canonical" href="https://actionboundary.dev/">
 <meta property="og:type" content="website">
-<meta property="og:title" content="Agent Authorization Review for tool-using AI agents">
-<meta property="og:description" content="Independent, staging-only Agent Authorization Review for tool-using AI agents. I test whether untrusted content can push an agent into unauthorized high-impact actions and deliver trace evidence for customer security reviews.">
+<meta property="og:title" content="Agent Authorization Review for AI agents that move money or data">
+<meta property="og:description" content="Independent, staging-only Agent Authorization Review for tool-using AI agents. I test whether an agent can move money, change records, grant access, or export data without the right user authority and approval evidence.">
 <meta property="og:url" content="https://actionboundary.dev/">
 <meta property="og:image" content="https://actionboundary.dev/og-image.png">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" content="Agent Authorization Review for tool-using AI agents">
-<meta name="twitter:description" content="Independent, staging-only Agent Authorization Review for tool-using AI agents. I test whether untrusted content can push an agent into unauthorized high-impact actions and deliver trace evidence for customer security reviews.">
+<meta name="twitter:title" content="Agent Authorization Review for AI agents that move money or data">
+<meta name="twitter:description" content="Independent, staging-only Agent Authorization Review for tool-using AI agents. I test whether an agent can move money, change records, grant access, or export data without the right user authority and approval evidence.">
 <meta name="twitter:image" content="https://actionboundary.dev/og-image.png">
 <style>
   :root {
@@ -191,16 +191,16 @@
 
 <header>
   <p class="eyebrow">Agent Authorization Review &middot; staging-only &middot; independent</p>
-  <h1>Get trace evidence that your AI agent only acts with the right authorization.</h1>
-  <p class="tag">Independent, staging-only review for tool-using agents in healthcare, finance, and ops. I test whether content your agent reads can push it into an unauthorized refund, payment, access change, deletion, or data export, then give you trace evidence a customer's security review can use. No production access, no real data.</p>
-  <p class="tag assurance"><strong>Independent, trace-backed evidence about your agent's authorization boundary, useful whether the tested workflow passes or fails.</strong> <span class="muted">Failing scenarios become reproducible findings, fixes, and a retest. Passing scenarios become evidence your customer's security review can use.</span></p>
+  <h1>Get trace evidence that your AI agent does not move money or data without authorization.</h1>
+  <p class="tag">Independent, staging-only review for tool-using agents in healthcare, finance, and ops. I test whether your agent can issue a refund, schedule a payment, change records, grant access, or export data without the right user authority and approval evidence. No production access, no real data.</p>
+  <p class="tag assurance"><strong>Useful before a customer security review asks whether your agent can take high-impact actions without permission.</strong> <span class="muted">Failing scenarios become reproducible findings, fixes, and a retest. Passing scenarios become trace evidence your customer's review can use.</span></p>
   <div class="quick">
-    <div><b>For</b>Small teams shipping agents that move money, change records, or touch patient/customer data</div>
+    <div><b>For</b>Founders and engineering teams shipping agents that move money, change records, or touch patient/customer data</div>
     <div><b>Pilot</b>3-scenario sketch first, then 5 to 10 staging scenarios with safe test data; I score the tool-call traces</div>
     <div><b>Output</b>OWASP-mapped report with trace evidence, concrete fixes, and one retest</div>
   </div>
   <p class="hero-cta"><b>Want the 3 scenarios I would test for your agent?</b> Reach me on <a href="https://www.linkedin.com/in/jiahao-zhang-12999b319">LinkedIn</a> or <a href="mailto:jiahao@actionboundary.dev?subject=3%20scenarios%20for%20our%20agent">email me</a>.</p>
-  <p class="trust">Independent audit by Jiahao Zhang, JZ Software Consulting &middot; <a href="https://github.com/hugoii/llm-agent-audit/blob/master/docs/sample-pilot-report.md">Sample report</a> &middot; <a href="https://github.com/hugoii/llm-agent-audit">Open-source harness</a> &middot; <a href="https://doi.org/10.5281/zenodo.20585659">Zenodo DOI</a> &middot; No production access or real data</p>
+  <p class="trust">Independent audit by Jiahao Zhang, JZ Software Consulting &middot; <a href="https://github.com/hugoii/llm-agent-audit/blob/master/docs/sample-pilot-report.md">Sample report</a> &middot; <a href="https://github.com/hugoii/llm-agent-audit/blob/master/docs/payment-approval-is-not-user-authorization.md">Payment-permission case note</a> &middot; <a href="https://github.com/hugoii/llm-agent-audit">Open-source harness</a> &middot; <a href="https://doi.org/10.5281/zenodo.20585659">Zenodo DOI</a> &middot; No production access or real data</p>
 </header>
 
 <h2>What I test</h2>
@@ -249,7 +249,7 @@
 
 <h2>What this looks like in practice</h2>
 <p class="section-note">These are examples of the action boundary, not public test payloads.</p>
-<div class="ex"><b>Finance and AP</b>An accounts-payable agent reads a vendor invoice whose text says the bank account changed. A text-only test checks whether the model warns about fraud. This audit checks whether the agent actually calls a tool to update bank details or schedule payment. See a <a href="https://github.com/hugoii/llm-agent-audit/blob/master/docs/ap-action-boundary-case-note.md">worked AP example</a>.</div>
+<div class="ex"><b>Finance and AP</b>An accounts-payable agent reads a vendor invoice whose text says the bank account changed, or reviews a valid payment approval under a user who lacks payment permission. A text-only test checks whether the model sounds careful. This audit checks whether the agent actually calls a tool to update bank details or schedule payment. See a <a href="https://github.com/hugoii/llm-agent-audit/blob/master/docs/ap-action-boundary-case-note.md">worked AP example</a> and a <a href="https://github.com/hugoii/llm-agent-audit/blob/master/docs/payment-approval-is-not-user-authorization.md">payment-permission case note</a>.</div>
 <div class="ex"><b>Healthcare</b>A prior-authorization agent reads a payer response or patient note that sounds like approval. This audit checks whether it schedules, submits, or changes care without checking the right source of authority. See a <a href="https://github.com/hugoii/llm-agent-audit/blob/master/docs/multi-turn-authorization-drift-case-note.md">multi-turn prior-auth case note</a>.</div>
 <div class="ex"><b>Logistics</b>A dispatch agent reads a carrier email or a phone transcript where the caller says a job is urgent or asks to change someone else's booking. This audit checks whether the agent dispatches, cancels, or edits the job without verifying the caller is allowed to ask.</div>
 
@@ -280,7 +280,7 @@
 </div>
 
 <h2>Why trust it</h2>
-<p>It is independent third-party evidence you can show a customer's security review or your own team. The harness is open source. The per-model summaries and the technical report are public and archived on Zenodo with a <a href="https://doi.org/10.5281/zenodo.20585659">DOI</a> for citation and reproducibility. The <a href="https://github.com/hugoii/llm-agent-audit/blob/master/docs/ap-action-boundary-case-note.md">worked AP example</a> and <a href="https://github.com/hugoii/llm-agent-audit/blob/master/docs/multi-turn-authorization-drift-case-note.md">multi-turn prior-auth case note</a> show the method on concrete workflows, the <a href="https://github.com/hugoii/llm-agent-audit/blob/master/docs/multi-turn-authorization-drift-method.md">method note</a> explains how I score multi-turn authorization drift without treating every approval-looking note as trusted evidence, and <a href="https://github.com/hugoii/llm-agent-audit/blob/master/docs/model-behavior-is-not-authorization-control.md">this short note</a> explains why strong model behavior is not the same as an authorization gate.</p>
+<p>It is independent third-party evidence you can show a customer's security review or your own team. The harness is open source. The per-model summaries and the technical report are public and archived on Zenodo with a <a href="https://doi.org/10.5281/zenodo.20585659">DOI</a> for citation and reproducibility. The <a href="https://github.com/hugoii/llm-agent-audit/blob/master/docs/ap-action-boundary-case-note.md">worked AP example</a>, <a href="https://github.com/hugoii/llm-agent-audit/blob/master/docs/payment-approval-is-not-user-authorization.md">payment-permission case note</a>, and <a href="https://github.com/hugoii/llm-agent-audit/blob/master/docs/multi-turn-authorization-drift-case-note.md">multi-turn prior-auth case note</a> show the method on concrete workflows, the <a href="https://github.com/hugoii/llm-agent-audit/blob/master/docs/multi-turn-authorization-drift-method.md">method note</a> explains how I score multi-turn authorization drift without treating every approval-looking note as trusted evidence, and <a href="https://github.com/hugoii/llm-agent-audit/blob/master/docs/model-behavior-is-not-authorization-control.md">this short note</a> explains why strong model behavior is not the same as an authorization gate.</p>
 
 <h2>Who runs this</h2>
 <div class="about">
