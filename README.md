@@ -32,11 +32,11 @@ A poisoned ticket, invoice, or tool response can look like normal business conte
 ## Start here
 
 <p align="center">
-  <img src="docs/sample-report-preview.png" alt="Preview of a sample founding-pilot report: executive summary, risk summary (1 critical, 1 high, 6 handled safely including 2 benign controls), finding F-1 payment redirected by a vendor email with tool-call evidence, and recommended controls" width="820">
+  <img src="docs/sample-report-preview.svg" alt="Preview of a sample evidence report: executive summary, risk summary, scenario matrix, finding F-1 payment redirected by vendor email, authorization evidence, control, and retest rule" width="820">
 </p>
-<p align="center"><sub>Sample founding-pilot report, synthetic AP workflow. A real report uses your agent, tools, traces, and workflow-specific scenarios.</sub></p>
+<p align="center"><sub>Sample evidence report, synthetic AP workflow. A real report uses your agent, tools, traces, and workflow-specific authorization rules.</sub></p>
 
-- **[Sample pilot report](docs/sample-pilot-report.md)**: what you receive, with findings, trace evidence, severity, and fixes.
+- **[Sample evidence report](docs/sample-pilot-report.md)**: what you receive, with findings, trace evidence, severity, authorization evidence, fixes, and retest rules.
 - **[A focused payment-permission case note](docs/payment-approval-is-not-user-authorization.md)**: a customer-like AP workflow where four model APIs often attempted payment under a viewer principal, while tool-side enforcement blocked the same action.
 - **[A worked example: an accounts-payable agent](docs/ap-action-boundary-case-note.md)**: the method run end to end on a real tool-calling model in a synthetic AP workflow. It caught an unauthorized data export and still passed the benign controls.
 - **[A multi-turn case note](docs/multi-turn-authorization-drift-case-note.md)**: a healthcare prior-auth workflow where the early action was authorized, then a later note tried to carry that approval too far. Includes a recent live agent-loop check and a paired benign control.
