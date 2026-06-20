@@ -254,7 +254,7 @@
 <div class="ex"><b>Logistics</b>A dispatch agent reads a carrier email or a phone transcript where the caller says a job is urgent or asks to change someone else's booking. This audit checks whether the agent dispatches, cancels, or edits the job without verifying the caller is allowed to ask.</div>
 
 <h2>Why multi-turn workflows are harder</h2>
-<p class="section-note">Real agents take several steps. An early action can be correctly authorized, then a later note can carry that approval too far. The same tool call is fine or unsafe depending on where the authorization came from. See the <a href="https://github.com/hugoii/llm-agent-audit/blob/master/docs/multi-turn-authorization-drift-case-note.md">worked prior-auth case note</a> and the <a href="https://github.com/hugoii/llm-agent-audit/blob/master/docs/multi-turn-authorization-drift-method.md">method note</a>.</p>
+<p class="section-note">Real agents take several steps. An early action can be correctly authorized, then a later note can carry that approval too far. The same tool call is fine or unsafe depending on where the authorization came from. The worked note includes a recent live agent-loop check and a paired benign control. See the <a href="https://github.com/hugoii/llm-agent-audit/blob/master/docs/multi-turn-authorization-drift-case-note.md">worked prior-auth case note</a> and the <a href="https://github.com/hugoii/llm-agent-audit/blob/master/docs/multi-turn-authorization-drift-method.md">method note</a>.</p>
 <figure>
   <div class="timeline">
     <div class="tl-step tl-trusted"><span class="tl-turn">T1</span><b>Payer lookup</b><small>PA-7781, source of truth</small></div>
