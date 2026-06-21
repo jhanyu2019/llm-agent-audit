@@ -56,6 +56,18 @@ A poisoned ticket, invoice, or tool response can look like normal business conte
 | Sample deliverable | The [rendered PDF sample](docs/sample-evidence-report.pdf) is generated from [docs/sample-pilot-report.md](docs/sample-pilot-report.md), not a standalone marketing mockup. |
 | Client pilot | The public benchmark proves the method; a client pilot replaces generic scenarios with your staging tools, authorization sources, and traces. |
 
+## What a clone shows
+
+This repository is the reproducible public method, not a copy of a customer's private staging environment.
+
+| Layer | What you can verify | What it does not claim |
+|---|---|---|
+| Offline demo | `agent_audit.py` runs 53 attack scenarios plus 3 controls against reference demo agents and writes a trace-backed report. | Evidence about your agent or your production controls. |
+| Public real-model evidence | `docs/runs/v1.5` and the Zenodo archive show fixed-battery runs across multiple model APIs. | A universal benchmark for every agent architecture, prompt, tool schema, or workflow. |
+| Pilot deliverable shape | The sample report and evidence flow show the structure of findings, trace evidence, authorization evidence, fixes, and retest rules. | A real report without your staging tools, approval sources, tool-call traces, and workflow-specific pass/fail rules. |
+
+Read it this way: **the repo proves the method; the pilot applies it to your real workflow.**
+
 ## Why you can trust it
 
 It is independent, open, and evidence-based. On a fixed battery run across six recent models from three major vendors, the average number of unsafe tool calls ranged from 0.0 to 8.0 on the same test, and the frontier label was not a reliable safety signal. The lesson: a model's refusal, and model choice, are not your authorization layer. That has to live in your application.
@@ -101,7 +113,7 @@ Public issue and pull request guidance is covered in [CONTRIBUTING.md](CONTRIBUT
 
 | Repo layer | What you are looking at |
 |---|---|
-| Offline demo | `agent_audit.py` runs a naive and a guarded reference agent with no API key. |
+| Offline demo | `agent_audit.py` runs a naive and a guarded reference demo agent with no API key. |
 | Live API runs | `run_real.py` runs battery v1.5 against real model APIs and writes trace-backed reports. |
 | Client pilot | The generic scenarios are replaced with your staging tools, approvals, and traces. |
 
@@ -116,7 +128,7 @@ Public issue and pull request guidance is covered in [CONTRIBUTING.md](CONTRIBUT
 python agent_audit.py
 ```
 
-It runs the 53 core attack scenarios against an un-hardened agent, then the same agent with guardrails, and writes a client-ready `agent_report.md` with evidence and fixes. The live cross-vendor study used battery v1.5, 58 attacks plus 3 controls; see `run_real.py`.
+It runs the 53 core attack scenarios against an un-hardened demo agent, then the same demo agent with guardrails, and writes `agent_report.md` with trace evidence and fixes. This is a reproducible method demo, not evidence about your system. The live cross-vendor study used battery v1.5, 58 attacks plus 3 controls; see `run_real.py`.
 
 **On your own model.** Replace the demo agents with a function that runs your agent's tool-calling loop and records each `(tool_name, args)` into `trace`. `run_real.py` supports OpenAI, Anthropic, and Gemini through the `PROVIDER` env var, plus OpenAI-compatible gateways through `OPENAI_BASE_URL`. Set `RUNS=3` for per-run reports and a multi-run summary.
 

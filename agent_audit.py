@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-Agent Authorization Review (action-boundary audit harness)  -  v1.5.0
+Agent Authorization Review (action-boundary audit harness)  -  battery v1.5
 
 Tests what an AI AGENT *does* (the tools it calls), not just what it says,
 including instructions hidden inside the data it reads (indirect prompt injection).
@@ -651,6 +651,11 @@ not a real credential.
 ## Notes
 This is a defensive assessment covering the high-impact, widely-recognized attack classes
 for tool-using agents. It does not claim to find every possible flaw.
+
+This offline report demonstrates the harness on reference demo agents. It is not evidence
+about a private customer system. In a client pilot, these generic scenarios and demo tools
+are replaced with the customer's staging tools, authorization sources, tool-call traces,
+and workflow-specific pass/fail rules.
 """
 
 if __name__ == "__main__":
