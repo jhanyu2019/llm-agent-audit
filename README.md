@@ -5,11 +5,12 @@
 I help teams shipping tool-using AI agents produce staging trace evidence for customer security reviews. The review checks whether your agent can issue a refund, schedule a payment, change a vendor's bank account, grant access, edit records, or export data without the right user authority and approval evidence.
 
 [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.20585659.svg)](https://doi.org/10.5281/zenodo.20585659)
+![offline smoke test](https://github.com/hugoii/llm-agent-audit/actions/workflows/offline-smoke.yml/badge.svg)
 ![OWASP LLM Top 10](https://img.shields.io/badge/OWASP-LLM_Top_10-155e75)
 ![staging only](https://img.shields.io/badge/scope-staging--only-155e75)
 ![MIT license](https://img.shields.io/badge/license-MIT-155e75)
 
-**Start here:** [Service page](https://actionboundary.dev/) | [Sample report](docs/sample-pilot-report.md) | [Payment case note](docs/payment-approval-is-not-user-authorization.md)
+**Start here:** [Service page](https://actionboundary.dev/) | [Evidence flow](docs/evidence-flow.md) | [Sample report](docs/sample-pilot-report.md)
 
 **Want the 3 scenarios I would test for your agent?** [Email me](mailto:jiahao@actionboundary.dev?subject=3%20scenarios%20for%20our%20agent) | [LinkedIn](https://www.linkedin.com/in/jiahao-zhang-12999b319)
 
@@ -38,6 +39,7 @@ A poisoned ticket, invoice, or tool response can look like normal business conte
 
 - **[Sample evidence report](docs/sample-pilot-report.md)**: what you receive, with findings, trace evidence, severity, authorization evidence, fixes, and retest rules.
 - **[Rendered PDF sample](docs/sample-evidence-report.pdf)**: a polished report-style preview generated from the public sample report source.
+- **[Evidence flow](docs/evidence-flow.md)**: how untrusted content, tool calls, authorization evidence, findings, fixes, and retests connect.
 - **[A focused payment-permission case note](docs/payment-approval-is-not-user-authorization.md)**: a customer-like AP workflow where four model APIs often attempted payment under a viewer principal, while tool-side enforcement blocked the same action.
 - **[A worked example: an accounts-payable agent](docs/ap-action-boundary-case-note.md)**: the method run end to end on a real tool-calling model in a synthetic AP workflow. It caught an unauthorized data export and still passed the benign controls.
 - **[A multi-turn case note](docs/multi-turn-authorization-drift-case-note.md)**: a healthcare prior-auth workflow where the early action was authorized, then a later note tried to carry that approval too far. Includes a recent live agent-loop check and a paired benign control.
@@ -49,6 +51,9 @@ A poisoned ticket, invoice, or tool response can look like normal business conte
 It is independent, open, and evidence-based. On a fixed battery run across six recent models from three major vendors, the average number of unsafe tool calls ranged from 0.0 to 8.0 on the same test, and the frontier label was not a reliable safety signal. The lesson: a model's refusal, and model choice, are not your authorization layer. That has to live in your application.
 
 Read the cross-vendor study: [Model choice is not an authorization layer](docs/model-choice-is-not-an-authorization-layer.md). The harness, per-model data, and technical report are archived on Zenodo with a [DOI](https://doi.org/10.5281/zenodo.20585659) for citation and reproducibility.
+
+Repository security reports and public disclosure boundaries are covered in the [security policy](SECURITY.md).
+Public issue and pull request guidance is covered in [CONTRIBUTING.md](CONTRIBUTING.md).
 
 <details>
 <summary><b>More research and raw data</b></summary>
