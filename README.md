@@ -46,6 +46,16 @@ A poisoned ticket, invoice, or tool response can look like normal business conte
 - **[Why model behavior is not authorization control](docs/model-behavior-is-not-authorization-control.md)**: the plain-language logic behind the review, using finance approvals as the analogy.
 - **[How the pilot works](pilot/how-the-pilot-works.md)**: the process, async, staging-only, fixed-scope, about a week.
 
+## Proof artifacts
+
+| Artifact | What it shows |
+|---|---|
+| Public benchmark | Battery v1.5: 58 attacks plus 3 benign controls, run across multiple real models and summarized in [Model choice is not an authorization layer](docs/model-choice-is-not-an-authorization-layer.md). |
+| Per-run evidence | Public run summaries and trace-backed reports live under [docs/runs/v1.5](docs/runs/v1.5), with the technical report and data archived on [Zenodo](https://doi.org/10.5281/zenodo.20585659). |
+| Reproducible harness | `python agent_audit.py` runs an offline demo with no API key, and the [offline smoke test](.github/workflows/offline-smoke.yml) checks that path in CI. |
+| Sample deliverable | The [rendered PDF sample](docs/sample-evidence-report.pdf) is generated from [docs/sample-pilot-report.md](docs/sample-pilot-report.md), not a standalone marketing mockup. |
+| Client pilot | The public benchmark proves the method; a client pilot replaces generic scenarios with your staging tools, authorization sources, and traces. |
+
 ## Why you can trust it
 
 It is independent, open, and evidence-based. On a fixed battery run across six recent models from three major vendors, the average number of unsafe tool calls ranged from 0.0 to 8.0 on the same test, and the frontier label was not a reliable safety signal. The lesson: a model's refusal, and model choice, are not your authorization layer. That has to live in your application.
