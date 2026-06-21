@@ -115,9 +115,26 @@
     position: sticky;
     top: 0;
     z-index: 20;
-    background: rgba(247, 248, 250, 0.92);
-    border-bottom: 1px solid rgba(219, 225, 232, 0.92);
-    backdrop-filter: blur(14px) saturate(140%);
+    background:
+      linear-gradient(180deg, rgba(21, 24, 28, 0.90), rgba(21, 24, 28, 0.84));
+    border-bottom: 1px solid rgba(154, 215, 207, 0.16);
+    box-shadow:
+      inset 0 1px 0 rgba(255, 255, 255, 0.10),
+      0 1px 8px rgba(0, 0, 0, 0.12);
+    -webkit-backdrop-filter: blur(22px) saturate(150%);
+    backdrop-filter: blur(22px) saturate(150%);
+  }
+
+  .site-nav::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: -1px;
+    height: 1px;
+    pointer-events: none;
+    background: linear-gradient(90deg, transparent, rgba(15, 118, 110, 0.34), transparent);
+    opacity: 0.52;
   }
 
   .nav-inner {
@@ -134,7 +151,7 @@
     display: flex;
     flex-direction: column;
     text-decoration: none;
-    color: var(--ink);
+    color: #f6f8f9;
     min-width: 0;
   }
 
@@ -145,7 +162,7 @@
   }
 
   .brand span {
-    color: var(--muted);
+    color: #b7c5ca;
     font-size: 0.78rem;
     line-height: 1.25;
     margin-top: 3px;
@@ -160,25 +177,26 @@
   }
 
   .nav-links a {
-    color: #30343a;
+    color: rgba(246, 248, 249, 0.90);
     text-decoration: none;
+    transition: color 160ms var(--ease-out-quint), opacity 160ms var(--ease-out-quint);
   }
 
   .nav-links a:hover {
-    color: var(--teal-dark);
+    color: var(--white);
   }
 
   .nav-links .nav-cta {
-    border: 1px solid var(--teal-dark);
-    background: var(--teal-dark);
+    border: 1px solid rgba(154, 215, 207, 0.36);
+    background: rgba(11, 79, 74, 0.88);
     color: var(--white);
     padding: 8px 12px;
     border-radius: 8px;
   }
 
   .nav-links .nav-cta:hover {
-    background: var(--charcoal);
-    border-color: var(--charcoal);
+    background: rgba(15, 118, 110, 0.96);
+    border-color: rgba(154, 215, 207, 0.54);
     color: var(--white);
   }
 
@@ -320,46 +338,107 @@
     background: var(--teal-soft);
   }
 
-  .method-strip {
-    display: flex;
-    flex-wrap: wrap;
-    align-items: center;
-    gap: 8px;
-    max-width: 1120px;
-    margin: 0 0 26px;
-    color: var(--hero-muted);
-    font-size: 0.84rem;
+  .method-menu {
+    position: relative;
+    z-index: 8;
+    display: inline-flex;
   }
 
-  .method-label {
-    color: #f4f7f8;
-    font-weight: 800;
-    margin-right: 2px;
+  .method-menu summary {
+    list-style: none;
   }
 
-  .method-strip a,
-  .method-note {
+  .method-menu summary::-webkit-details-marker {
+    display: none;
+  }
+
+  .method-trigger {
+    position: relative;
     display: inline-flex;
     align-items: center;
-    min-height: 30px;
-    padding: 5px 9px;
-    border: 1px solid rgba(154, 215, 207, 0.28);
-    border-radius: 999px;
-    background: rgba(154, 215, 207, 0.07);
+    gap: 8px;
+    min-height: 44px;
+    padding: 11px 14px;
+    border: 1px solid rgba(154, 215, 207, 0.32);
+    border-radius: 8px;
+    background:
+      linear-gradient(180deg, rgba(154, 215, 207, 0.11), rgba(154, 215, 207, 0.055));
     color: #d8f2ee;
-    text-decoration: none;
+    font-weight: 750;
+    cursor: pointer;
+    user-select: none;
   }
 
-  .method-strip a:hover {
+  .method-trigger::after {
+    content: "";
+    width: 7px;
+    height: 7px;
+    border-right: 2px solid currentColor;
+    border-bottom: 2px solid currentColor;
+    transform: translateY(-2px) rotate(45deg);
+    opacity: 0.78;
+    transition: transform 180ms var(--ease-out-quint);
+  }
+
+  .method-menu[open] .method-trigger::after {
+    transform: translateY(1px) rotate(225deg);
+  }
+
+  .method-menu[open] .method-trigger,
+  .method-trigger:hover {
     color: var(--white);
-    border-color: rgba(154, 215, 207, 0.48);
-    background: rgba(154, 215, 207, 0.12);
+    border-color: rgba(154, 215, 207, 0.56);
+    background:
+      linear-gradient(180deg, rgba(154, 215, 207, 0.18), rgba(154, 215, 207, 0.08));
+  }
+
+  .method-panel {
+    position: absolute;
+    top: calc(100% + 8px);
+    left: 0;
+    width: min(300px, calc(100vw - 48px));
+    padding: 7px;
+    border: 1px solid rgba(154, 215, 207, 0.22);
+    border-radius: 8px;
+    background:
+      linear-gradient(180deg, rgba(30, 34, 39, 0.96), rgba(23, 26, 31, 0.96));
+    box-shadow: 0 8px 14px rgba(0, 0, 0, 0.24);
+    -webkit-backdrop-filter: blur(18px) saturate(140%);
+    backdrop-filter: blur(18px) saturate(140%);
+  }
+
+  .method-menu:not([open]) .method-panel {
+    display: none;
+  }
+
+  .method-panel a {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    min-height: 34px;
+    padding: 8px 10px;
+    border-radius: 8px;
+    color: #d8f2ee;
+    text-decoration: none;
+    font-size: 0.86rem;
+  }
+
+  .method-panel a::after {
+    content: "->";
+    color: rgba(154, 215, 207, 0.60);
+    font-weight: 800;
+  }
+
+  .method-panel a:hover {
+    color: var(--white);
+    background: rgba(154, 215, 207, 0.10);
   }
 
   .method-note {
+    margin: 6px 9px 3px;
     color: var(--hero-muted);
-    border-color: rgba(255,255,255,0.14);
-    background: rgba(255,255,255,0.045);
+    font-size: 0.76rem;
+    line-height: 1.35;
   }
 
   .hero-proof {
@@ -370,8 +449,8 @@
   }
 
   .proof-tile {
-    border: 1px solid rgba(255,255,255,0.14);
-    background: rgba(255,255,255,0.07);
+    border: 1px solid rgba(255,255,255,0.10);
+    background: rgba(255,255,255,0.046);
     border-radius: 8px;
     padding: 12px 13px;
     min-width: 0;
@@ -399,10 +478,35 @@
     background:
       radial-gradient(circle at 82% 18%, rgba(15, 118, 110, 0.16), transparent 38%),
       linear-gradient(180deg, rgba(255,255,255,0.045), rgba(255,255,255,0.015));
+    box-shadow: inset 0 1px 0 rgba(255,255,255,0.05);
     overflow: hidden;
   }
 
+  .trace-scene::before,
+  .trace-scene::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+    pointer-events: none;
+    border-radius: 8px;
+  }
+
+  .trace-scene::before {
+    background: linear-gradient(105deg, transparent 0%, transparent 40%, rgba(154, 215, 207, 0.12) 50%, transparent 62%, transparent 100%);
+    opacity: 0;
+    transform: translateX(-48%);
+  }
+
+  .trace-scene::after {
+    background:
+      linear-gradient(90deg, transparent, rgba(154, 215, 207, 0.18), transparent) bottom / 100% 1px no-repeat;
+    opacity: 0.58;
+  }
+
   .scene-label {
+    position: relative;
+    z-index: 1;
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -417,6 +521,8 @@
   }
 
   .trace-grid {
+    position: relative;
+    z-index: 1;
     display: grid;
     grid-template-columns: 1fr;
     gap: 10px;
@@ -498,12 +604,27 @@
   }
 
   .rule-line {
+    position: relative;
+    z-index: 1;
+    overflow: hidden;
     color: var(--rule-on-dark);
     border: 1px solid var(--rule-border);
     padding: 10px 14px;
     margin: 16px 0 0;
     background: var(--rule-wash);
     border-radius: 8px;
+  }
+
+  .rule-line::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+    pointer-events: none;
+    background: linear-gradient(90deg, transparent, rgba(154, 215, 207, 0.16), transparent);
+    mix-blend-mode: screen;
+    opacity: 0;
+    transform: translateX(-36%);
   }
 
   main {
@@ -627,14 +748,45 @@
   }
 
   .report-frame {
+    position: relative;
+    isolation: isolate;
     background: var(--white);
     border: 1px solid var(--line);
     border-radius: 8px;
     padding: 16px;
-    box-shadow: var(--shadow);
+    overflow: visible;
+    box-shadow: var(--shadow), 0 20px 38px rgba(15, 118, 110, 0.06);
+  }
+
+  .report-frame::before {
+    content: "";
+    position: absolute;
+    inset: -22px;
+    z-index: 0;
+    pointer-events: none;
+    border-radius: 8px;
+    background:
+      radial-gradient(ellipse at 50% 50%, rgba(15, 118, 110, 0.28), rgba(73, 185, 169, 0.16) 42%, rgba(73, 185, 169, 0) 72%);
+    opacity: 0.40;
+    transform: scale(0.985);
+    filter: blur(18px);
+  }
+
+  .report-frame::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+    pointer-events: none;
+    border-radius: 8px;
+    background: linear-gradient(112deg, rgba(73, 185, 169, 0) 0%, rgba(73, 185, 169, 0) 37%, rgba(15, 118, 110, 0.14) 49%, rgba(73, 185, 169, 0) 62%, rgba(73, 185, 169, 0) 100%);
+    opacity: 0;
+    transform: translateX(-18%);
   }
 
   .report-frame img {
+    position: relative;
+    z-index: 1;
     display: block;
     width: 100%;
     border: 1px solid var(--line);
@@ -645,6 +797,8 @@
   }
 
   .report-frame .report-actions {
+    position: relative;
+    z-index: 1;
     display: flex;
     justify-content: center;
   }
@@ -737,11 +891,14 @@
 
   .proof-grid {
     display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 14px;
+    grid-template-columns: repeat(6, 1fr);
+    gap: 16px;
   }
 
   .proof-card {
+    position: relative;
+    grid-column: span 3;
+    overflow: hidden;
     background: var(--white);
     border: 1px solid var(--line);
     border-radius: 8px;
@@ -749,13 +906,50 @@
     box-shadow: var(--shadow-soft);
   }
 
+  .proof-card::before {
+    content: "";
+    position: absolute;
+    inset: 0 0 auto;
+    z-index: 0;
+    height: 3px;
+    background: linear-gradient(90deg, rgba(15, 118, 110, 0.72), rgba(154, 215, 207, 0.12));
+  }
+
+  .proof-card::after {
+    content: "";
+    position: absolute;
+    right: -42px;
+    top: -48px;
+    z-index: 0;
+    width: 136px;
+    height: 136px;
+    pointer-events: none;
+    background: radial-gradient(circle, rgba(73, 185, 169, 0.12), rgba(73, 185, 169, 0) 68%);
+    opacity: 0;
+    transition: opacity 180ms var(--ease-out-quint);
+  }
+
+  .proof-card:hover::after {
+    opacity: 1;
+  }
+
+  .proof-card:nth-child(5) {
+    grid-column: 1 / -1;
+    background: linear-gradient(180deg, var(--white), #f9fdfc);
+    border-color: rgba(15, 118, 110, 0.22);
+  }
+
   .proof-card b {
+    position: relative;
+    z-index: 1;
     display: block;
     margin-bottom: 6px;
     font-size: 1.03rem;
   }
 
   .proof-card p {
+    position: relative;
+    z-index: 1;
     color: var(--muted);
     margin-bottom: 0;
   }
@@ -775,6 +969,7 @@
   }
 
   .proof-ladder {
+    counter-reset: proof-step;
     max-width: 1040px;
     display: grid;
     grid-template-columns: repeat(3, 1fr);
@@ -782,12 +977,33 @@
     overflow: hidden;
     border: 1px solid var(--line);
     border-radius: 8px;
-    background: var(--white);
+    background: linear-gradient(180deg, var(--white), #fbfdfd);
   }
 
   .proof-step {
-    padding: 16px;
+    position: relative;
+    counter-increment: proof-step;
+    padding: 18px 18px 20px 50px;
     border-right: 1px solid var(--line);
+  }
+
+  .proof-step::before {
+    content: counter(proof-step);
+    position: absolute;
+    left: 17px;
+    top: 20px;
+    width: 21px;
+    height: 21px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid rgba(15, 118, 110, 0.28);
+    border-radius: 50%;
+    background: var(--teal-soft);
+    color: var(--teal-dark);
+    font-size: 0.72rem;
+    font-weight: 900;
+    line-height: 1;
   }
 
   .proof-step:last-child {
@@ -1026,9 +1242,121 @@
       animation-name: trace-pass-replay;
     }
 
+    .trace-scene::before {
+      animation: trace-scene-scan 7.8s var(--ease-out-quint) infinite;
+    }
+
+    .rule-line::after {
+      animation: rule-confirm-replay 7.8s var(--ease-out-quint) infinite;
+    }
+
+    .method-menu[open] .method-panel {
+      animation: method-panel-in 180ms var(--ease-out-quint) both;
+    }
+
+    .report-frame::before {
+      animation: report-halo-breathe 4.4s var(--ease-out-quint) infinite;
+    }
+
+    .report-frame::after {
+      animation: report-sheen-pass 4.4s var(--ease-out-quint) infinite;
+    }
+
+    .proof-step::before {
+      animation: proof-node-focus 7.2s var(--ease-out-quint) infinite;
+    }
+
+    .proof-step:nth-child(2)::before {
+      animation-delay: 1.35s;
+    }
+
+    .proof-step:nth-child(3)::before {
+      animation-delay: 2.7s;
+    }
+
     @keyframes rise {
       from { transform: translateY(5px); opacity: 0.96; }
       to { transform: translateY(0); opacity: 1; }
+    }
+
+    @keyframes report-halo-breathe {
+      0%, 100% {
+        opacity: 0.36;
+        transform: scale(0.985);
+      }
+      45% {
+        opacity: 0.82;
+        transform: scale(1.025);
+      }
+    }
+
+    @keyframes report-sheen-pass {
+      0%, 28%, 100% {
+        opacity: 0;
+        transform: translateX(-18%);
+      }
+      48% {
+        opacity: 0.78;
+        transform: translateX(0);
+      }
+      68% {
+        opacity: 0;
+        transform: translateX(18%);
+      }
+    }
+
+    @keyframes proof-node-focus {
+      0%, 64%, 100% {
+        border-color: rgba(15, 118, 110, 0.28);
+        background: var(--teal-soft);
+        transform: scale(1);
+      }
+      12%, 24% {
+        border-color: rgba(15, 118, 110, 0.56);
+        background: #d8efec;
+        transform: scale(1.08);
+      }
+    }
+
+    @keyframes method-panel-in {
+      from {
+        opacity: 0;
+        transform: translateY(-4px) scale(0.985);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+      }
+    }
+
+    @keyframes trace-scene-scan {
+      0%, 18%, 100% {
+        opacity: 0;
+        transform: translateX(-48%);
+      }
+      34% {
+        opacity: 0.64;
+        transform: translateX(-12%);
+      }
+      58% {
+        opacity: 0;
+        transform: translateX(46%);
+      }
+    }
+
+    @keyframes rule-confirm-replay {
+      0%, 55%, 100% {
+        opacity: 0;
+        transform: translateX(-36%);
+      }
+      66% {
+        opacity: 0.76;
+        transform: translateX(0);
+      }
+      78% {
+        opacity: 0;
+        transform: translateX(36%);
+      }
     }
 
     @keyframes trace-node-replay {
@@ -1178,6 +1506,11 @@
       grid-template-columns: 1fr;
     }
 
+    .proof-card,
+    .proof-card:nth-child(5) {
+      grid-column: auto;
+    }
+
     .section {
       padding: 48px 18px;
     }
@@ -1216,6 +1549,23 @@
   @media print {
     .site-nav {
       position: static;
+      background: var(--white);
+      border-bottom: 1px solid var(--line);
+      box-shadow: none;
+    }
+
+    .site-nav::after {
+      display: none;
+    }
+
+    .brand,
+    .brand strong,
+    .nav-links a {
+      color: var(--black);
+    }
+
+    .brand span {
+      color: var(--print-muted);
     }
 
     .hero,
@@ -1250,6 +1600,16 @@
       background: var(--white);
       color: var(--black);
     }
+
+    .report-frame::before,
+    .report-frame::after,
+    .trace-scene::before,
+    .trace-scene::after,
+    .rule-line::after,
+    .proof-card::before,
+    .proof-card::after {
+      display: none;
+    }
   }
 </style>
 </head>
@@ -1281,19 +1641,21 @@
       The review tests whether content your agent reads can push it to <strong>move money, change records, grant access, schedule work, or export data</strong>
       without trusted, current, scope-matching authorization evidence, before a customer security review asks.
     </p>
-    <div class="cta-row" aria-label="Primary actions">
+    <div class="cta-row" aria-label="Primary actions and method references">
       <a class="button primary" href="mailto:jiahao@actionboundary.dev?subject=3%20scenario%20sketch%20for%20our%20agent">Get a 3-scenario sketch</a>
       <a class="button secondary" href="https://github.com/hugoii/llm-agent-audit/blob/master/docs/sample-pilot-report.md">View sample evidence report</a>
+      <details class="method-menu">
+        <summary class="method-trigger">Method references</summary>
+        <div class="method-panel" aria-label="Public method references">
+          <a href="https://genai.owasp.org/llm-top-10/">OWASP LLM Top 10</a>
+          <a href="https://csrc.nist.gov/pubs/other/2026/02/05/accelerating-the-adoption-of-software-and-ai-agent/ipd">NIST agent identity</a>
+          <a href="https://doi.org/10.5281/zenodo.20585658">Zenodo DOI</a>
+          <a href="https://github.com/hugoii/llm-agent-audit">Open-source harness</a>
+          <p class="method-note">References, not endorsements.</p>
+        </div>
+      </details>
     </div>
     <p class="cta-note">Start with one risky workflow. No production access or real customer data.</p>
-    <div class="method-strip" aria-label="Public method anchors">
-      <span class="method-label">Method anchors</span>
-      <a href="https://genai.owasp.org/llm-top-10/">OWASP LLM Top 10</a>
-      <a href="https://csrc.nist.gov/pubs/other/2026/02/05/accelerating-the-adoption-of-software-and-ai-agent/ipd">NIST agent identity</a>
-      <a href="https://doi.org/10.5281/zenodo.20585658">Zenodo DOI</a>
-      <a href="https://github.com/hugoii/llm-agent-audit">Open-source harness</a>
-      <span class="method-note">References, not endorsements</span>
-    </div>
     <div class="hero-proof" aria-label="Review summary">
       <div class="proof-tile"><b>For</b><span>Early AI agent teams selling into healthcare, finance, insurance, and enterprise buyers</span></div>
       <div class="proof-tile"><b>Scope</b><span>Safe staging paths, synthetic data, no production access, no shared credentials</span></div>
@@ -1536,5 +1898,49 @@
     <span><a href="https://github.com/hugoii/llm-agent-audit">GitHub</a> | <a href="https://doi.org/10.5281/zenodo.20585658">Zenodo DOI</a> | <a href="mailto:jiahao@actionboundary.dev">jiahao@actionboundary.dev</a></span>
   </div>
 </footer>
+<script>
+  document.querySelectorAll('.method-menu').forEach((menu) => {
+    let hoverCloseTimer;
+
+    const closeIfUnfocused = () => {
+      if (!menu.matches(':focus-within')) {
+        menu.open = false;
+      }
+    };
+
+    menu.addEventListener('mouseenter', () => {
+      clearTimeout(hoverCloseTimer);
+      menu.open = true;
+    });
+
+    menu.addEventListener('mouseleave', () => {
+      hoverCloseTimer = window.setTimeout(closeIfUnfocused, 90);
+    });
+
+    menu.addEventListener('focusin', () => {
+      clearTimeout(hoverCloseTimer);
+      menu.open = true;
+    });
+
+    menu.addEventListener('focusout', () => {
+      window.setTimeout(closeIfUnfocused, 0);
+    });
+
+    menu.addEventListener('keydown', (event) => {
+      if (event.key === 'Escape') {
+        menu.open = false;
+        menu.querySelector('summary')?.focus();
+      }
+    });
+  });
+
+  document.addEventListener('click', (event) => {
+    document.querySelectorAll('.method-menu[open]').forEach((menu) => {
+      if (event.target instanceof Node && !menu.contains(event.target)) {
+        menu.open = false;
+      }
+    });
+  });
+</script>
 </body>
 </html>
