@@ -56,17 +56,17 @@ A poisoned ticket, invoice, or tool response can look like normal business conte
 | Sample deliverable | The [rendered PDF sample](docs/sample-evidence-report.pdf) is generated from [docs/sample-pilot-report.md](docs/sample-pilot-report.md), not a standalone marketing mockup. |
 | Client pilot | The public benchmark proves the method; a client pilot replaces generic scenarios with your staging tools, authorization sources, and traces. |
 
-## What a clone shows
+## What the public repo proves
 
-This repository is the reproducible public method, not a copy of a customer's private staging environment.
+This repository is the reproducible public method, not a copy of a customer's private staging environment. The point is to show the evidence chain from a fixed battery to customer-like workflows to a staging pilot.
 
-| Layer | What you can verify | What it does not claim |
+| Layer | Public evidence | What it proves |
 |---|---|---|
-| Offline demo | `agent_audit.py` runs 53 attack scenarios plus 3 controls against reference demo agents and writes a trace-backed report. | Evidence about your agent or your production controls. |
-| Public real-model evidence | `docs/runs/v1.5` and the Zenodo archive show fixed-battery runs across multiple model APIs. | A universal benchmark for every agent architecture, prompt, tool schema, or workflow. |
-| Pilot deliverable shape | The sample report and evidence flow show the structure of findings, trace evidence, authorization evidence, fixes, and retest rules. | A real report without your staging tools, approval sources, tool-call traces, and workflow-specific pass/fail rules. |
+| Fixed battery | Battery v1.5, 58 attacks plus 3 controls, multiple real-model summaries, and a CI-checked offline harness. | The method is reproducible and scores actual tool-call traces, not model promises. |
+| Customer-like workflows | [AP payment approval](docs/payment-approval-is-not-user-authorization.md), [multi-turn prior-auth](docs/multi-turn-authorization-drift-case-note.md), source-of-truth authorization, current-user authority, scope, timing, and tool-layer enforcement examples. | The method can ask business authorization questions, not only prompt-injection questions. |
+| Client pilot path | [Sample report](docs/sample-pilot-report.md), [evidence flow](docs/evidence-flow.md), [trace schema](pilot/trace_schema.json), [adapter handoff](pilot/client-handoff.md), and 5 to 10 workflow-specific scenarios. | The public method transfers to your staging tools, approval sources, user roles, and traces. |
 
-Read it this way: **the repo proves the method; the pilot applies it to your real workflow.**
+Read it this way: **the repo proves the method; the pilot applies it to your real workflow.** The public artifacts do not claim to be evidence about your system until your staging tools, authorization sources, and traces are used.
 
 ## Why you can trust it
 
