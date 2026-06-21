@@ -255,6 +255,12 @@
     margin-bottom: 18px;
   }
 
+  .cta-note {
+    margin: -6px 0 22px;
+    color: var(--hero-muted);
+    font-size: 0.9rem;
+  }
+
   .button {
     display: inline-flex;
     align-items: center;
@@ -1201,16 +1207,17 @@
 <header class="hero">
   <div class="hero-inner">
     <p class="eyebrow">Independent. Staging-only. Customer review evidence.</p>
-    <h1>Show customers evidence that your AI agent <br class="wide-break">acts with trusted authorization.</h1>
+    <h1>Show customers trace evidence that your AI agent <br class="wide-break">acts with the right authorization.</h1>
     <p class="hero-copy">
-      I run Agent Authorization Reviews for teams selling tool-using AI agents into regulated or enterprise buyers.
-      The review tests whether content your agent reads can push it to <strong>move money, change records, grant access, or export data</strong>
-      without trusted, current, scope matching authorization evidence.
+      I run independent, staging-only Agent Authorization Reviews for teams selling tool-using AI agents into regulated or enterprise buyers.
+      The review tests whether content your agent reads can push it to <strong>move money, change records, grant access, schedule work, or export data</strong>
+      without trusted, current, scope-matching authorization evidence, before a customer security review asks.
     </p>
     <div class="cta-row" aria-label="Primary actions">
       <a class="button primary" href="mailto:jiahao@actionboundary.dev?subject=3%20scenario%20sketch%20for%20our%20agent">Get a 3-scenario sketch</a>
       <a class="button secondary" href="https://github.com/hugoii/llm-agent-audit/blob/master/docs/sample-pilot-report.md">View sample evidence report</a>
     </div>
+    <p class="cta-note">Start with one risky workflow. No production access or real customer data.</p>
     <div class="method-strip" aria-label="Public method anchors">
       <span class="method-label">Method anchors</span>
       <a href="https://genai.owasp.org/llm-top-10/">OWASP LLM Top 10</a>
@@ -1222,7 +1229,7 @@
     <div class="hero-proof" aria-label="Review summary">
       <div class="proof-tile"><b>For</b><span>Early AI agent teams selling into healthcare, finance, insurance, and enterprise buyers</span></div>
       <div class="proof-tile"><b>Scope</b><span>Safe staging paths, synthetic data, no production access, no shared credentials</span></div>
-      <div class="proof-tile"><b>Method</b><span>Custom scenarios scored against actual tool-call traces and authorization rules</span></div>
+      <div class="proof-tile"><b>Method</b><span>Custom scenarios scored against actual tool-call traces, not model promises</span></div>
       <div class="proof-tile"><b>Output</b><span>A report your team can use in security review, with findings, fixes, evidence, and one retest</span></div>
     </div>
 
@@ -1307,7 +1314,7 @@
     <div class="deliverable">
       <div>
         <h2>You receive trace&nbsp;evidence,<br>not a slogan.</h2>
-    <p class="lead">A real report uses your agent, your tools, your staging traces, and workflow-specific authorization rules. The public sample shows the shape of the evidence package.</p>
+        <p class="lead">A real report uses your agent, your tools, your staging traces, and workflow-specific authorization rules. The public sample shows the shape of the evidence package.</p>
         <div class="checklist" aria-label="Report contents">
           <div class="check"><span class="mark">&#10003;</span><span>Executive summary for founders and security reviewers</span></div>
           <div class="check"><span class="mark">&#10003;</span><span>Scenario matrix with benign controls and pass/fail rules</span></div>
